@@ -717,8 +717,11 @@
   background: var(--bg-neutral-white); border-top: 1px solid var(--bo-hierarchy-secondary);
 }
 .lxp-footer__row { display: flex; align-items: center; justify-content: space-between; }
-.lxp-footer__count { font: var(--font-label-18b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary); }
-.lxp-footer__count em { font-style: normal; color: var(--tx-coursmos-primary); margin-right: -4px; }
+.lxp-footer__count {
+  display: flex; align-items: center; gap: 4px; white-space: nowrap;
+  font: var(--font-label-18b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary);
+}
+.lxp-footer__count em { font-style: normal; color: var(--tx-coursmos-primary); }
 .lxp-footer--chat {
   min-height: 60px; padding: 12px 20px;
   display: flex; flex-direction: column; justify-content: center; gap: 6px;

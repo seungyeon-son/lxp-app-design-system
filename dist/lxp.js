@@ -377,7 +377,7 @@ function Footer({ type = 'button', label, count = 2, caption = '차단 친구와
   if (type === 'button') return `<footer class="lxp-footer lxp-footer--action">${Button({ label: label || '저장하기', block: true })}</footer>`;
   if (type === 'count-button') {
     return `<footer class="lxp-footer lxp-footer--action"><div class="lxp-footer__row">
-      <p class="lxp-footer__count">총 <em>${esc(count)}</em>명</p>${Button({ label: label || '대화시작하기' })}
+      <p class="lxp-footer__count"><span>총</span><span><em>${esc(count)}</em>명</span></p>${Button({ label: label || '대화시작하기' })}
     </div></footer>`;
   }
   if (type === 'message-input') return `<footer class="lxp-footer lxp-footer--chat">${MessageInput({ placeholder })}</footer>`;
