@@ -116,10 +116,10 @@ README의 "확장하기"는 *방법*이고, 이 문서는 *판단 기준*입니�
 | `Button` 에 `id`·`type`·`data-*` 를 못 넘김 | 테스트 시안(삭제) | **처리함** — `Button`·`IconButton` 에 `attrs` prop, 유틸 `htmlAttrs()` |
 | `Footer({ type: 'count-button' })` 문구가 '총 N명'으로 고정, 버튼 비활성 불가 | 테스트 시안(삭제) | 미처리 (`button-pair` 타입만 `disabled` 지원) |
 | `chevron-right` 아이콘 없음 (`scaleX(-1)` 로 뒤집음) | 테스트 시안(삭제) | **처리함** — Figma 출석부에서 `chevron-right`(16)·`chevron-right-14` 추가 |
-| `Toast` 를 어디에 띄울지 정해진 자리가 없음 → 본문 안에 절대배치해서 **스크롤하면 토스트가 같이 움직임** | 테스트 시안(삭제) | `overlay` 슬롯 사용을 규칙으로(CLAUDE.md), 출석부 반영함. 남은 문제: overlay 가 화면 전체를 덮어 토스트가 떠 있는 동안 터치가 막힘 → `Screen({ toast })` 검토 |
+| `Toast` 를 어디에 띄울지 정해진 자리가 없음 → 본문 안에 절대배치해서 **스크롤하면 토스트가 같이 움직임** | 테스트 시안(삭제) | `overlay` 슬롯 사용을 규칙으로(CLAUDE.md), `_starter.html` 이 overlay 방식. 남은 문제: overlay 가 화면 전체를 덮어 토스트가 떠 있는 동안 터치가 막힘 → `Screen({ toast })` 검토 |
 | Figma 출석부의 원시 색 `#f5f8fb`(현황 배경)·`#e5e8ec`(구분선)에 맞는 토큰 없음 | 스마트 출석부 | 가까운 토큰 `--bg-hierarchy-primary-subtle`·`--bo-hierarchy-secondary` 사용. Figma에서 변수로 바꾸면 교체 |
 | `Button` outline-primary 변형·xl(48) 크기의 Figma 변형 이름 미확인 | 스마트 출석부 | 코드 이름은 임시. Figma btn-base-state 변형명 확인 후 맞춤 |
-| 출석률 숫자용 32px 제목 토큰 없음 | 테스트 시안(삭제) | 토큰 추가 금지(모바일 정리 때 의도적으로 삭제). `--font-head-28b` 사용 — 출석부 반영함 |
+| 출석률 숫자용 32px 제목 토큰 없음 | 테스트 시안(삭제) | 토큰 추가 금지(모바일 정리 때 의도적으로 삭제). `--font-head-28b` 사용 |
 | `Chip` warn 톤 글자색이 배경 토큰(`--bg-semantic-warn-tertiary`)을 씀 | 시스템 코드 | 경고 글자색 토큰은 `--tx-semantic-noti-primary`. 색 단계가 달라 Figma 확인 후 수정 |
 | `AppHeader` 의 `right` prop(오른쪽 아이콘, `null` 이면 숨김)이 JSDoc에 없음 | 시스템 코드 | **처리함** — JSDoc 추가, `titleIcon` 도 추가 |
 

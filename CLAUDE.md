@@ -16,7 +16,8 @@
 2. **틀을 복사한다.** `templates/mockups/_starter.html` → `templates/mockups/<영문-슬러그>.html`.
    헤더 주석(`@mockup` `@status` `@date` …)을 채웁니다.
 3. **조립한다.** `LXP.Screen({ header, body, bottom, overlay, bg })` 안에 시스템 함수를 넣습니다.
-   비슷한 기존 화면이 있으면 `templates/screens.js`(홈·내강의실·메시지·채팅)에서 시작합니다.
+   비슷한 기존 화면이 있으면 `templates/screens.js`(홈·내강의실·메시지·채팅·출석부)에서 시작합니다.
+   **출석 관련 요청은 `rollBook({ statuses, onlyTodo, menu })`·`rollBookEntry()`·`rollBookChecking()` 에서 시작하고 새로 그리지 않습니다**(Figma 확정안).
    샘플 데이터(강의명, 교수명, 아바타 `avatar-02~05`, 썸네일 색)도 `screens.js` 것을 재사용합니다.
 4. **시스템에 없는 UI만** 시안 `<style>` 에 직접 만들고, 헤더 `@local-ui` 에 적습니다. 우회한 것은 `@gaps` 에 적습니다.
 5. **확인한다.** `npm run build` 후 `npm run dev` → `http://localhost:4173/mockups/<슬러그>.html`.
@@ -33,7 +34,8 @@
 
 - **시스템 함수가 있는 UI는 직접 만들지 않습니다.** 버튼·칩·아바타·헤더·탭·푸터·토스트·팝업은 반드시 함수로.
 - **`lxp-*` 클래스를 직접 마크업하지 않습니다.** 함수가 못 해 주는 게 있어서 어쩔 수 없이 쓰면 `@gaps` 에 이유를 적습니다.
-  (근거: 출석부는 `Button` 에 `id` 를 못 넘겨 `lxp-btn` 을, `Footer` 문구가 '총 N명'으로 고정돼 `lxp-footer` 를 직접 썼습니다. 컴포넌트 구조가 바뀌면 이런 시안이 조용히 깨집니다.)
+  (근거: 첫 테스트 시안은 `lxp-btn`·`lxp-footer` 를 직접 썼고, 그 뒤 `Button` 에 `attrs` 가 생기면서 그 코드는 필요 없어졌습니다. 직접 쓴 마크업은 이런 변화를 따라가지 못합니다.)
+  `id`·`type`·`data-*` 가 필요하면 `Button({ attrs: { id: 'save', 'data-x': 1 } })` 처럼 `attrs` 를 씁니다.
 - **시안 전용 클래스는 시안 접두사**(`att-`, `roll-` 처럼 주제 약자)를 씁니다. `lxp-` 는 시스템 전용입니다.
 - **떠 있는 레이어는 `overlay` 슬롯에.** 토스트·팝업(`Dim` + `Popup`)·바텀시트를 `body` 안에 절대배치하지 않습니다.
   (근거: 출석부의 저장 토스트는 본문 안에 있어서, 목록을 끝까지 스크롤하면 화면 중간(위에서 246px)으로 올라갑니다.)
@@ -60,12 +62,15 @@
 
 같은 의미는 어느 시안에서든 같은 색입니다. `Chip({ tone })` 과 글자색 토큰을 아래처럼 씁니다.
 
+**출석 상태(출석·결석·지각·조퇴·지각조퇴)는 이 표가 아니라 `templates/screens.js` 의 `ROLL_MAIN`·`ROLL_EXTRA` 를 따릅니다.**
+Figma 확정안 기준이며 일반적인 의미 색과 다릅니다(예: 출석 = `info` 파랑, 지각 = `posi`). 아이콘도 `status-*` 를 그대로 씁니다.
+
 | 의미 | 예 | `tone` | 글자/숫자 색 | 채움 색 (막대·선택된 버튼) |
 |---|---|---|---|---|
-| 완료·정상 | 출석, 제출 완료 | `posi` | `--tx-semantic-posi-primary` | `--bg-semantic-posi-primary` |
-| 주의 | 지각, 마감 임박 | `warn` | `--tx-semantic-noti-primary` | `--bg-semantic-warn-primary` |
-| 실패·위험 | 결석, 미제출, 누적 경고 | `nega` | `--tx-semantic-nega-primary` | `--bg-semantic-nega-primary` |
-| 진행 중·강조 | 이번 주차, D-3 이하 | `info` | `--tx-coursmos-primary` | `--bg-coursmos-primary` |
+| 완료·정상 | 제출 완료, 수강 완료 | `posi` | `--tx-semantic-posi-primary` | `--bg-semantic-posi-primary` |
+| 주의 | 마감 임박 | `warn` | `--tx-semantic-noti-primary` | `--bg-semantic-warn-primary` |
+| 실패·위험 | 미제출, 누적 경고 | `nega` | `--tx-semantic-nega-primary` | `--bg-semantic-nega-primary` |
+| 진행 중·강조 | 이번 주차, D-3 이하, 선택됨 | `info` | `--tx-coursmos-primary` | `--bg-coursmos-primary` |
 | 예정·비활성 | 다음 주차, D-4 이상 | `neutral` | `--tx-hierarchy-tertiary` | `--bg-hierarchy-quaternary` |
 
 경고(warn) 글자색 토큰 이름은 `noti` 입니다(`--tx-semantic-warn-*` 은 없음).
