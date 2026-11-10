@@ -8,6 +8,8 @@
 .lxp-chip--neutral { background: var(--bg-hierarchy-secondary-subtle); color: var(--tx-hierarchy-secondary); }
 .lxp-chip--posi { background: var(--bg-semantic-posi-senary); color: var(--tx-semantic-posi-secondary); }
 .lxp-chip--nega { background: var(--bg-semantic-nega-senary); color: var(--tx-semantic-nega-secondary); }
+/* warn 은 Figma chip/times 에 없는 코드 확장 톤. 글자 토큰 --tx-semantic-noti-primary(warn50)는 이 배경에서 대비 1.55:1 이라
+   못 씀 → warn30(4.0:1, posi·nega 칩과 비슷)을 쓰는데, 그 단계의 글자 토큰이 없어 배경 토큰을 빌림. Figma에 글자 변수가 생기면 교체 */
 .lxp-chip--warn { background: var(--bg-semantic-warn-senary); color: var(--bg-semantic-warn-tertiary); }
 
 /* ---------- Badge ---------- */

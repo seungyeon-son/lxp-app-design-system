@@ -30,7 +30,6 @@
 
   /* ── 시안 전용 UI — 접두사를 정하고(예: xx-) lxp- 는 쓰지 않습니다. 토큰만 사용 ── */
   .xx-body { display: flex; flex-direction: column; gap: 12px; padding: 12px 16px 24px; }
-  .xx-toast { position: absolute; left: 0; right: 0; bottom: 100px; display: flex; justify-content: center; }
 </style>
 
 <div class="board">
@@ -71,8 +70,8 @@
       header: L.AppHeader({ type: 'page', title: '새 기능' }),
       body: `<div class="xx-body">${L.CourseCard({ layout: 'list', color: 'purple', title: '교육공학 개론' })}</div>`,
       bottom: L.Footer({ type: 'button', label: '저장하기' }),
-      // 토스트·팝업·바텀시트처럼 떠 있는 것은 body 가 아니라 overlay 에 (스크롤과 무관하게 고정)
-      overlay: state.saved ? `<div class="xx-toast">${L.Toast({ label: '저장되었습니다' })}</div>` : '',
+      // 토스트는 toast 슬롯(하단 바로 위, 터치 통과). 팝업·바텀시트는 overlay 슬롯(Dim 과 함께)
+      toast: state.saved ? L.Toast({ label: '저장되었습니다' }) : '',
     });
     const body = b.querySelector('.lxp-screen__body');
     if (body) body.scrollTop = prev;

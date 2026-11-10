@@ -370,7 +370,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
   // ---- components
   const S = (code, label, opts = {}) => ({ code, label, ...opts });
   const groupsC = [
-    ['Screen', 'Screen 조립', '—', '360×780 프레임. StatusBar를 넣고 header · body(스크롤) · bottom · overlay를 쌓습니다. 화면 템플릿 섹션 참고.', []],
+    ['Screen', 'Screen 조립', '—', '360×780 프레임. StatusBar를 넣고 header · body(스크롤) · bottom · overlay · toast를 쌓습니다. 화면 템플릿 섹션 참고.', []],
     ['Header', 'Header', '5:12707', '메인 탭 상단 헤더(h68). variant 프리셋 또는 title/actions/menu로 직접 구성합니다.', [
       S(`Header({ variant: 'home' })`, 'home'),
       S(`Header({ variant: 'class' })`, 'class (카드형 선택)'),
@@ -458,7 +458,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
       S(`StatGrid({ footer: '<span>처리 현황: 0/40</span>' })`, 'Default'),
       S(`StatGrid({ linked: true, items: [{ label: '출석', count: 32, icon: 'status-present' }, { label: '결석', count: 0, icon: 'status-absent' }, { label: '지각', count: 2, icon: 'status-late' }, { label: '조퇴', count: 1, icon: 'status-early' }, { label: '지각조퇴', count: 1, icon: 'status-lateearly-muted' }], footer: '<span>처리 현황: 36/40</span>' + Checkbox({ count: 3 }) })`, 'Active · 미처리만 보기'),
     ]],
-    ['Popup', 'Popup · Toast · Dropdown · BottomSheet', '80:22498 · 37:14852', '오버레이 요소. 화면 위에 올릴 때는 Screen({ overlay: Dim({ content }) }).', [
+    ['Popup', 'Popup · Toast · Dropdown · BottomSheet', '80:22498 · 37:14852', '오버레이 요소. 팝업·바텀시트는 Screen({ overlay: Dim({ content }) }), 토스트는 Screen({ toast: Toast({ label }) }).', [
       S(`Popup({})`, 'Popup delete', { bare: true }),
       S(`Popup({ title: '대화방 이름 변경', body: '변경한 이름은 나에게만 보입니다.', actions: [{ label: '취소' }, { label: '확인', tone: 'primary' }] })`, 'Popup confirm', { bare: true }),
       S(`Toast({})`, 'Toast', { bare: true }),

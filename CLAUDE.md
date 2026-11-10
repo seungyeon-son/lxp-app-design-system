@@ -15,7 +15,7 @@
    `docs/promotion-rules.md` §5 후보 장부에 쓸 만한 UI가 있으면 그 시안의 코드를 가져다 씁니다.
 2. **틀을 복사한다.** `templates/mockups/_starter.html` → `templates/mockups/<영문-슬러그>.html`.
    헤더 주석(`@mockup` `@status` `@date` …)을 채웁니다.
-3. **조립한다.** `LXP.Screen({ header, body, bottom, overlay, bg })` 안에 시스템 함수를 넣습니다.
+3. **조립한다.** `LXP.Screen({ header, body, bottom, overlay, toast, bg })` 안에 시스템 함수를 넣습니다.
    비슷한 기존 화면이 있으면 `templates/screens.js`(홈·내강의실·메시지·채팅·출석부)에서 시작합니다.
    **출석 관련 요청은 `rollBook({ statuses, onlyTodo, menu })`·`rollBookEntry()`·`rollBookChecking()` 에서 시작하고 새로 그리지 않습니다**(Figma 확정안).
    샘플 데이터(강의명, 교수명, 아바타 `avatar-02~05`, 썸네일 색)도 `screens.js` 것을 재사용합니다.
@@ -37,9 +37,9 @@
   (근거: 첫 테스트 시안은 `lxp-btn`·`lxp-footer` 를 직접 썼고, 그 뒤 `Button`·`Footer` 에 `attrs`·`prefix`·`disabled` 가 생기면서 그 코드는 필요 없어졌습니다. 직접 쓴 마크업은 이런 변화를 따라가지 못합니다.)
   `id`·`type`·`data-*` 가 필요하면 `Button({ attrs: { id: 'save', 'data-x': 1 } })` 처럼 `attrs` 를 씁니다.
 - **시안 전용 클래스는 시안 접두사**(`att-`, `roll-` 처럼 주제 약자)를 씁니다. `lxp-` 는 시스템 전용입니다.
-- **떠 있는 레이어는 `overlay` 슬롯에.** 토스트·팝업(`Dim` + `Popup`)·바텀시트를 `body` 안에 절대배치하지 않습니다.
+- **떠 있는 레이어는 전용 슬롯에.** 토스트는 `toast` 슬롯(`Screen({ toast: Toast({ label }) })`), 팝업(`Dim` + `Popup`)·바텀시트는 `overlay` 슬롯. `body` 안에 절대배치하지 않습니다.
   (근거: 출석부의 저장 토스트는 본문 안에 있어서, 목록을 끝까지 스크롤하면 화면 중간(위에서 246px)으로 올라갑니다.)
-  overlay 는 화면 전체를 덮으므로 떠 있는 동안 아래 화면은 눌리지 않습니다 — 토스트처럼 잠깐 뜨는 것은 괜찮습니다.
+  `toast` 는 하단(푸터·탭바) 높이와 상관없이 그 바로 위 16px에 뜨고 터치를 막지 않습니다. `overlay` 는 화면 전체를 덮어 아래 터치를 막습니다.
 - **`src/` 는 시안 작업 중에 고치지 않습니다.** 컴포넌트 추가·수정은 `docs/promotion-rules.md` 절차로 따로 합니다.
   사용자가 명시적으로 요청한 경우만 예외입니다.
 - 사용자 텍스트를 템플릿 문자열에 넣을 때는 `LXP.esc()` 를 씁니다. 같은 함수를 다시 정의하지 않습니다.
@@ -68,12 +68,13 @@ Figma 확정안 기준이며 일반적인 의미 색과 다릅니다(예: 출석
 | 의미 | 예 | `tone` | 글자/숫자 색 | 채움 색 (막대·선택된 버튼) |
 |---|---|---|---|---|
 | 완료·정상 | 제출 완료, 수강 완료 | `posi` | `--tx-semantic-posi-primary` | `--bg-semantic-posi-primary` |
-| 주의 | 마감 임박 | `warn` | `--tx-semantic-noti-primary` | `--bg-semantic-warn-primary` |
+| 주의 | 마감 임박 | `warn` | 글자로 쓰지 말 것 (아래 참고) | `--bg-semantic-warn-primary` |
 | 실패·위험 | 미제출, 누적 경고 | `nega` | `--tx-semantic-nega-primary` | `--bg-semantic-nega-primary` |
 | 진행 중·강조 | 이번 주차, D-3 이하, 선택됨 | `info` | `--tx-coursmos-primary` | `--bg-coursmos-primary` |
 | 예정·비활성 | 다음 주차, D-4 이상 | `neutral` | `--tx-hierarchy-tertiary` | `--bg-hierarchy-quaternary` |
 
-경고(warn) 글자색 토큰 이름은 `noti` 입니다(`--tx-semantic-warn-*` 은 없음).
+경고(warn) 글자색 토큰은 `--tx-semantic-noti-primary` 하나뿐인데 밝은 노랑(warn50)이라 흰 배경에서 대비가 약 1.6:1입니다.
+**주의 상태를 글자색만으로 표시하지 말고** `Chip({ tone: 'warn' })` 이나 아이콘으로 표시합니다. 노랑은 채움(막대·점·아이콘)에만 씁니다.
 
 ### 내용
 

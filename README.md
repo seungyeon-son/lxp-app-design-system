@@ -70,7 +70,7 @@ dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.j
 
 | 함수 | Figma 노드 | 주요 props |
 |---|---|---|
-| `Screen` | — | `header, body, bottom, overlay, bg('default'\|'white'\|'sky')` |
+| `Screen` | — | `header, body, bottom, overlay, toast, bg('default'\|'white'\|'sky')` |
 | `StatusBar` | 24:13152 | |
 | `Header` | 5:12707 | `variant('home'\|'class'\|'class_list'\|'message'\|'message-open'\|'more'), title, actions, menu` |
 | `AppHeader` | 24:13004 | `type('default'\|'popup_pull'\|'page'\|'page_chat'\|'photo-viewer'), title, subtitle, right, titleIcon` |
