@@ -3,7 +3,7 @@
 .lxp-chip-tabs__item {
   flex-shrink: 0; padding: 8px 12px; border-radius: var(--radi-full);
   border: 1px solid var(--bo-hierarchy-secondary);
-  font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quinary);
+  font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
   white-space: nowrap;
 }
 .lxp-chip-tabs__item.is-active {
@@ -33,7 +33,7 @@
 .lxp-line-tabs { display: flex; height: 44px; border-bottom: 1px solid var(--bo-hierarchy-secondary); background: var(--bg-neutral-white); }
 .lxp-line-tabs__item {
   flex: 1 1 0; position: relative;
-  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quinary);
+  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
 }
 .lxp-line-tabs__item.is-active { font: var(--font-label-15sb); color: var(--tx-hierarchy-primary); }
 .lxp-line-tabs__item.is-active::after {

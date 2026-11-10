@@ -25,7 +25,7 @@
 
 .lxp-btn--outline { background: var(--bg-neutral-white); color: var(--tx-hierarchy-secondary); border: 1px solid var(--bo-hierarchy-quaternary); }
 
-.lxp-btn--outline-primary { background: var(--bg-neutral-white); color: var(--tx-coursmos-primary); border: 1px solid var(--bo-coursmos-quaternary); }
+.lxp-btn--outline-primary { background: var(--bg-neutral-white); color: var(--tx-coursmos-secondary); border: 1px solid var(--bo-coursmos-quaternary); }
 
 .lxp-btn--gray { background: var(--bg-hierarchy-quinary); color: var(--tx-neutral-white-solid); }
 

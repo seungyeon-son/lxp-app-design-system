@@ -41,7 +41,7 @@
 .lxp-chat-msg__meta { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
 .lxp-chat-msg__meta b { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
 .lxp-chat-msg__meta span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
-.lxp-chat-msg__meta .lxp-chat-msg__read { display: inline-flex; align-items: center; gap: 4px; color: var(--tx-hierarchy-quinary); }
+.lxp-chat-msg__meta .lxp-chat-msg__read { display: inline-flex; align-items: center; gap: 4px; color: var(--tx-hierarchy-quaternary); }
 .lxp-chat-msg__text { font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
 .lxp-chat-msg__reactions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 

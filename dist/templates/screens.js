@@ -140,7 +140,7 @@
         ${L.StatGrid({
           linked: done > 0,
           items: ROLL_STATS.map(([value, label, icon]) => ({ value, label, icon, count: count(value) })),
-          footer: `<span>처리 현황: <span class="lxp-num" style="color:var(--tx-hierarchy-secondary)">${done}</span><span class="lxp-num" style="color:var(--tx-hierarchy-quinary)">/${total ?? st.length}</span></span>
+          footer: `<span>처리 현황: <span class="lxp-num" style="color:var(--tx-hierarchy-secondary)">${done}</span><span class="lxp-num" style="color:var(--tx-hierarchy-quaternary)">/${total ?? st.length}</span></span>
             ${done > 0 ? L.Checkbox({ checked: onlyTodo, count: todo, id: 'roll-only-todo' }) : ''}`,
         })}
         <div style="background:var(--bg-neutral-white);padding-top:8px">

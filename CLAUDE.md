@@ -67,14 +67,26 @@ Figma 확정안 기준이며 일반적인 의미 색과 다릅니다(예: 출석
 
 | 의미 | 예 | `tone` | 글자/숫자 색 | 채움 색 (막대·선택된 버튼) |
 |---|---|---|---|---|
-| 완료·정상 | 제출 완료, 수강 완료 | `posi` | `--tx-semantic-posi-primary` | `--bg-semantic-posi-primary` |
+| 완료·정상 | 제출 완료, 수강 완료 | `posi` | `--tx-semantic-posi-secondary` | `--bg-semantic-posi-primary` |
 | 주의 | 마감 임박 | `warn` | 글자로 쓰지 말 것 (아래 참고) | `--bg-semantic-warn-primary` |
-| 실패·위험 | 미제출, 누적 경고 | `nega` | `--tx-semantic-nega-primary` | `--bg-semantic-nega-primary` |
-| 진행 중·강조 | 이번 주차, D-3 이하, 선택됨 | `info` | `--tx-coursmos-primary` | `--bg-coursmos-primary` |
+| 실패·위험 | 미제출, 누적 경고 | `nega` | `--tx-semantic-nega-secondary` | `--bg-semantic-nega-primary` |
+| 진행 중·강조 | 이번 주차, D-3 이하, 선택됨 | `info` | `--tx-coursmos-secondary` | `--bg-coursmos-primary` |
 | 예정·비활성 | 다음 주차, D-4 이상 | `neutral` | `--tx-hierarchy-tertiary` | `--bg-hierarchy-quaternary` |
 
 경고(warn) 글자색 토큰은 `--tx-semantic-noti-primary` 하나뿐인데 밝은 노랑(warn50)이라 흰 배경에서 대비가 약 1.6:1입니다.
 **주의 상태를 글자색만으로 표시하지 말고** `Chip({ tone: 'warn' })` 이나 아이콘으로 표시합니다. 노랑은 채움(막대·점·아이콘)에만 씁니다.
+
+### 글자색 대비 (흰 배경, WCAG AA 4.5:1)
+
+폰 화면은 항상 라이트이므로 흰 배경 위 글자는 4.5:1 이상인 토큰만 씁니다.
+(근거: `-primary` 상태색과 회색 `quinary` 가 미달인데 탭바·팝업 버튼·완료 글자에 쓰이고 있었습니다.)
+
+- **글자로 쓰지 않는 토큰**: `--tx-semantic-{posi|nega|info|prog|noti}-primary`(3.8 이하), `--tx-coursmos-primary`(4.3), `--tx-hierarchy-quinary`(3.2).
+  상태색 글자는 위 표의 `-secondary` 를, 보조 회색 글자는 `--tx-hierarchy-quaternary`(4.6) 이상을 씁니다.
+  `-primary` 상태색은 채움(`--bg-*`)·버튼 배경에는 그대로 씁니다.
+- 예외: 입력칸 안내 문구(placeholder)는 `quinary`, 비활성·차단 표시는 `senary` 를 씁니다.
+- **연한 글자 토큰**(`--tx-*-quaternary~senary` 컬러 계열, `-subtle`, `-30%`)은 대비 1.1–1.8 이라 **진한 배경 위 글자 전용**입니다. 흰 배경에 쓰지 않습니다.
+- 11px(`--font-cap-11sb`)은 탭바·배지처럼 짧은 라벨에만 쓰고, 색은 `quaternary` 이상으로 씁니다.
 
 ### 내용
 

@@ -14,8 +14,8 @@
   font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
 }
 .lxp-popup__btn + .lxp-popup__btn { border-left: 1px solid var(--bo-hierarchy-quaternary); }
-.lxp-popup__btn.is-danger { color: var(--tx-semantic-nega-primary); }
-.lxp-popup__btn.is-primary { color: var(--tx-coursmos-primary); }
+.lxp-popup__btn.is-danger { color: var(--tx-semantic-nega-secondary); }
+.lxp-popup__btn.is-primary { color: var(--tx-coursmos-secondary); }
 
 /* ---------- BottomSheet ---------- */
 .lxp-sheet {
@@ -29,7 +29,7 @@
   height: 48px; display: flex; align-items: center; padding: 0 4px;
   font: var(--font-label-16m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
 }
-.lxp-sheet__item.is-danger { color: var(--tx-semantic-nega-primary); }
+.lxp-sheet__item.is-danger { color: var(--tx-semantic-nega-secondary); }
 
 /* ---------- Dim content ---------- */
 .lxp-dim__content { position: absolute; inset: 0; display: flex; justify-content: center; }

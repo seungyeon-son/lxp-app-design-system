@@ -560,7 +560,7 @@
 .lxp-section-title__count {
   min-width: 24px; height: 24px; padding: 0 6px; border-radius: var(--radi-3xsm);
   border: 1px solid var(--bo-coursmos-quinary); background: var(--bg-neutral-white);
-  font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-coursmos-primary);
+  font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-coursmos-secondary);
   display: inline-flex; align-items: center; justify-content: center;
 }
 
@@ -595,7 +595,7 @@
 
 .lxp-btn--outline { background: var(--bg-neutral-white); color: var(--tx-hierarchy-secondary); border: 1px solid var(--bo-hierarchy-quaternary); }
 
-.lxp-btn--outline-primary { background: var(--bg-neutral-white); color: var(--tx-coursmos-primary); border: 1px solid var(--bo-coursmos-quaternary); }
+.lxp-btn--outline-primary { background: var(--bg-neutral-white); color: var(--tx-coursmos-secondary); border: 1px solid var(--bo-coursmos-quaternary); }
 
 .lxp-btn--gray { background: var(--bg-hierarchy-quinary); color: var(--tx-neutral-white-solid); }
 
@@ -675,7 +675,7 @@
   position: relative; width: 48px; cursor: pointer;
   display: flex; flex-direction: column; align-items: center; gap: 5px;
   font: var(--font-cap-11sb); letter-spacing: var(--ls-cap); text-align: center; white-space: nowrap;
-  color: var(--tx-hierarchy-quinary); text-decoration: none;
+  color: var(--tx-hierarchy-quaternary); text-decoration: none;
 }
 .lxp-tabbar__item.is-active { color: var(--tx-hierarchy-secondary); }
 .lxp-tabbar__badge {
@@ -741,13 +741,13 @@
   display: flex; align-items: center; gap: 4px; white-space: nowrap;
   font: var(--font-label-18b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary);
 }
-.lxp-footer__count em { font-style: normal; color: var(--tx-coursmos-primary); }
+.lxp-footer__count em { font-style: normal; color: var(--tx-coursmos-secondary); }
 .lxp-footer--chat {
   min-height: 60px; padding: 12px 20px;
   display: flex; flex-direction: column; justify-content: center; gap: 6px;
   background: var(--bg-hierarchy-secondary); border-top: 1px solid var(--bo-hierarchy-secondary);
 }
-.lxp-footer__caption { text-align: center; font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quinary); }
+.lxp-footer__caption { text-align: center; font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
 
 /* ===== components/tabs.css ===== */
 /* ---------- ChipTabs ---------- */
@@ -755,7 +755,7 @@
 .lxp-chip-tabs__item {
   flex-shrink: 0; padding: 8px 12px; border-radius: var(--radi-full);
   border: 1px solid var(--bo-hierarchy-secondary);
-  font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quinary);
+  font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
   white-space: nowrap;
 }
 .lxp-chip-tabs__item.is-active {
@@ -785,7 +785,7 @@
 .lxp-line-tabs { display: flex; height: 44px; border-bottom: 1px solid var(--bo-hierarchy-secondary); background: var(--bg-neutral-white); }
 .lxp-line-tabs__item {
   flex: 1 1 0; position: relative;
-  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quinary);
+  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
 }
 .lxp-line-tabs__item.is-active { font: var(--font-label-15sb); color: var(--tx-hierarchy-primary); }
 .lxp-line-tabs__item.is-active::after {
@@ -822,7 +822,7 @@
 .lxp-toggle-group__more { width: 40px; }
 /* 하나라도 고르면 나머지는 흐리게 (unselected) */
 .lxp-toggle-group.is-picked .lxp-toggle-group__item,
-.lxp-toggle-group.is-picked .lxp-toggle-group__more { border-color: var(--bo-hierarchy-primary-subtle); color: var(--tx-hierarchy-quinary); }
+.lxp-toggle-group.is-picked .lxp-toggle-group__more { border-color: var(--bo-hierarchy-primary-subtle); color: var(--tx-hierarchy-quaternary); }
 .lxp-toggle-group.is-picked .lxp-toggle-group__item.is-active { color: var(--tx-hierarchy-secondary); }
 /* 선택 (selected / active) — tone 별 테두리 */
 .lxp-toggle-group .is-active.is-info    { border-color: var(--bo-semantic-info-primary); }
@@ -846,7 +846,7 @@
   border: solid var(--fg-neutral-white-solid); border-width: 0 0 2px 2px;
 }
 .lxp-checkbox input:disabled { opacity: .4; cursor: not-allowed; }
-.lxp-checkbox em { font-style: normal; color: var(--tx-semantic-nega-primary); }
+.lxp-checkbox em { font-style: normal; color: var(--tx-semantic-nega-secondary); }
 
 .lxp-date-strip__item:focus-visible,
 .lxp-toggle-group__item:focus-visible,
@@ -860,7 +860,7 @@
   height: 24px; padding: 4px 8px; border-radius: var(--radi-3xsm);
   font: var(--font-label-12m); letter-spacing: var(--ls-label); white-space: nowrap;
 }
-.lxp-chip--info { background: var(--bg-semantic-info-senary); color: var(--tx-coursmos-primary); }
+.lxp-chip--info { background: var(--bg-semantic-info-senary); color: var(--tx-coursmos-secondary); }
 .lxp-chip--neutral { background: var(--bg-hierarchy-secondary-subtle); color: var(--tx-hierarchy-secondary); }
 .lxp-chip--posi { background: var(--bg-semantic-posi-senary); color: var(--tx-semantic-posi-secondary); }
 .lxp-chip--nega { background: var(--bg-semantic-nega-senary); color: var(--tx-semantic-nega-secondary); }
@@ -961,7 +961,7 @@
 .lxp-member-row__name { display: flex; align-items: center; }
 .lxp-member-row__name p { min-width: 0; max-width: 5em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font: var(--font-label-15b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
 .lxp-member-row__chev { width: 24px; height: 24px; flex-shrink: 0; display: grid; place-items: center; border-radius: var(--radi-2xsm); }
-.lxp-member-row__sub { font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quinary); }
+.lxp-member-row__sub { font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
 .lxp-member-row__right { flex-shrink: 0; }
 
 /* ===== components/learning.css ===== */
@@ -1001,7 +1001,7 @@
 .lxp-deadline-card__body { display: flex; align-items: center; gap: 8px; }
 .lxp-deadline-card__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
 .lxp-deadline-card__text p { font: var(--font-label-18sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-deadline-card__text span { font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quinary); }
+.lxp-deadline-card__text span { font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
 
 .lxp-deadline-carousel { display: flex; justify-content: center; gap: 6px; width: 100%; overflow: hidden; padding: 6px 0; }
 
@@ -1022,11 +1022,11 @@
   position: relative; width: 44px; padding: 12px 0 8px; border-radius: var(--radi-md);
   display: flex; flex-direction: column; align-items: center;
 }
-.lxp-week__day span { font: var(--font-cap-11sb); letter-spacing: var(--ls-cap); color: var(--tx-hierarchy-quinary); }
+.lxp-week__day span { font: var(--font-cap-11sb); letter-spacing: var(--ls-cap); color: var(--tx-hierarchy-quaternary); }
 .lxp-week__day b { font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
 .lxp-week__day.is-selected { background: var(--bg-neutral-w50); }
 .lxp-week__day.is-selected span { color: var(--tx-hierarchy-secondary); }
-.lxp-week__day.is-selected b { color: var(--tx-coursmos-primary); }
+.lxp-week__day.is-selected b { color: var(--tx-coursmos-secondary); }
 .lxp-week__dot { position: absolute; top: 8px; left: calc(50% + 11.5px); width: 5px; height: 5px; transform: translateX(-50%); }
 
 /* ===== components/message.css ===== */
@@ -1073,7 +1073,7 @@
 .lxp-chat-msg__meta { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
 .lxp-chat-msg__meta b { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
 .lxp-chat-msg__meta span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
-.lxp-chat-msg__meta .lxp-chat-msg__read { display: inline-flex; align-items: center; gap: 4px; color: var(--tx-hierarchy-quinary); }
+.lxp-chat-msg__meta .lxp-chat-msg__read { display: inline-flex; align-items: center; gap: 4px; color: var(--tx-hierarchy-quaternary); }
 .lxp-chat-msg__text { font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
 .lxp-chat-msg__reactions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
@@ -1101,8 +1101,8 @@
   font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
 }
 .lxp-popup__btn + .lxp-popup__btn { border-left: 1px solid var(--bo-hierarchy-quaternary); }
-.lxp-popup__btn.is-danger { color: var(--tx-semantic-nega-primary); }
-.lxp-popup__btn.is-primary { color: var(--tx-coursmos-primary); }
+.lxp-popup__btn.is-danger { color: var(--tx-semantic-nega-secondary); }
+.lxp-popup__btn.is-primary { color: var(--tx-coursmos-secondary); }
 
 /* ---------- BottomSheet ---------- */
 .lxp-sheet {
@@ -1116,7 +1116,7 @@
   height: 48px; display: flex; align-items: center; padding: 0 4px;
   font: var(--font-label-16m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
 }
-.lxp-sheet__item.is-danger { color: var(--tx-semantic-nega-primary); }
+.lxp-sheet__item.is-danger { color: var(--tx-semantic-nega-secondary); }
 
 /* ---------- Dim content ---------- */
 .lxp-dim__content { position: absolute; inset: 0; display: flex; justify-content: center; }
