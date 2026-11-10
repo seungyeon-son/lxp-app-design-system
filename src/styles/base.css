@@ -66,3 +66,6 @@
   font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-coursmos-primary);
   display: inline-flex; align-items: center; justify-content: center;
 }
+
+/* 고정폭 숫자 (집계·학번·시간) */
+.lxp-num { font-variant-numeric: tabular-nums; }

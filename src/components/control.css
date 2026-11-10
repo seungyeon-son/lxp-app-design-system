@@ -1,0 +1,59 @@
+/* 선택 컨트롤: DateStrip · ToggleGroup · Checkbox — Figma 확정안 7054:14428 (스마트 출석부) */
+
+/* ---------- DateStrip (62×60 칸, gap 6, 가운데 정렬 · 양 끝 잘림) ---------- */
+.lxp-date-strip { width: 100%; overflow: hidden; display: flex; justify-content: center; }
+.lxp-date-strip__track { display: flex; gap: 6px; flex-shrink: 0; }
+.lxp-date-strip__item {
+  width: 62px; height: 60px; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--bg-neutral-white); border: 1px solid var(--bo-hierarchy-secondary); border-radius: var(--radi-xsm);
+  cursor: pointer;
+}
+.lxp-date-strip__item span { font: var(--font-cap-12sb); letter-spacing: var(--ls-cap); line-height: 1.2; color: var(--tx-hierarchy-quaternary); }
+.lxp-date-strip__item strong { font: var(--font-label-18b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-date-strip__item.is-active { background: var(--bg-semantic-info-primary); border-color: var(--bo-semantic-info-primary); box-shadow: var(--shadow-md); }
+.lxp-date-strip__item.is-active span,
+.lxp-date-strip__item.is-active strong { color: var(--tx-neutral-white-solid); }
+
+/* ---------- ToggleGroup (버튼 h40, gap 2) ---------- */
+.lxp-toggle-group { position: relative; display: flex; gap: 2px; flex-shrink: 0; }
+.lxp-toggle-group__item,
+.lxp-toggle-group__more {
+  height: 40px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  background: var(--bg-neutral-white); border: 1px solid var(--bo-hierarchy-secondary); border-radius: var(--radi-xsm);
+  cursor: pointer;
+}
+.lxp-toggle-group__item { padding: 0 10px 0 6px; font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); white-space: nowrap; }
+.lxp-toggle-group__more { width: 40px; }
+/* 하나라도 고르면 나머지는 흐리게 (unselected) */
+.lxp-toggle-group.is-picked .lxp-toggle-group__item,
+.lxp-toggle-group.is-picked .lxp-toggle-group__more { border-color: var(--bo-hierarchy-primary-subtle); color: var(--tx-hierarchy-quinary); }
+.lxp-toggle-group.is-picked .lxp-toggle-group__item.is-active { color: var(--tx-hierarchy-secondary); }
+/* 선택 (selected / active) — tone 별 테두리 */
+.lxp-toggle-group .is-active.is-info    { border-color: var(--bo-semantic-info-primary); }
+.lxp-toggle-group .is-active.is-nega    { border-color: var(--bo-semantic-nega-primary); }
+.lxp-toggle-group .is-active.is-posi    { border-color: var(--bo-semantic-posi-primary); }
+.lxp-toggle-group .is-active.is-warn    { border-color: var(--bo-semantic-warn-primary); }
+.lxp-toggle-group .is-active.is-neutral { border-color: var(--bo-hierarchy-quinary); }
+.lxp-toggle-group__menu { position: absolute; top: calc(100% + 4px); right: 0; z-index: 3; width: 118px; }
+.lxp-toggle-group__menu .lxp-dropdown__item { width: 100%; cursor: pointer; }
+
+/* ---------- Checkbox (20px 박스 + 라벨 14M) ---------- */
+.lxp-checkbox { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-checkbox input {
+  appearance: none; -webkit-appearance: none; margin: 0; width: 20px; height: 20px; flex-shrink: 0;
+  display: grid; place-items: center; cursor: pointer;
+  background: var(--bg-neutral-white); border: 1.5px solid var(--bo-hierarchy-quaternary); border-radius: var(--radi-3xsm);
+}
+.lxp-checkbox input:checked { background: var(--bg-coursmos-primary); border-color: var(--bo-coursmos-primary); }
+.lxp-checkbox input:checked::after {
+  content: ''; width: 9px; height: 5px; transform: translateY(-1px) rotate(-45deg);
+  border: solid var(--fg-neutral-white-solid); border-width: 0 0 2px 2px;
+}
+.lxp-checkbox input:disabled { opacity: .4; cursor: not-allowed; }
+.lxp-checkbox em { font-style: normal; color: var(--tx-semantic-nega-primary); }
+
+.lxp-date-strip__item:focus-visible,
+.lxp-toggle-group__item:focus-visible,
+.lxp-toggle-group__more:focus-visible,
+.lxp-checkbox input:focus-visible { outline: 2px solid var(--bo-coursmos-primary); outline-offset: 1px; }

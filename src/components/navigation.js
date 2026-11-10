@@ -12,11 +12,18 @@ export function StatusBar({ className = '' } = {}) {
   </div>`;
 }
 
-/** 드롭다운 메뉴 (Header message-open 의 more-dropdown, 79:18854) */
+/**
+ * 드롭다운 메뉴 (Header message-open 의 more-dropdown, 79:18854)
+ * @param {{icon?:string,label:string,value?:string,checked?:boolean}[]} [p.items]
+ *   value 를 주면 data-value 로, checked 를 주면 선택형 메뉴(menuitemradio, aria-checked)로 그립니다.
+ */
 export function Dropdown({ items = [], className = '', style = '' } = {}) {
   return `<div class="${cx('lxp-dropdown', className)}" role="menu" style="${style}">
-    ${items.map((it) => `<button class="lxp-dropdown__item" role="menuitem">
-      ${it.icon ? Icon(it.icon, { size: 18 }) : ''}<span>${esc(it.label)}</span></button>`).join('')}
+    ${items.map((it) => {
+      const radio = it.checked != null;
+      return `<button type="button" class="${cx('lxp-dropdown__item', it.checked && 'is-checked')}" role="${radio ? 'menuitemradio' : 'menuitem'}"${radio ? ` aria-checked="${!!it.checked}"` : ''}${it.value != null ? ` data-value="${esc(it.value)}"` : ''}>
+      ${it.icon ? Icon(it.icon, { size: 18 }) : ''}<span>${esc(it.label)}</span></button>`;
+    }).join('')}
   </div>`;
 }
 
@@ -59,14 +66,18 @@ export function Header(p = {}) {
  * 서브 페이지 헤더 (h56, 하단 보더)
  * @param {'default'|'popup_pull'|'page'|'page_chat'|'photo-viewer'} [p.type]
  * @param {string} [p.title] @param {string} [p.subtitle] photo-viewer 날짜
+ * @param {string|null} [p.right] 오른쪽 아이콘 이름. null 이면 빈 자리. 생략하면 type 기본값
+ * @param {string} [p.titleIcon] 타이틀 오른쪽 16px 아이콘 (스마트 출석부의 동기화 'refresh-16')
  */
-export function AppHeader({ type = 'page', title = '', subtitle = '', right } = {}) {
+export function AppHeader({ type = 'page', title = '', subtitle = '', right, titleIcon } = {}) {
   const leftIcon = { default: 'menu', popup_pull: 'x-close' }[type] || 'chevron-left';
   const rightIcon = right !== undefined ? right
     : type === 'default' ? 'bell-18'
     : (type === 'page_chat' || type === 'photo-viewer') ? 'dots-vertical' : null;
   const center = type === 'default' ? '<div class="lxp-app-header__title"></div>'
-    : `<div class="lxp-app-header__title"><p class="lxp-ellipsis">${esc(title)}</p>${subtitle ? `<span>${esc(subtitle)}</span>` : ''}</div>`;
+    : titleIcon
+      ? `<div class="lxp-app-header__title has-icon"><p class="lxp-ellipsis">${esc(title)}</p>${Icon(titleIcon, { size: 16 })}</div>`
+      : `<div class="lxp-app-header__title"><p class="lxp-ellipsis">${esc(title)}</p>${subtitle ? `<span>${esc(subtitle)}</span>` : ''}</div>`;
   return `<header class="lxp-app-header">
     ${IconButton({ icon: leftIcon, size: 36, label: leftIcon === 'chevron-left' ? '뒤로' : leftIcon === 'menu' ? '메뉴' : '닫기' })}
     ${center}

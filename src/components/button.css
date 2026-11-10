@@ -9,10 +9,12 @@
 .lxp-btn:disabled { cursor: not-allowed; }
 
 /* size */
+.lxp-btn--xl { height: 48px; padding: 0 20px; font: var(--font-label-16sb); letter-spacing: var(--ls-label); }
 .lxp-btn--lg { height: 44px; padding: 0 18px; font: var(--font-label-15m); letter-spacing: var(--ls-label); }
 .lxp-btn--md { height: 40px; padding: 0 16px 0 14px; font: var(--font-label-14m); letter-spacing: var(--ls-label); }
 .lxp-btn--xs { height: 28px; padding: 0 12px 0 10px; border-radius: var(--radi-2xsm); font: var(--font-label-12m); letter-spacing: var(--ls-label); }
 .lxp-btn--lg.has-icon { padding: 0 18px 0 16px; }
+.lxp-btn--lg.has-icon-right { padding: 0 16px 0 18px; }
 
 /* variant */
 .lxp-btn--primary { background: var(--bg-coursmos-primary); color: var(--tx-neutral-white-solid); }
@@ -22,6 +24,8 @@
 .lxp-btn--secondary { background: var(--bg-hierarchy-secondary); color: var(--tx-hierarchy-secondary); }
 
 .lxp-btn--outline { background: var(--bg-neutral-white); color: var(--tx-hierarchy-secondary); border: 1px solid var(--bo-hierarchy-quaternary); }
+
+.lxp-btn--outline-primary { background: var(--bg-neutral-white); color: var(--tx-coursmos-primary); border: 1px solid var(--bo-coursmos-quaternary); }
 
 .lxp-btn--gray { background: var(--bg-hierarchy-quinary); color: var(--tx-neutral-white-solid); }
 

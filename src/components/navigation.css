@@ -29,6 +29,7 @@
   font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
   text-align: left; white-space: nowrap;
 }
+.lxp-dropdown__item.is-checked { background: var(--bg-hierarchy-secondary-subtle); }
 
 /* ---------- AppHeader (서브 페이지 헤더 56px) ---------- */
 .lxp-app-header {
@@ -42,6 +43,8 @@
   display: flex; flex-direction: column; align-items: center;
 }
 .lxp-app-header__title p { width: 100%; font: var(--font-label-16b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-app-header__title.has-icon { flex-direction: row; justify-content: center; gap: 4px; }
+.lxp-app-header__title.has-icon p { width: auto; }
 .lxp-app-header__title span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
 
 /* ---------- TabBar (82px) ---------- */

@@ -199,7 +199,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
 │  ├─ components/*.js|css    ← button · navigation · input · tabs · display · learning · message · overlay
 │  ├─ assets/icons|images|fonts  ← Figma에서 내려받은 원본 SVG/PNG, Pretendard
 │  └─ index.js               ← ESM 엔트리
-├─ templates/screens.js      ← 홈 · 내강의실 · 메시지 · 채팅 화면 조립 예시
+├─ templates/screens.js      ← 홈 · 내강의실 · 메시지 · 채팅 · 출석부 화면 조립 예시
 ├─ scripts/build.mjs         ← npm run build → dist/
 └─ dist/ lxp.css · lxp.js · fonts/ · index.html</pre></div>
     </section>
@@ -289,7 +289,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
   // ---- facts
   const nSem = Object.keys(T.semantic).length;
   const nIcons = L.iconNames().length;
-  const comps = ['Screen','StatusBar','Header','AppHeader','TabBar','Dropdown','Button','IconButton','Input','MessageInput','Footer','ChipTabs','SegmentedControl','LineTabs','Chip','Badge','Avatar','AvatarGroup','Tag','Toast','CourseCard','DeadlineCard','DeadlineCarousel','ModuleItem','WeekPicker','MessageItem','ChatMessage','Reaction','ChatDate','Popup','BottomSheet','Dim'];
+  const comps = ['Screen','StatusBar','Header','AppHeader','TabBar','Dropdown','Button','IconButton','Input','MessageInput','Footer','ChipTabs','SegmentedControl','LineTabs','Chip','Badge','Avatar','AvatarGroup','Tag','Toast','CourseCard','DeadlineCard','DeadlineCarousel','ModuleItem','WeekPicker','MessageItem','ChatMessage','Reaction','ChatDate','Popup','BottomSheet','Dim','DateStrip','ToggleGroup','Checkbox','StatGrid','InfoBar','MemberRow'];
   $('#facts').innerHTML = `<span><b>${nSem}</b> 시맨틱 컬러 토큰</span><span><b>${Object.keys(T.typography.styles).length}</b> 텍스트 스타일</span><span><b>${comps.length}</b> 컴포넌트 함수</span><span><b>${nIcons}</b> 아이콘·에셋</span><span>기준 화면 <b>360 × 780</b></span>`;
 
   // ---- start code
@@ -315,7 +315,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
 
   // ---- screens
   const SC = window.LXP_SCREENS || {};
-  const scList = [['home', '홈 · 오늘 마감'], ['classGrid', '내 강의실 · 카드형'], ['classList', '내 강의실 · 목록형'], ['messages', '메시지 목록'], ['chat', '채팅방'], ['chatDelete', '메시지 삭제 팝업']];
+  const scList = [['home', '홈 · 오늘 마감'], ['classGrid', '내 강의실 · 카드형'], ['classList', '내 강의실 · 목록형'], ['messages', '메시지 목록'], ['chat', '채팅방'], ['chatDelete', '메시지 삭제 팝업'], ['rollBookEntry', '스마트 출석부 · 진입'], ['rollBookChecking', '스마트 출석부 · 출석체크 진행중']];
   $('#screens-row').innerHTML = scList.filter(([k]) => SC[k]).map(([k, label]) =>
     `<figure><div class="phone">${SC[k]()}</div><figcaption><span>${label}</span><code>LXP_SCREENS.${k}()</code></figcaption></figure>`).join('');
 
@@ -387,11 +387,12 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
       S(`TabBar({ active: 'home' })`, 'home'),
       S(`TabBar({ active: 'more', newDots: ['more'] })`, 'more_new'),
     ]],
-    ['Button', 'Button · IconButton', 'btn-base-state', 'lg 44 · md 40 · xs 28. primary / secondary / outline / gray / ghost.', [
+    ['Button', 'Button · IconButton', 'btn-base-state', 'xl 48 · lg 44 · md 40 · xs 28. primary / secondary / outline / outline-primary / gray / ghost. attrs 로 id · data-* 를 넘깁니다.', [
       S(`Button({ label: '저장하기', block: true })`, 'primary lg block'),
       S(`[Button({ label: '내 강의실 편집', variant: 'secondary', size: 'xs', icon: 'settings' }), Button({ label: '차단 해제', variant: 'outline', size: 'xs', icon: 'block-12' })].join(' ')`, 'xs', { bare: true }),
       S(`Button({ label: '차단 해제', variant: 'gray', size: 'md', icon: 'block' })`, 'gray md', { bare: true }),
       S(`[IconButton({ icon: 'bell-18' }), IconButton({ icon: 'grid-active', active: true }), IconButton({ icon: 'plus', round: true })].join('')`, 'IconButton 36 · active · round', { bare: true }),
+      S(`[Button({ label: '자동출결', variant: 'outline-primary', size: 'xl', iconRight: 'check-circle' }), Button({ label: '출결 일괄 처리', size: 'xl', attrs: { 'data-act': 'bulk' } })].join(' ')`, 'xl 48 · outline-primary · iconRight · attrs', { bare: true }),
     ]],
     ['Input', 'Input', '86:18467', 'state × validation 9가지. 실제 포커스 시 파란 보더가 자동 적용됩니다.', [
       S(`Input({})`, 'enabled · normal'),
@@ -405,6 +406,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
       S(`Footer({ type: 'count-button', count: 2 })`, 'count-button'),
       S(`Footer({ type: 'message-input' })`, 'message-input'),
       S(`Footer({ type: 'message-block' })`, 'message-block'),
+      S(`Footer({ type: 'button-pair', label: '출결 일괄 처리' })`, 'button-pair (출석부 BottomCTA)'),
     ]],
     ['ChipTabs', 'ChipTabs · SegmentedControl · LineTabs', '5:12886 · 37:15014', '강좌 분류 전환. LineTabs는 근사치입니다.', [
       S(`ChipTabs({ active: 0 })`, 'ChipTabs'),
@@ -440,6 +442,20 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
       S(`AvatarGroup({ more: 5 })`, 'AvatarGroup', { bare: true }),
       S(`[Tag({ label: '김연아' }), Tag({ label: '1조', avatar: false, icon: 'plus' })].join(' ')`, 'Tag', { bare: true }),
       S(`[Badge({ count: 1 }), Badge({ count: 11, size: 'sm' }), Chip({ label: '3시간 남았어요' }), Chip({ label: 'D-4', tone: 'neutral' })].join(' ')`, 'Badge · Chip', { bare: true }),
+    ]],
+    ['DateStrip', 'DateStrip · InfoBar', '7062:38201 · 7062:38223', '스마트 출석부 상단. 날짜 칸(62×60)은 가운데 정렬되고 양 끝은 잘립니다. 달이 바뀌는 날에만 월 표기.', [
+      S(`DateStrip({ selected: 3 })`, 'DateStrip'),
+      S(`InfoBar({})`, 'InfoBar', { pad: true }),
+    ]],
+    ['ToggleGroup', 'ToggleGroup · MemberRow', '7062:38277 · 7062:38271', '단일 선택 버튼 묶음. 고르면 선택 버튼만 tone 테두리, 나머지는 흐려집니다. overflow 로 ⋯ 메뉴(조퇴·지각조퇴)를 붙입니다.', [
+      S(`MemberRow({ right: ToggleGroup({ overflow: { items: [{ value: 'early', label: '조퇴', icon: 'status-early', tone: 'warn' }, { value: 'lateearly', label: '지각조퇴', icon: 'status-lateearly', tone: 'neutral' }] } }) })`, '기본 (미처리)', { bare: true }),
+      S(`MemberRow({ name: '남궁길동', right: ToggleGroup({ value: 'absent', overflow: { items: [{ value: 'early', label: '조퇴', icon: 'status-early', tone: 'warn' }] } }) })`, 'selected · 결석', { bare: true }),
+      S(`MemberRow({ name: '송길동', right: ToggleGroup({ value: 'early', overflow: { items: [{ value: 'early', label: '조퇴', icon: 'status-early', tone: 'warn' }, { value: 'lateearly', label: '지각조퇴', icon: 'status-lateearly', tone: 'neutral' }] } }) })`, 'overflow 선택 · 조퇴', { bare: true }),
+      S(`MemberRow({ name: '박길동', right: ToggleGroup({ overflow: { open: true, items: [{ value: 'early', label: '조퇴', icon: 'status-early', tone: 'warn' }, { value: 'lateearly', label: '지각조퇴', icon: 'status-lateearly', tone: 'neutral' }] } }) })`, '⋯ 메뉴 열림', { bare: true, tall: 150 }),
+    ]],
+    ['StatGrid', 'StatGrid · Checkbox', '7062:38229', '상태별 개수. 0이면 누를 수 없고, linked 면 0이 아닌 칸에 › 가 붙습니다. footer 슬롯에 처리 현황과 필터.', [
+      S(`StatGrid({ footer: '<span>처리 현황: 0/40</span>' })`, 'Default'),
+      S(`StatGrid({ linked: true, items: [{ label: '출석', count: 32, icon: 'status-present' }, { label: '결석', count: 0, icon: 'status-absent' }, { label: '지각', count: 2, icon: 'status-late' }, { label: '조퇴', count: 1, icon: 'status-early' }, { label: '지각조퇴', count: 1, icon: 'status-lateearly-muted' }], footer: '<span>처리 현황: 36/40</span>' + Checkbox({ count: 3 }) })`, 'Active · 미처리만 보기'),
     ]],
     ['Popup', 'Popup · Toast · Dropdown · BottomSheet', '80:22498 · 37:14852', '오버레이 요소. 화면 위에 올릴 때는 Screen({ overlay: Dim({ content }) }).', [
       S(`Popup({})`, 'Popup delete', { bare: true }),

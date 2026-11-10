@@ -40,6 +40,13 @@
   height: 86px; padding: 12px 20px 28px;
   background: var(--bg-neutral-white); border-top: 1px solid var(--bo-hierarchy-secondary);
 }
+.lxp-footer--pair {
+  display: flex; gap: 8px; padding: 12px 16px 20px;
+  background: var(--bg-neutral-white); border-top: 1px solid var(--bo-hierarchy-primary);
+  box-shadow: var(--shadow-lg);
+}
+.lxp-footer__secondary { width: 128px; }
+.lxp-footer__primary { flex: 1 1 0; min-width: 0; }
 .lxp-footer__row { display: flex; align-items: center; justify-content: space-between; }
 .lxp-footer__count {
   display: flex; align-items: center; gap: 4px; white-space: nowrap;

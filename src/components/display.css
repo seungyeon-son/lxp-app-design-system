@@ -63,3 +63,45 @@
   background: var(--bg-neutral-b60); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
   font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-neutral-white); white-space: nowrap;
 }
+
+/* ---------- StatGrid (SessionStrip 7062:38229) ----------
+   Figma 배경 #f5f8fb 는 토큰이 아니어서 가장 가까운 --bg-hierarchy-primary-subtle 을 씁니다. */
+.lxp-stat-grid { display: flex; flex-direction: column; gap: 8px; padding: 12px 16px 8px; background: var(--bg-hierarchy-primary-subtle); }
+.lxp-stat-grid__row { display: flex; gap: 4px; }
+.lxp-stat-grid__item {
+  flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 3px 0; border-radius: var(--radi-2xsm); cursor: pointer;
+}
+.lxp-stat-grid__item:disabled { cursor: default; }
+.lxp-stat-grid__label { display: flex; align-items: center; padding-right: 6px; white-space: nowrap; font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-stat-grid__item.is-long .lxp-stat-grid__label { font-size: 11px; }
+.lxp-stat-grid__count { height: 20px; display: flex; align-items: center; justify-content: center; gap: 1px; padding-left: 6px; font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary); }
+.lxp-stat-grid__item:disabled .lxp-stat-grid__count { padding-left: 0; }
+.lxp-stat-grid__footer {
+  min-height: 31px; display: flex; align-items: center; justify-content: space-between; padding: 6px 0 0 4px;
+  border-top: 1px solid var(--bo-hierarchy-primary);
+  font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
+}
+
+/* ---------- InfoBar (SubRow 7062:38223) ---------- */
+.lxp-info-bar {
+  width: 100%; height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 6px 8px 6px 12px;
+  background: var(--bg-hierarchy-primary); border: 1px solid var(--bo-hierarchy-primary); border-radius: var(--radi-xsm);
+  box-shadow: var(--shadow-xsm);
+}
+.lxp-info-bar__main { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.lxp-info-bar__main p { white-space: nowrap; font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary); }
+.lxp-info-bar__chip { flex-shrink: 0; white-space: nowrap; }
+.lxp-info-bar__chip.is-box { height: 24px; display: inline-flex; align-items: center; padding: 0 8px; border-radius: var(--radi-3xsm); background: var(--bg-semantic-info-quinary); font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-info-bar__chip.is-pill { padding: 4px 12px; border-radius: var(--radi-full); background: var(--bg-neutral-b6-hovered); font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary); }
+.lxp-info-bar__action { flex-shrink: 0; height: 32px; display: inline-flex; align-items: center; gap: 4px; padding: 0 6px 0 8px; border-radius: var(--radi-xsm); font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); cursor: pointer; }
+
+/* ---------- MemberRow (LearnerRows › Row 7062:38271) ----------
+   Figma 구분선 #e5e8ec 는 토큰이 아니어서 가장 가까운 --bo-hierarchy-secondary 를 씁니다. */
+.lxp-member-row { position: relative; display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg-neutral-white); border-bottom: 1px solid var(--bo-hierarchy-secondary); }
+.lxp-member-row__who { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; }
+.lxp-member-row__name { display: flex; align-items: center; }
+.lxp-member-row__name p { min-width: 0; max-width: 5em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font: var(--font-label-15b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-member-row__chev { width: 24px; height: 24px; flex-shrink: 0; display: grid; place-items: center; border-radius: var(--radi-2xsm); }
+.lxp-member-row__sub { font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quinary); }
+.lxp-member-row__right { flex-shrink: 0; }

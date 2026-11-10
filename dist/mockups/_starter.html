@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<base href="../">
+</head>
+<body>
+<!--
+  새 시안 시작점. 이 파일을 templates/mockups/<영문-슬러그>.html 로 복사해서 시작하세요.
+  밑줄(_)로 시작하는 파일은 시안이 아니라 틀입니다. 규칙: templates/README.md
+-->
+<!--
+@mockup  (주제) — (화면 A) / (화면 B)
+@status  아이디어
+@date    YYYY-MM-DD
+@artifact
+@screens A (역할·화면) | B (역할·화면)
+@local-ui
+@gaps
+@assume
+-->
+<title>LXP 새 시안</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="lxp.css">
+<style>
+  /* ── 캔버스 (폰 바깥) — 다크 모드는 캔버스에만 ── */
+  :root { --canvas: #eceef0; --canvas-tx: #3a4048; --canvas-tx2: #6b7380; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --canvas: #16191d; --canvas-tx: #e4e7eb; --canvas-tx2: #9aa2ad; color-scheme: dark; } }
+  :root[data-theme="dark"] { --canvas: #16191d; --canvas-tx: #e4e7eb; --canvas-tx2: #9aa2ad; color-scheme: dark; }
+  body { background: var(--canvas); color: var(--canvas-tx); font-family: var(--font-family, system-ui), sans-serif; }
+  .board { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: flex-start;
+    padding-block: 40px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  figure { margin: 0; display: flex; flex-direction: column; gap: 12px; max-width: 100%; }
+  figcaption { font: 600 13px/1.4 var(--font-family, system-ui); color: var(--canvas-tx2); letter-spacing: .02em; }
+  figcaption b { color: var(--canvas-tx); font-weight: 700; margin-right: 6px; }
+  .phone { border-radius: 28px; overflow: hidden; box-shadow: 0 20px 40px -20px rgba(10,13,18,.35); max-width: 100%; }
+
+  /* ── 시안 전용 UI — 접두사를 정하고(예: xx-) lxp- 는 쓰지 않습니다. 토큰만 사용 ── */
+  .xx-body { display: flex; flex-direction: column; gap: 12px; padding: 12px 16px 24px; }
+  .xx-toast { position: absolute; left: 0; right: 0; bottom: 100px; display: flex; justify-content: center; }
+</style>
+
+<div class="board">
+  <figure>
+    <figcaption><b>A</b>역할 · 화면 이름</figcaption>
+    <div class="phone" id="a"></div>
+  </figure>
+  <figure>
+    <figcaption><b>B</b>역할 · 화면 이름 (버튼을 눌러보세요)</figcaption>
+    <div class="phone" id="b"></div>
+  </figure>
+</div>
+
+<script src="lxp.js"></script>
+<script>
+(() => {
+  const L = window.LXP;
+  const { esc } = L; // 사용자 텍스트는 항상 L.esc — 따로 정의하지 않습니다
+
+  /* ── A. 정적 화면 ── */
+  a.innerHTML = L.Screen({
+    bg: 'sky',
+    header: L.Header({ variant: 'home' }),
+    body: `<div class="xx-body">
+      ${L.WeekPicker({ selected: 1 })}
+      ${L.ModuleItem({ title: '학습이론 2: 경험주의', course: '물리학수업', dday: 2 })}
+    </div>`,
+    bottom: L.TabBar({ active: 'home' }),
+  });
+
+  /* ── B. 인터랙션 화면: 상태 객체 → 전체 다시 그리기 → 스크롤 위치 유지 ── */
+  const state = { saved: false };
+  let timer;
+  function render() {
+    const prev = b.querySelector('.lxp-screen__body')?.scrollTop || 0;
+    b.innerHTML = L.Screen({
+      bg: 'white',
+      header: L.AppHeader({ type: 'page', title: '새 기능' }),
+      body: `<div class="xx-body">${L.CourseCard({ layout: 'list', color: 'purple', title: '교육공학 개론' })}</div>`,
+      bottom: L.Footer({ type: 'button', label: '저장하기' }),
+      // 토스트·팝업·바텀시트처럼 떠 있는 것은 body 가 아니라 overlay 에 (스크롤과 무관하게 고정)
+      overlay: state.saved ? `<div class="xx-toast">${L.Toast({ label: '저장되었습니다' })}</div>` : '',
+    });
+    const body = b.querySelector('.lxp-screen__body');
+    if (body) body.scrollTop = prev;
+  }
+  b.addEventListener('click', (e) => {
+    if (!e.target.closest('.lxp-footer .lxp-btn')) return;
+    state.saved = true; render();
+    clearTimeout(timer); timer = setTimeout(() => { state.saved = false; render(); }, 1800);
+  });
+  render();
+})();
+</script>
+
+</body>
+</html>

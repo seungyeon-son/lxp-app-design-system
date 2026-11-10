@@ -75,7 +75,7 @@ writeFileSync(r('src/core/assets.generated.js'),
 
 // ---------------------------------------------------------------- 3. css
 const cssOrder = ['styles/tokens.css', 'styles/base.css', 'components/button.css', 'components/navigation.css',
-  'components/input.css', 'components/tabs.css', 'components/display.css', 'components/learning.css',
+  'components/input.css', 'components/tabs.css', 'components/control.css', 'components/display.css', 'components/learning.css',
   'components/message.css', 'components/overlay.css'];
 const css = cssOrder.map((f) => `/* ===== ${f} ===== */\n` + readFileSync(r('src', f), 'utf8')).join('\n')
   .replace(/\.\.\/assets\/fonts\//g, 'fonts/');
@@ -83,7 +83,7 @@ writeFileSync(join(DIST, 'lxp.css'), `/*! UBION LXP App Design System */\n${css}
 
 // ---------------------------------------------------------------- 4. js (의존 순서대로 결합)
 const jsOrder = ['core/html.js', 'core/assets.generated.js', 'core/assets.js', 'components/button.js',
-  'components/display.js', 'components/navigation.js', 'components/input.js', 'components/tabs.js',
+  'components/display.js', 'components/navigation.js', 'components/input.js', 'components/tabs.js', 'components/control.js',
   'components/learning.js', 'components/message.js', 'components/overlay.js'];
 const exported = new Set();
 const body = jsOrder.map((f) => {
@@ -107,8 +107,23 @@ for (const f of readdirSync(r('docs'))) {
 }
 if (existsSync(r('templates'))) {
   mkdirSync(join(DIST, 'templates'), { recursive: true });
-  for (const f of readdirSync(r('templates'))) copyFileSync(r('templates', f), join(DIST, 'templates', f));
+  for (const f of readdirSync(r('templates'), { withFileTypes: true })) {
+    if (f.isFile()) copyFileSync(r('templates', f.name), join(DIST, 'templates', f.name));
+  }
+}
+// templates/mockups/*.html 은 아티팩트에 그대로 게시하는 조각(lxp.css·lxp.js 를 같은 폴더에서 찾음).
+// 로컬 열람용으로 <base href="../"> 를 넣은 전체 문서를 dist/mockups/ 에 만듭니다.
+const mockups = [];
+if (existsSync(r('templates/mockups'))) {
+  mkdirSync(join(DIST, 'mockups'), { recursive: true });
+  for (const f of readdirSync(r('templates/mockups')).sort()) {
+    if (!f.endsWith('.html')) continue;
+    const frag = readFileSync(r('templates/mockups', f), 'utf8');
+    writeFileSync(join(DIST, 'mockups', f), `<!doctype html>\n<html lang="ko">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<base href="../">\n</head>\n<body>\n${frag}\n</body>\n</html>\n`);
+    mockups.push(f);
+  }
 }
 
 console.log(`✓ tokens ${lines.length} vars · assets ${Object.keys(assets).length} · exports ${exported.size}`);
 console.log(`✓ dist/lxp.css ${(css.length / 1024).toFixed(1)}KB · dist/lxp.js ${(js.length / 1024).toFixed(1)}KB`);
+if (mockups.length) console.log(`✓ mockups ${mockups.length} → dist/mockups/ (${mockups.join(', ')})`);

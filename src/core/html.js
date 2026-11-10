@@ -21,6 +21,21 @@ export function cx(...args) {
   return out.join(' ');
 }
 
+/**
+ * 추가 HTML 속성: htmlAttrs({ id: 'save', 'data-i': 3, disabled: true }) → ' id="save" data-i="3" disabled'
+ * false/null/undefined 는 생략, true 는 값 없는 속성. 앞에 공백이 붙어 있어 태그 안에 바로 이어 씁니다.
+ */
+export function htmlAttrs(obj) {
+  if (!obj) return '';
+  let out = '';
+  for (const k in obj) {
+    const v = obj[k];
+    if (v == null || v === false || !/^[a-zA-Z_:][\w:.-]*$/.test(k)) continue;
+    out += v === true ? ` ${k}` : ` ${k}="${esc(v)}"`;
+  }
+  return out;
+}
+
 /** 자식 렌더: 문자열/배열/함수 모두 허용 */
 export function slot(v) {
   if (v == null || v === false) return '';

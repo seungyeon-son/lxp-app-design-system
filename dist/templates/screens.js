@@ -1,4 +1,5 @@
 // 화면 템플릿 — Figma 시안을 컴포넌트로 재조립한 예시이자 새 시안의 출발점.
+// 홈 · 내강의실 · 메시지 · 채팅 · 스마트 출석부(교수자)
 // 사용: <script src="lxp.js"></script><script src="templates/screens.js"></script>
 //       el.innerHTML = LXP_SCREENS.home();
 (function (global) {
@@ -95,6 +96,69 @@
       overlay: L.Dim({ content: L.Popup({}) }),
     }),
   };
+
+  // ---------------------------------------------------------------- 스마트 출석부 (교수자)
+  // Figma 4.5 LXP App 작업장 ZRoFjuXczoq30fVbJMNsVP › 확정안 7054:14428
+  const ROLL = [
+    ['홍길동', '202080187'], ['남궁길동', '202080214'], ['제갈길동이', '202080233'], ['박길동', '202080251'],
+    ['선우온누리', '202080278'], ['송길동', '202080296'], ['정길동', '202080305'], ['황보민준', '202080322'],
+  ];
+  const ROLL_MAIN = [
+    { value: 'present', label: '출석', icon: 'status-present', iconOff: 'status-present-off', tone: 'info' },
+    { value: 'absent', label: '결석', icon: 'status-absent', iconOff: 'status-absent-off', tone: 'nega' },
+    { value: 'late', label: '지각', icon: 'status-late', iconOff: 'status-late-off', tone: 'posi' },
+  ];
+  const ROLL_EXTRA = [
+    { value: 'early', label: '조퇴', icon: 'status-early', tone: 'warn' },
+    { value: 'lateearly', label: '지각조퇴', icon: 'status-lateearly', tone: 'neutral' },
+  ];
+  const ROLL_STATS = [['present', '출석', 'status-present'], ['absent', '결석', 'status-absent'], ['late', '지각', 'status-late'],
+    ['early', '조퇴', 'status-early'], ['lateearly', '지각조퇴', 'status-lateearly-muted']];
+
+  /**
+   * 스마트 출석부 화면. 인터랙션용으로도 그대로 씁니다(상태를 바꿔 다시 호출).
+   * @param {object} o
+   * @param {(string|null)[]} [o.statuses] 학생별 상태(present|absent|late|early|lateearly|null)
+   * @param {{name:string,id:string}[]} [o.students] @param {number} [o.day] 선택 날짜 인덱스
+   * @param {boolean} [o.onlyTodo] 미처리만 보기 @param {number} [o.menu] ⋯ 메뉴가 열린 행 인덱스(-1 없음)
+   * @param {number} [o.total] 처리 현황 분모(기본 학생 수) @param {string} [o.overlay]
+   */
+  function rollBook({ statuses = [], students = ROLL.map(([name, id]) => ({ name, id })), day = 3, onlyTodo = false, menu = -1, total, overlay = '' } = {}) {
+    const st = students.map((s, i) => ({ ...s, i, s: statuses[i] || null }));
+    const count = (k) => st.filter((x) => x.s === k).length;
+    const todo = count(null);
+    const done = st.length - todo;
+    const rows = st.filter((x) => !onlyTodo || !x.s);
+    return L.Screen({
+      bg: 'white',
+      header: L.AppHeader({ type: 'page', title: '스마트 출석부', titleIcon: 'refresh-16', right: 'search' }),
+      body: `<div style="min-height:100%;background:var(--bg-hierarchy-primary-subtle);padding-bottom:81px">
+        <div style="display:flex;flex-direction:column;gap:12px;padding:16px 16px 12px;background:var(--bg-neutral-white)">
+          ${L.DateStrip({ selected: day })}
+          ${L.InfoBar({})}
+        </div>
+        ${L.StatGrid({
+          linked: done > 0,
+          items: ROLL_STATS.map(([value, label, icon]) => ({ value, label, icon, count: count(value) })),
+          footer: `<span>처리 현황: <span class="lxp-num" style="color:var(--tx-hierarchy-secondary)">${done}</span><span class="lxp-num" style="color:var(--tx-hierarchy-quinary)">/${total ?? st.length}</span></span>
+            ${done > 0 ? L.Checkbox({ checked: onlyTodo, count: todo, id: 'roll-only-todo' }) : ''}`,
+        })}
+        <div style="background:var(--bg-neutral-white);padding-top:8px">
+          ${rows.map((x) => L.MemberRow({
+            name: x.name, sub: x.id, attrs: { 'data-row': x.i },
+            right: L.ToggleGroup({ items: ROLL_MAIN, value: x.s, label: `${x.name} 출결`, overflow: { items: ROLL_EXTRA, open: menu === x.i, label: '조퇴 · 지각조퇴' } }),
+          })).join('')}
+        </div>
+      </div>`,
+      bottom: L.Footer({ type: 'button-pair', label: '출결 일괄 처리', secondary: { label: '자동출결', iconRight: 'check-circle' } }),
+      overlay,
+    });
+  }
+  screens.rollBook = rollBook;
+  /** 스마트 출석부 — 진입 (Figma 7062:38197) */
+  screens.rollBookEntry = () => rollBook({ total: 40 });
+  /** 스마트 출석부 — 출석체크 진행중 (Figma 7062:38718) */
+  screens.rollBookChecking = () => rollBook({ statuses: ['present', 'absent', 'late', null, 'present', 'early', 'lateearly', 'present'], menu: 3, total: 40 });
 
   global.LXP_SCREENS = screens;
 })(typeof window !== 'undefined' ? window : globalThis);

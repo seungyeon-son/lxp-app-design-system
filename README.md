@@ -32,7 +32,7 @@ npm run dev        # 빌드 + http://localhost:4173 (문서/쇼케이스)
 
 ESM으로 쓸 때: `import { Screen, Header } from './src/index.js'` (빌드 후 에셋이 data URI로 포함됨).
 
-새 시안은 `dist/templates/blank.html` 을 복사해서 시작하거나, `templates/screens.js` 의 화면 함수를 복사해 고치세요.
+새 시안은 `templates/mockups/_starter.html` 을 복사해서 시작하거나, `templates/screens.js` 의 화면 함수를 복사해 고치세요(자세한 규칙은 아래 "시안 만들기").
 
 ## 구조
 
@@ -41,10 +41,13 @@ tokens/tokens.json         단일 소스 (primitive → semantic 참조)
 src/styles/tokens.css      ← 빌드 생성
 src/styles/base.css        폰트(@font-face), :where() 리셋, Screen 프레임
 src/core/                  esc/cx/slot 유틸, Icon/asset 로더
-src/components/            button · navigation · input · tabs · display · learning · message · overlay (.js + .css)
+src/components/            button · navigation · input · tabs · control · display · learning · message · overlay (.js + .css)
 src/assets/                Figma 원본 SVG/PNG, Pretendard Variable
-templates/                 screens.js(홈·내강의실·메시지·채팅), blank.html(새 시안 시작점)
+templates/                 screens.js(홈·내강의실·메시지·채팅), blank.html
+templates/mockups/         팀 시안 보관소 (아티팩트 게시용 조각, _starter.html 이 틀)
 docs/index.html            쇼케이스 (아티팩트 게시용 조각)
+docs/promotion-rules.md    새 UI → 정식 컴포넌트 승격 규칙 + 후보 장부
+CLAUDE.md                  Claude 작업 규칙 (저장소를 열면 자동 적용)
 scripts/build.mjs          빌드
 dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.json
 ```
@@ -70,10 +73,10 @@ dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.j
 | `Screen` | — | `header, body, bottom, overlay, bg('default'\|'white'\|'sky')` |
 | `StatusBar` | 24:13152 | |
 | `Header` | 5:12707 | `variant('home'\|'class'\|'class_list'\|'message'\|'message-open'\|'more'), title, actions, menu` |
-| `AppHeader` | 24:13004 | `type('default'\|'popup_pull'\|'page'\|'page_chat'\|'photo-viewer'), title, subtitle` |
+| `AppHeader` | 24:13004 | `type('default'\|'popup_pull'\|'page'\|'page_chat'\|'photo-viewer'), title, subtitle, right, titleIcon` |
 | `TabBar` | 5:12712 | `active, badges, newDots` |
-| `Footer` | 37:14876 | `type('empty'\|'button'\|'count-button'\|'message-input'\|'message-block'), label, count` |
-| `Button` / `IconButton` | btn-base-state | `variant, size('lg'\|'md'\|'xs'), icon, block` / `icon, size(24\|36\|40), active, round` |
+| `Footer` | 37:14876 · 7062:38459 | `type('empty'\|'button'\|'count-button'\|'button-pair'\|'message-input'\|'message-block'), label, count, secondary, attrs, disabled` |
+| `Button` / `IconButton` | btn-base-state | `variant(+'outline-primary'), size('xl'\|'lg'\|'md'\|'xs'), icon, iconRight, block, attrs` / `icon, size(24\|36\|40), active, round, attrs` |
 | `Input` / `MessageInput` | 86:18467 | `state('enabled'\|'focused'\|'disabled'), validation('normal'\|'filled'\|'invalid'), value` |
 | `ChipTabs` / `SegmentedControl` / `LineTabs` | 5:12886 / 37:15014 / 85:21691 | `items, active` |
 | `CourseCard` | 5:12819 | `layout('grid'\|'list'), color('blue'\|'yellow'\|'orange'\|'green'\|'purple'), title, professor` |
@@ -85,7 +88,15 @@ dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.j
 | `Avatar` / `AvatarGroup` | 72:11136 | `src('avatar-02'…), size(24–48), dimmed` |
 | `Tag` | 63:11157 | `label, size, avatar, closable` |
 | `Chip` / `Badge` | chip/times · new | `tone` / `count, size` |
-| `Popup` / `BottomSheet` / `Dropdown` / `Toast` / `Dim` | 80:22498 · 37:14852 | |
+| `Popup` / `BottomSheet` / `Dropdown` / `Toast` / `Dim` | 80:22498 · 37:14852 | Dropdown `items[{icon,label,value,checked}]` |
+| `DateStrip` | 7062:38201 † | `items[{label,date}], selected` |
+| `InfoBar` | 7062:38223 † | `label, chips[{label,variant('box'\|'pill')}], action{label,icon}` |
+| `StatGrid` | 7062:38229 † | `items[{label,count,icon,value}], linked, footer` (0이면 비활성) |
+| `ToggleGroup` | 7062:38277 † | `items[{value,label,icon,iconOff,tone}], value, overflow{items,open}, label, attrs` |
+| `MemberRow` | 7062:38271 † | `name, sub, chevron, right, avatar, attrs` |
+| `Checkbox` | 7062:38718 † | `label, checked, count, id` |
+
+† 출처는 컴포넌트 페이지가 아니라 **4.5 LXP App 작업장** 파일(`ZRoFjuXczoq30fVbJMNsVP`)의 스마트 출석부 확정안(7054:14428)입니다. 화면 조립 예시: `LXP_SCREENS.rollBookEntry()` · `rollBookChecking()` · `rollBook({ statuses, onlyTodo, menu })`.
 
 ## Figma와 다른 점 (의도적 근사)
 
@@ -96,7 +107,15 @@ dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.j
 - Figma의 이모지 리액션·기본 아바타 레이어는 gear 플레이스홀더로만 내보내져, 문자 이모지(👍)와 이니셜 플레이스홀더로 대체했습니다.
 - 홈의 `module/report`(초록) 등 일부 모듈 아이콘은 아직 내려받지 않았습니다(현재 `module-vod`, `module-url`).
 
+## 시안 만들기
+
+- Claude에게 맡길 때: 저장소를 열면 `CLAUDE.md` 를 자동으로 따릅니다. "출석부 시안 그려줘"처럼 말하면 됩니다.
+- 시안은 `templates/mockups/<이름>.html` 에 모읍니다. 틀은 `templates/mockups/_starter.html`, 규칙은 [`templates/README.md`](templates/README.md).
+- 로컬 확인: `npm run dev` → `http://localhost:4173/mockups/<이름>.html`
+
 ## 확장하기
+
+새 컴포넌트를 **언제** 올릴지는 [`docs/promotion-rules.md`](docs/promotion-rules.md) 를 먼저 보세요(승격 조건, 체크리스트, 후보 장부).
 
 1. 토큰 수정: `tokens/tokens.json` → `npm run build`
 2. 컴포넌트 추가: `src/components/foo.js|css` 작성 → `src/index.js` export 추가 → `scripts/build.mjs` 의 `cssOrder`/`jsOrder` 에 추가
