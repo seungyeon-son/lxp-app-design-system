@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>새 시안</title>
+<!-- dist/ 기준 경로. dist/templates/blank.html 로 열면 ../lxp.css -->
+<link rel="stylesheet" href="../lxp.css">
+<style>
+  body { margin: 0; min-height: 100vh; background: #eceef0; display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; align-items: flex-start; padding: 40px 16px; }
+  .phone { border-radius: 28px; overflow: hidden; box-shadow: 0 20px 40px -20px rgba(10,13,18,.3); }
+</style>
+</head>
+<body>
+<div class="phone" id="a"></div>
+<div class="phone" id="b"></div>
+
+<script src="../lxp.js"></script>
+<script>
+  const { Screen, Header, AppHeader, TabBar, Footer, WeekPicker, ModuleItem, CourseCard, MessageItem, Button, Popup, Dim } = LXP;
+
+  // 시안 A — 여기서부터 자유롭게 조합하세요
+  a.innerHTML = Screen({
+    bg: 'sky',
+    header: Header({ variant: 'home', title: '홈' }),
+    body: `<div style="display:flex;flex-direction:column;gap:8px;padding:8px 16px">
+      ${WeekPicker({ selected: 1 })}
+      ${ModuleItem({ title: '새로운 학습 모듈 아이디어', course: '물리학수업', dday: 2 })}
+    </div>`,
+    bottom: TabBar({ active: 'home' }),
+  });
+
+  // 시안 B — 서브 페이지 + 하단 버튼
+  b.innerHTML = Screen({
+    bg: 'white',
+    header: AppHeader({ type: 'page', title: '새 기능' }),
+    body: `<div style="padding:20px">${CourseCard({ layout: 'list', color: 'purple', title: '교육공학 개론' })}</div>`,
+    bottom: Footer({ type: 'button', label: '시작하기' }),
+  });
+</script>
+</body>
+</html>

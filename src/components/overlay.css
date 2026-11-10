@@ -1,0 +1,38 @@
+/* ---------- Popup ---------- */
+.lxp-popup {
+  width: 300px; overflow: hidden; display: flex; flex-direction: column;
+  background: var(--bg-neutral-w90); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+  border-radius: var(--radi-lg); box-shadow: var(--shadow-lg);
+}
+.lxp-popup__content { display: flex; flex-direction: column; gap: 8px; padding: 20px 20px 16px; text-align: center; }
+.lxp-popup__title { font: var(--font-label-16sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-popup__body { font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary); }
+.lxp-popup__actions { display: flex; }
+.lxp-popup__btn {
+  flex: 1 1 0; height: 48px; padding: 0 20px;
+  border-top: 1px solid var(--bo-hierarchy-quaternary);
+  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+}
+.lxp-popup__btn + .lxp-popup__btn { border-left: 1px solid var(--bo-hierarchy-quaternary); }
+.lxp-popup__btn.is-danger { color: var(--tx-semantic-nega-primary); }
+.lxp-popup__btn.is-primary { color: var(--tx-coursmos-primary); }
+.lxp-popup__btn:hover { background: var(--bg-neutral-b6-hovered); }
+
+/* ---------- BottomSheet ---------- */
+.lxp-sheet {
+  position: relative; width: 100%; padding: 32px 16px 34px;
+  background: var(--bg-neutral-white); border-radius: var(--radi-lg) var(--radi-lg) 0 0;
+}
+.lxp-sheet__handle { position: absolute; top: 4px; left: 50%; width: 48px; height: 4px; margin-left: -24px; border-radius: 2px; background: var(--bg-hierarchy-quaternary); }
+.lxp-sheet__title { padding: 0 4px 12px; font: var(--font-label-16sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-sheet__list { list-style: none; margin: 0; padding: 0; }
+.lxp-sheet__item {
+  height: 48px; display: flex; align-items: center; padding: 0 4px;
+  font: var(--font-label-16m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+}
+.lxp-sheet__item.is-danger { color: var(--tx-semantic-nega-primary); }
+
+/* ---------- Dim content ---------- */
+.lxp-dim__content { position: absolute; inset: 0; display: flex; justify-content: center; }
+.lxp-dim__content.is-center { align-items: center; }
+.lxp-dim__content.is-bottom { align-items: flex-end; }

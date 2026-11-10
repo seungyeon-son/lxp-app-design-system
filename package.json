@@ -1,0 +1,19 @@
+{
+  "name": "@ubion/lxp-app-design-system",
+  "version": "0.1.0",
+  "description": "UBION LXP 모바일 앱 디자인 시스템 — Figma 토큰/컴포넌트의 코드 구현 (의존성 없음)",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./tokens.json": "./tokens/tokens.json",
+    "./css": "./dist/lxp.css",
+    "./bundle": "./dist/lxp.js"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/build.mjs && python3 -m http.server 4173 --directory dist"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}

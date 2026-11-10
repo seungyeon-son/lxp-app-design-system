@@ -1,0 +1,4 @@
+node_modules/
+.DS_Store
+*.log
+# dist/ 는 아티팩트·다른 프로젝트에서 바로 쓰도록 커밋합니다.

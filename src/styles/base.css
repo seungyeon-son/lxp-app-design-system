@@ -1,0 +1,68 @@
+/* ==========================================================
+   Base — 폰트, 리셋, 아이콘, 화면 프레임
+   (tokens.css 는 tokens/tokens.json 에서 자동 생성)
+   ========================================================== */
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/fonts/PretendardVariable.woff2') format('woff2-variations');
+}
+
+/* 리셋은 :where() 로 특이성 0 — 컴포넌트 클래스가 항상 이깁니다 */
+:where(.lxp), :where(.lxp) * { box-sizing: border-box; }
+:where(.lxp) {
+  font-family: var(--font-family);
+  color: var(--tx-hierarchy-primary);
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+}
+:where(.lxp) :where(p, h1, h2, h3, h4) { margin: 0; }
+:where(.lxp) :where(button) { font: inherit; color: inherit; border: 0; background: none; padding: 0; cursor: pointer; }
+:where(.lxp) :where(input) { font: inherit; color: inherit; border: 0; background: none; outline: none; padding: 0; min-width: 0; }
+
+/* 아이콘 */
+.lxp-icon { display: inline-block; flex-shrink: 0; vertical-align: middle; }
+.lxp-icon--tint {
+  background-color: currentColor;
+  -webkit-mask: var(--lxp-icon-src) center / contain no-repeat;
+          mask: var(--lxp-icon-src) center / contain no-repeat;
+}
+
+/* 말줄임 */
+.lxp-ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+
+/* ---------- Screen: 360×780 모바일 프레임 ---------- */
+.lxp-screen {
+  position: relative;
+  width: 360px;
+  height: 780px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-hierarchy-primary);
+}
+.lxp-screen--white { background: var(--bg-neutral-white); }
+.lxp-screen--sky::before {
+  /* 홈 상단 블루 그라디언트 (Rectangle 360×262) */
+  content: ''; position: absolute; inset: 0 0 auto 0; height: 262px; z-index: 0;
+  background: linear-gradient(180deg, var(--bg-coursmos-quinary) 0%, var(--bg-coursmos-senary) 55%, rgba(229, 241, 255, 0) 100%);
+}
+.lxp-screen > * { position: relative; z-index: 1; flex-shrink: 0; }
+.lxp-screen__body { flex: 1 1 auto; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+.lxp-screen__body::-webkit-scrollbar { display: none; }
+.lxp-screen__overlay { position: absolute !important; inset: 0; z-index: 10; display: flex; }
+.lxp-screen__bottom { position: absolute !important; left: 0; right: 0; bottom: 0; z-index: 5; }
+
+.lxp-dim { position: absolute; inset: 0; background: var(--alpha-b30); }
+
+/* 섹션 타이틀 (홈 '이번 주 학습 6') */
+.lxp-section-title { display: flex; align-items: center; gap: 8px; padding: 0 12px; }
+.lxp-section-title__text { font: var(--font-head-20b); letter-spacing: var(--ls-head); color: var(--tx-hierarchy-primary); }
+.lxp-section-title__count {
+  min-width: 24px; height: 24px; padding: 0 6px; border-radius: var(--radi-3xsm);
+  border: 1px solid var(--bo-coursmos-quinary); background: var(--bg-neutral-white);
+  font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-coursmos-primary);
+  display: inline-flex; align-items: center; justify-content: center;
+}
