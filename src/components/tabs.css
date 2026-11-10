@@ -24,7 +24,7 @@
 }
 .lxp-segment__item.is-active {
   background: var(--bg-neutral-white); color: var(--tx-hierarchy-primary);
-  filter: drop-shadow(0 1px 0.5px rgba(10, 13, 18, 0.15));
+  box-shadow: var(--shadow-xsm);
 }
 .lxp-segment__divider { width: 1px; height: 16px; flex-shrink: 0; background: var(--bo-hierarchy-primary); }
 .lxp-segment__divider.is-hidden { display: none; }

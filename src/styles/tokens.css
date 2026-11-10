@@ -22,7 +22,6 @@
   --neutral-gray95: #f0f1f2;
   --neutral-gray96: #f5f5f5;
   --neutral-gray99: #fcfcfc;
-  --alpha-w1: #ffffff03;
   --alpha-w5: #ffffff0d;
   --alpha-w6: #ffffff0f;
   --alpha-w10: #ffffff1a;
@@ -33,7 +32,6 @@
   --alpha-w60: #ffffff99;
   --alpha-w80: #ffffffcc;
   --alpha-w90: #ffffffe5;
-  --alpha-b6: #0000000f;
   --alpha-b10: #0000001a;
   --alpha-b15: #00000026;
   --alpha-b20: #00000033;
@@ -162,7 +160,6 @@
   --utility-allo: #48bba5;
   --utility-vpl: #7b7bac;
   --utility-notice: #a2abc5;
-  --utility-lnb: #46556a;
   --utility-hyflex: #2a4c9c;
   --utility-kelly-green: #57ae00;
   --utility-light-green: #cbea00;
@@ -182,11 +179,9 @@
   --bg-neutral-black: var(--neutral-black);
   --bg-neutral-white-solid: var(--neutral-white);
   --bg-neutral-black-solid: var(--neutral-black);
-  --bg-neutral-b6-hovered: var(--alpha-b6);
   --bg-neutral-b10: var(--alpha-b10);
   --bg-neutral-b15: var(--alpha-b15);
   --bg-neutral-b60: var(--alpha-b60);
-  --bg-neutral-w1: var(--alpha-w1);
   --bg-neutral-w5: var(--alpha-w5);
   --bg-neutral-w20: var(--alpha-w20);
   --bg-neutral-w30: var(--alpha-w30);
@@ -374,7 +369,6 @@
   --ut-module-allo: var(--utility-allo);
   --ut-module-vpl: var(--utility-vpl);
   --ut-module-notice: var(--utility-notice);
-  --ut-module-lnb: var(--utility-lnb);
   --ut-module-hyflex: var(--utility-hyflex);
   --ut-school-cos-primary: var(--brand-cos50);
   --ut-school-cos-secondary: var(--brand-cos60);
@@ -402,9 +396,6 @@
   --ls-paragraph: -0.001em;
   --ls-label: -0.005em;
   --ls-cap: -0.005em;
-  --font-head-56b: 700 56px/1.4 var(--font-family);
-  --font-head-40b: 700 40px/1.4 var(--font-family);
-  --font-head-32b: 700 32px/1.4 var(--font-family);
   --font-head-28b: 700 28px/1.4 var(--font-family);
   --font-head-24b: 700 24px/1.4 var(--font-family);
   --font-head-20b: 700 20px/1.4 var(--font-family);
@@ -436,7 +427,6 @@
   --font-label-12r: 400 12px/1.5 var(--font-family);
   --font-cap-12sb: 600 12px/1.2 var(--font-family);
   --font-cap-11sb: 600 11px/1.2 var(--font-family);
-  --font-cap-10sb: 600 10px/1.2 var(--font-family);
   /* spacing */
   --spac-2: 2px;
   --spac-4: 4px;
@@ -458,20 +448,15 @@
   --radi-xlg: 32px;
   --radi-full: 999px;
   /* shadow */
-  --shadow-xsm: 0 1px 1px 0 #1018280D;
-  --shadow-sm: 0 1px 1px 0 #0A0D1226;
-  --shadow-md: 0 4px 6px -1px #0A0D121A;
-  --shadow-lg: 0 4px 6px -2px #0A0D1208, 0 12px 16px -4px #0A0D1214, 0 12px 16px -4px #0A0D1214, 0 -1px 10px 0 #0000000A;
-  --shadow-xl: 0 3px 3px -1.5px #0A0D120A, 0 20px 24px -4px #0A0D1214, 0 8px 8px -4px #0A0D1208;
-  --shadow-2xl: 0 4px 4px -2px #0A0D120A, 0 24px 48px -12px #0A0D122E;
-  --shadow-3xl: 0 5px 5px -2.5px #0A0D120A, 0 32px 64px -12px #0A0D1224;
-  --shadow-card: 0 0 10px 0 #0000000D;
+  --shadow-xsm: 0 0 4px #0000000D;
+  --shadow-sm: 0 0 8px #00000012;
+  --shadow-card: 0 0 10px #0000000D;
+  --shadow-md: 0 0 12px #00000014;
+  --shadow-lg: 0 0 20px #0000001A;
+  --shadow-xl: 0 0 32px #0000001F;
 }
 
 /* 타이포 유틸리티 클래스 */
-.t-head-56b { font: var(--font-head-56b); letter-spacing: var(--ls-head); }
-.t-head-40b { font: var(--font-head-40b); letter-spacing: var(--ls-head); }
-.t-head-32b { font: var(--font-head-32b); letter-spacing: var(--ls-head); }
 .t-head-28b { font: var(--font-head-28b); letter-spacing: var(--ls-head); }
 .t-head-24b { font: var(--font-head-24b); letter-spacing: var(--ls-head); }
 .t-head-20b { font: var(--font-head-20b); letter-spacing: var(--ls-head); }
@@ -503,4 +488,3 @@
 .t-label-12r { font: var(--font-label-12r); letter-spacing: var(--ls-label); }
 .t-cap-12sb { font: var(--font-cap-12sb); letter-spacing: var(--ls-cap); }
 .t-cap-11sb { font: var(--font-cap-11sb); letter-spacing: var(--ls-cap); }
-.t-cap-10sb { font: var(--font-cap-10sb); letter-spacing: var(--ls-cap); }

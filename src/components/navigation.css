@@ -29,7 +29,6 @@
   font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
   text-align: left; white-space: nowrap;
 }
-.lxp-dropdown__item:hover { background: var(--bg-neutral-b6-hovered); }
 
 /* ---------- AppHeader (서브 페이지 헤더 56px) ---------- */
 .lxp-app-header {

@@ -26,9 +26,9 @@
   flex-shrink: 0; width: 328px; height: 128px; padding: 16px 20px;
   display: flex; flex-direction: column; gap: 16px;
   background: var(--bg-neutral-white); border-radius: var(--radi-lg);
-  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.05));
+  box-shadow: var(--shadow-xsm);
 }
-.lxp-deadline-card.is-faded { background: var(--fg-neutral-w80-solid); filter: none; box-shadow: var(--shadow-card); }
+.lxp-deadline-card.is-faded { background: var(--fg-neutral-w80-solid); box-shadow: var(--shadow-card); }
 .lxp-deadline-card__head { display: flex; align-items: center; justify-content: space-between; }
 .lxp-deadline-card__head > span { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
 .lxp-deadline-card__body { display: flex; align-items: center; gap: 8px; }

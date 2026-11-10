@@ -54,7 +54,7 @@ dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.j
 | Figma | CSS |
 |---|---|
 | `bg/hierarchy/primary` | `--bg-hierarchy-primary` |
-| `bg/neutral/b6%-hovered` | `--bg-neutral-b6-hovered` |
+| `bg/coursmos/primary-30%` | `--bg-coursmos-primary-30` |
 | `nutral/gray20` (오타) | `--neutral-gray20` |
 | `sementic/info45` (오타) | `--semantic-info45` |
 | `Lable/14M` | `--font-label-14m` · `.t-label-14m` |
@@ -89,7 +89,8 @@ dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.j
 
 ## Figma와 다른 점 (의도적 근사)
 
-- hover/pressed 색은 Figma에 정의가 없어 같은 토큰 계열의 다음 단계로 정했습니다.
+- 모바일 전용이라 hover/pressed 색(`b6%-hovered`, `w1%`), 웹 LNB 색(`ut/module/lnb`), 헤드 56·40·32px, 캡션 10px은 두지 않습니다.
+- 그림자는 x·y 오프셋 0, spread 없이 blur와 농도만 다른 단계입니다: `xsm 4` · `sm 8` · `card 10` · `md 12` · `lg 20` · `xl 32`(px). Figma의 2xl/3xl(데스크톱 모달용)은 뺐습니다.
 - `LineTabs`, `ChatDate`, `BottomSheet`, 홈 섹션 카운트 배지, 홈 상단 그라디언트는 화면 캡처 + 토큰으로 구성했습니다.
 - 카드 썸네일 패턴은 Figma 렌더(1x)를 잘라 쓴 PNG입니다. 고해상도가 필요하면 Figma에서 `thumb/lxp_solid/*` 를 2x로 내보내 `src/assets/images/thumb-*.png` 를 교체하세요.
 - Figma의 이모지 리액션·기본 아바타 레이어는 gear 플레이스홀더로만 내보내져, 문자 이모지(👍)와 이니셜 플레이스홀더로 대체했습니다.

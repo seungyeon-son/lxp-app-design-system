@@ -16,7 +16,6 @@
 .lxp-popup__btn + .lxp-popup__btn { border-left: 1px solid var(--bo-hierarchy-quaternary); }
 .lxp-popup__btn.is-danger { color: var(--tx-semantic-nega-primary); }
 .lxp-popup__btn.is-primary { color: var(--tx-coursmos-primary); }
-.lxp-popup__btn:hover { background: var(--bg-neutral-b6-hovered); }
 
 /* ---------- BottomSheet ---------- */
 .lxp-sheet {

@@ -16,29 +16,23 @@
 
 /* variant */
 .lxp-btn--primary { background: var(--bg-coursmos-primary); color: var(--tx-neutral-white-solid); }
-.lxp-btn--primary:hover { background: var(--bg-coursmos-secondary); }
 .lxp-btn--primary:active { background: var(--bg-coursmos-tertiary); }
 .lxp-btn--primary:disabled { background: var(--bg-coursmos-quaternary); }
 
 .lxp-btn--secondary { background: var(--bg-hierarchy-secondary); color: var(--tx-hierarchy-secondary); }
-.lxp-btn--secondary:hover { background: var(--bg-hierarchy-secondary-subtle); }
 
 .lxp-btn--outline { background: var(--bg-neutral-white); color: var(--tx-hierarchy-secondary); border: 1px solid var(--bo-hierarchy-quaternary); }
-.lxp-btn--outline:hover { background: var(--bg-hierarchy-primary-subtle); }
 
 .lxp-btn--gray { background: var(--bg-hierarchy-quinary); color: var(--tx-neutral-white-solid); }
-.lxp-btn--gray:hover { background: var(--bg-hierarchy-senary); }
 
 .lxp-btn--ghost { background: transparent; color: var(--tx-hierarchy-secondary); }
-.lxp-btn--ghost:hover { background: var(--bg-neutral-b6-hovered); }
 
 /* ---------- IconButton ---------- */
 .lxp-icon-btn {
   display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
   overflow: hidden; border-radius: var(--radi-xsm);
-  background: var(--bg-neutral-w1);
+  background: transparent;
 }
-.lxp-icon-btn:hover { background: var(--bg-neutral-b6-hovered); }
 .lxp-icon-btn--24 { width: 24px; height: 24px; border-radius: var(--radi-2xsm); }
 .lxp-icon-btn--36 { width: 36px; height: 36px; }
 .lxp-icon-btn--40 { width: 40px; height: 40px; }
