@@ -75,7 +75,7 @@ dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.j
 | `Header` | 5:12707 | `variant('home'\|'class'\|'class_list'\|'message'\|'message-open'\|'more'), title, actions, menu` |
 | `AppHeader` | 24:13004 | `type('default'\|'popup_pull'\|'page'\|'page_chat'\|'photo-viewer'), title, subtitle, right, titleIcon` |
 | `TabBar` | 5:12712 | `active, badges, newDots` |
-| `Footer` | 37:14876 · 7062:38459 | `type('empty'\|'button'\|'count-button'\|'button-pair'\|'message-input'\|'message-block'), label, count, secondary, attrs, disabled` |
+| `Footer` | 37:14876 · 7062:38459 | `type('empty'\|'button'\|'count-button'\|'button-pair'\|'message-input'\|'message-block'), label, count, prefix, unit, secondary, attrs, disabled` |
 | `Button` / `IconButton` | btn-base-state | `variant(+'outline-primary'), size('xl'\|'lg'\|'md'\|'xs'), icon, iconRight, block, attrs` / `icon, size(24\|36\|40), active, round, attrs` |
 | `Input` / `MessageInput` | 86:18467 | `state('enabled'\|'focused'\|'disabled'), validation('normal'\|'filled'\|'invalid'), value` |
 | `ChipTabs` / `SegmentedControl` / `LineTabs` | 5:12886 / 37:15014 / 85:21691 | `items, active` |

@@ -114,7 +114,7 @@ README의 "확장하기"는 *방법*이고, 이 문서는 *판단 기준*입니�
 | 빈틈 | 처음 나온 곳 | 처리 |
 |---|---|---|
 | `Button` 에 `id`·`type`·`data-*` 를 못 넘김 | 테스트 시안(삭제) | **처리함** — `Button`·`IconButton` 에 `attrs` prop, 유틸 `htmlAttrs()` |
-| `Footer({ type: 'count-button' })` 문구가 '총 N명'으로 고정, 버튼 비활성 불가 | 테스트 시안(삭제) | 미처리 (`button-pair` 타입만 `disabled` 지원) |
+| `Footer({ type: 'count-button' })` 문구가 '총 N명'으로 고정, 버튼 비활성 불가 | 테스트 시안(삭제) | **처리함** — `prefix`·`unit` prop 추가, `disabled`·`attrs` 를 button · count-button 에도 적용 (기본 출력은 그대로) |
 | `chevron-right` 아이콘 없음 (`scaleX(-1)` 로 뒤집음) | 테스트 시안(삭제) | **처리함** — Figma 출석부에서 `chevron-right`(16)·`chevron-right-14` 추가 |
 | `Toast` 를 어디에 띄울지 정해진 자리가 없음 → 본문 안에 절대배치해서 **스크롤하면 토스트가 같이 움직임** | 테스트 시안(삭제) | `overlay` 슬롯 사용을 규칙으로(CLAUDE.md), `_starter.html` 이 overlay 방식. 남은 문제: overlay 가 화면 전체를 덮어 토스트가 떠 있는 동안 터치가 막힘 → `Screen({ toast })` 검토 |
 | Figma 출석부의 원시 색 `#f5f8fb`(현황 배경)·`#e5e8ec`(구분선)에 맞는 토큰 없음 | 스마트 출석부 | 가까운 토큰 `--bg-hierarchy-primary-subtle`·`--bo-hierarchy-secondary` 사용. Figma에서 변수로 바꾸면 교체 |

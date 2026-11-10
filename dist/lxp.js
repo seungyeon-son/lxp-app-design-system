@@ -488,12 +488,15 @@ function MessageInput({ placeholder = '메세지를 입력하세요.', value = '
  * 하단 고정 영역
  * @param {'empty'|'button'|'count-button'|'button-pair'|'message-input'|'message-block'} [p.type]
  * @param {{label?:string,icon?:string,iconRight?:string,attrs?:object}} [p.secondary] button-pair 왼쪽 보조 버튼
- * @param {object} [p.attrs] button-pair 주 버튼 추가 속성 @param {boolean} [p.disabled] button-pair 주 버튼 비활성
+ * @param {object} [p.attrs] 주 버튼 추가 속성(id·type·data-*) — button · count-button · button-pair
+ * @param {boolean} [p.disabled] 주 버튼 비활성 — button · count-button · button-pair
  * @param {string} [p.label] 버튼 라벨
- * @param {number} [p.count] count-button 의 인원 수
+ * @param {number|string} [p.count] count-button 의 숫자
+ * @param {string} [p.prefix] count-button 숫자 앞 문구 (기본 '총', 빈 문자열이면 생략) 예: '미체크'
+ * @param {string} [p.unit] count-button 숫자 뒤 단위 (기본 '명') 예: '건', '개'
  * @param {string} [p.caption] message-block 안내 문구
  */
-function Footer({ type = 'button', label, count = 2, caption = '차단 친구와는 대화할 수 없습니다.', placeholder, secondary, attrs, disabled = false } = {}) {
+function Footer({ type = 'button', label, count = 2, prefix = '총', unit = '명', caption = '차단 친구와는 대화할 수 없습니다.', placeholder, secondary, attrs, disabled = false } = {}) {
   if (type === 'empty') return '<footer class="lxp-footer lxp-footer--empty"></footer>';
   if (type === 'button-pair') {
     // 출석부 BottomCTA (7062:38459): 왼쪽 보조 버튼 128px + 오른쪽 주 버튼, 높이 48
@@ -503,10 +506,10 @@ function Footer({ type = 'button', label, count = 2, caption = '차단 친구와
       ${Button({ label: label || '출결 일괄 처리', size: 'xl', disabled, attrs, className: 'lxp-footer__primary' })}
     </footer>`;
   }
-  if (type === 'button') return `<footer class="lxp-footer lxp-footer--action">${Button({ label: label || '저장하기', block: true })}</footer>`;
+  if (type === 'button') return `<footer class="lxp-footer lxp-footer--action">${Button({ label: label || '저장하기', block: true, disabled, attrs })}</footer>`;
   if (type === 'count-button') {
     return `<footer class="lxp-footer lxp-footer--action"><div class="lxp-footer__row">
-      <p class="lxp-footer__count"><span>총</span><span><em>${esc(count)}</em>명</span></p>${Button({ label: label || '대화시작하기' })}
+      <p class="lxp-footer__count">${prefix ? `<span>${esc(prefix)}</span>` : ''}<span><em>${esc(count)}</em>${esc(unit)}</span></p>${Button({ label: label || '대화시작하기', disabled, attrs })}
     </div></footer>`;
   }
   if (type === 'message-input') return `<footer class="lxp-footer lxp-footer--chat">${MessageInput({ placeholder })}</footer>`;

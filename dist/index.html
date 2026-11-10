@@ -404,6 +404,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
     ['Footer', 'Footer', '37:14876', '하단 고정 영역. 버튼 · 인원수 + 버튼 · 메시지 입력 · 차단 안내.', [
       S(`Footer({ type: 'button' })`, 'button'),
       S(`Footer({ type: 'count-button', count: 2 })`, 'count-button'),
+      S(`Footer({ type: 'count-button', prefix: '미체크', count: 3, label: '출석부 저장', disabled: true })`, 'count-button · 문구 변경 · 비활성'),
       S(`Footer({ type: 'message-input' })`, 'message-input'),
       S(`Footer({ type: 'message-block' })`, 'message-block'),
       S(`Footer({ type: 'button-pair', label: '출결 일괄 처리' })`, 'button-pair (출석부 BottomCTA)'),
