@@ -3,9 +3,9 @@
 //   npm test             저장된 스냅샷과 비교 (다르면 실패)
 //   npm test -- --update 지금 결과를 새 기준으로 저장 (의도한 변경일 때만)
 //
-// 검사 대상 (dist/lxp.js · dist/templates/screens.js 기준 = 실제로 쓰는 번들)
+// 검사 대상 (dist/lxp.js · dist/stories.js · dist/templates/screens.js 기준 = 실제로 쓰는 번들)
 //   default:<함수>   모든 컴포넌트 함수를 인자 없이 호출한 결과
-//   demo:<코드>      쇼케이스(docs/index.html)의 예시 코드 S(`...`) 전부
+//   story:<컴포넌트>/<story>  src/components/**/*.stories.js 의 story 전부 (쇼케이스 Docs 와 같은 것)
 //   screen:<이름>    templates/screens.js 의 화면 전부
 // 에셋 data URI 는 파일 이름으로 바꿔 저장합니다(스냅샷이 읽히도록).
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
@@ -25,6 +25,7 @@ ctx.window = ctx; ctx.globalThis = ctx;
 vm.createContext(ctx);
 vm.runInContext(readFileSync(r('dist/lxp.js'), 'utf8'), ctx);
 vm.runInContext(readFileSync(r('dist/templates/screens.js'), 'utf8'), ctx);
+vm.runInContext(readFileSync(r('dist/stories.js'), 'utf8'), ctx);
 const L = ctx.LXP, SC = ctx.LXP_SCREENS;
 
 // ---- 정규화
@@ -46,14 +47,15 @@ for (const name of Object.keys(L).sort()) {
 }
 run('default:Icon', () => L.Icon('bell'));
 
-const docs = readFileSync(r('docs/index.html'), 'utf8');
-const demoRe = /S\(`([\s\S]*?)`\s*,/g;
-for (let m; (m = demoRe.exec(docs));) {
-  const code = m[1];
-  run(`demo:${code}`, () => vm.runInContext(`(function(L){ with (L) { return (${code}); } })`, ctx)(L));
-}
+for (const c of ctx.LXP_STORIES) for (const st of c.stories) run(`story:${c.name}/${st.key}`, () => st.run());
 
 for (const name of Object.keys(SC).sort()) run(`screen:${name}`, () => SC[name]());
+
+// ---- 없는 에셋: asset() 은 맵에 없는 이름을 src/assets/… 경로로 돌려주므로(번들에서는 깨진 그림) 에러로 봅니다
+for (const [k, v] of Object.entries(cases)) {
+  const miss = [...new Set([...v.matchAll(/src\/assets\/(?:icons|images)\/([\w-]+)\.(?:svg|png)/g)].map((m) => m[1]).filter((n) => n !== 'undefined'))];  // 필수 인자 없이 부른 default:IconButton 은 제외
+  if (miss.length) cases[k] = `THROWS: 없는 에셋 ${miss.join(', ')} — LXP.iconNames() 로 이름을 확인하세요`;
+}
 
 // ---- 비교
 const total = Object.keys(cases).length;

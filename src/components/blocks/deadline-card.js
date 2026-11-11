@@ -5,7 +5,7 @@ import { Chip } from '../primitives/chip.js';
 
 /**
  * 마감 학습 카드 (Card 20:10467 — 오늘 마감 학습)
- * @param {string} [p.module] 모듈 아이콘 (module-vod | module-url ...)
+ * @param {string} [p.module] 모듈 아이콘 (module-vod · module-vod-28 · module-url-28)
  * @param {boolean} [p.faded] 캐러셀 양옆 카드 (흰 80%)
  */
 export function DeadlineCard({ label = '오늘 마감 학습', remain = '3시간 남았어요', title = '학습이론 2: 경험주의', course = '물리학수업', module = 'module-vod', faded = false } = {}) {

@@ -41,7 +41,7 @@ tokens/tokens.json         단일 소스 (primitive → semantic 참조)
 src/styles/tokens.css      ← 빌드 생성
 src/styles/base.css        폰트(@font-face), :where() 리셋, Screen 프레임
 src/core/                  esc/cx/slot 유틸, Icon/asset 로더
-src/components/            컴포넌트 하나 = 파일 하나(.js + .css), 계층별 폴더 (docs/architecture.md)
+src/components/            컴포넌트 하나 = 파일 하나(.js + .css + .stories.js), 계층별 폴더 (docs/architecture.md)
   primitives/              2층 요소  Button · Chip · Badge · Avatar · Checkbox · Input · Toast · Ratio · SwipeAction …
   blocks/                  3층 블록  ModuleItem · MemberRow · Popup · ToggleGroup · StatGrid · Tabs …
   sections/                4층 영역  Header · TabBar · Footer · Section · DeadlineCarousel
@@ -49,14 +49,16 @@ src/components/            컴포넌트 하나 = 파일 하나(.js + .css), 계�
 src/assets/                Figma 원본 SVG/PNG, Pretendard Variable
 templates/                 screens.js(홈·내강의실·메시지·채팅·출석부), blank.html
 templates/mockups/         팀 시안 보관소 (아티팩트 게시용 조각, _starter.html 이 틀)
-docs/index.html            쇼케이스 (아티팩트 게시용 조각)
+docs/index.html            쇼케이스 (아티팩트 게시용 조각) — 컴포넌트는 Storybook 형식 뷰어 (#/button)
+docs/stories.md            *.stories.js 작성 규칙
 docs/architecture.md       컴포넌트 계층 구조와 규칙
 docs/promotion-rules.md    새 UI → 정식 컴포넌트 승격 규칙 + 후보 장부
 CLAUDE.md                  Claude 작업 규칙 (저장소를 열면 자동 적용)
 scripts/build.mjs          빌드 (컴포넌트 파일 자동 탐색, import 관계로 순서 결정, 문서 빠짐 경고)
-scripts/test.mjs           스냅샷 테스트 (npm test)
+scripts/stories-lib.mjs    JSDoc → 인자 표 · stories 묶기 · 빠진 변형 검사
+scripts/test.mjs           스냅샷 테스트 (npm test — story 하나 = 스냅샷 하나)
 tests/snapshots.json       HTML 출력 기준
-dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.json
+dist/                      lxp.css · lxp.js · stories.js · fonts/ · index.html · tokens.json
 ```
 
 ## 토큰 네이밍

@@ -332,7 +332,8 @@
     messages: [L.ChatMessage({ name: '이병헌', avatar: 'avatar-04', text: LONG })],
     bottom: [L.ChatReplyBar({ to: '이병헌', text: LONG }), L.Footer({ type: 'message-input' })],
   });
-  /** 대화방 — 답장 메시지 (chating-message reply) */
+  /** 대화방 — 답장 메시지 (chating-message reply)
+   *  Figma 80:22639(360×1314)는 대화 전체를 펼친 참고 그림 — chatGroup · chatSystem · 이 화면을 이어 붙인 내용이라 따로 만들지 않음 */
   screens.chatReplied = () => room({ messages: [
     L.ChatMessage({ name: '이병헌', avatar: 'avatar-04', text: LONG }),
     L.ChatMessage({ kind: 'reply', time: '오전 05:00', quote: { to: '박진영', text: LONG }, text: '[[서울] 안전및조직관리사례연구 (HART3002 (1)) [2학기]] 유비온8 applied for TA position 471:', link: 'https://ecampus.smu.ac.kr/local/ubassistant/approve.php?id=86570' }),
@@ -361,6 +362,14 @@
       L.ListGroup({ label: '대화방 관리', items: [{ icon: 'edit-20', label: '대화방 이름 변경', tone: 'muted' }, { icon: 'bell-setting-20', label: '대화방 알림 끄기', tone: 'muted' }, { icon: 'settings-20', label: '대화방 관리', tone: 'muted' }] }),
       L.ListItem({ icon: 'log-out-20-red', label: '대화방 나가기', tone: 'danger' }),
     ] }),
+  }) }) });
+
+  /** 대화방 설정 > 메시지 번역 — 언어 선택 시트 (Figma 78:16570) */
+  screens.chatTranslate = () => room({ messages: startGroup(), bottom: L.Footer({ type: 'message-input' }), overlay: L.Dim({ align: 'bottom', content: L.BottomSheet({
+    tone: 'subtle', title: '메시지 번역', gap: 12, content: [
+      L.ListGroup({ label: '언어 선택', items: [{ flag: 'kr', label: '한국어', trailing: 'check' }, { flag: 'us', label: '영어' }, { flag: 'jp', label: '일본어' }, { flag: 'cn', label: '중국어' }] }),
+      L.Stack({ direction: 'row', justify: 'end', children: L.Button({ label: '원문 보기', variant: 'outline' }) }),
+    ],
   }) }) });
 
   // 대화방 관리 · 기록 (Figma 80:23898 · 80:24116 · 80:23946 · 80:24008 …)

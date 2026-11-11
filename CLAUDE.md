@@ -4,6 +4,7 @@
 목적은 하나입니다. **팀원이 "○○ 화면 그려줘"라고 하면, 처음부터 만들지 말고 이 시스템의 함수로 360×780 모바일 시안을 조립**합니다.
 
 - 컴포넌트 목록·props: `README.md` 의 컴포넌트 표(계층별) → 정확한 인자는 `src/components/<계층>/*.js` 의 JSDoc
+- 변형·상태별 예시: 컴포넌트 옆 `<이름>.stories.js` (쇼케이스 `#/<컴포넌트>` 와 같음). 작성 규칙: `docs/stories.md`
 - 컴포넌트 계층(요소 → 블록 → 영역 → 화면, 배치는 틀)과 조합 규칙: `docs/architecture.md`
 - 시안 보관 규칙: `templates/README.md`
 - 새 UI를 정식 컴포넌트로 올리는 규칙과 후보 장부: `docs/promotion-rules.md`

@@ -101,6 +101,7 @@ src/components/
 
 - 파일 하나 = 컴포넌트 하나(아주 가까운 묶음은 한 파일: `tabs` = ChipTabs·SegmentedControl·LineTabs, `header` = Header·AppHeader).
 - 각 파일 첫 줄에 `// 함수 — 계층` 을 적습니다. CSS 는 같은 이름의 `.css` 에 둡니다.
+- 예시는 함수마다 `<이름>.stories.js` (Storybook CSF 모양, `docs/stories.md`). 쇼케이스와 스냅샷 테스트가 이 파일을 씁니다.
 - 빌드는 하위 폴더까지 찾아 import 관계로 순서를 정합니다(관계가 없으면 요소 → 블록 → 영역 → 틀 순). 새 파일을 만들어도 `build.mjs` 는 고치지 않습니다.
 - 결과물 `dist/lxp.css`·`dist/lxp.js` 와 함수 이름은 그대로라서 기존 시안·아티팩트는 바꿀 필요가 없습니다.
 

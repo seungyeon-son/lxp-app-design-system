@@ -34,7 +34,11 @@ export function Screen({ header = '', body = '', bottom = '', overlay = '', toas
   </div>`;
 }
 
-/** 딤 + 가운데 정렬 컨텐츠 */
+/**
+ * 딤(어두운 막) + 내용. Screen({ overlay }) 에 넣습니다
+ * @param {string} [p.content] Popup · BottomSheet · Dropdown 등
+ * @param {'center'|'bottom'} [p.align] center = 팝업, bottom = 바텀시트
+ */
 export function Dim({ content = '', align = 'center' } = {}) {
   return `<div class="lxp-dim"></div><div class="${cx('lxp-dim__content', `is-${align}`)}">${slot(content)}</div>`;
 }

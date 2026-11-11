@@ -6,7 +6,9 @@ import { asset } from '../../core/assets.js';
  * 아바타 (Avata-base: 24/28/32/36/40/48)
  * @param {string} [p.src] 이미지 URL 또는 에셋명 (avatar-02~05). 없으면 이름 첫 글자 플레이스홀더
  * @param {string} [p.name] 플레이스홀더 이니셜용
+ * @param {24|28|32|36|40|48} [p.size] 지름(px)
  * @param {boolean} [p.dimmed] 차단/나간 사용자 (투명도 25%)
+ * @param {string} [p.alt] 스크린리더용 이름 (없으면 name)
  */
 export function Avatar({ src, name = '', size = 48, dimmed = false, alt = '', className = '' } = {}) {
   const box = `width:${size}px;height:${size}px`;
@@ -26,6 +28,7 @@ export function Avatar({ src, name = '', size = 48, dimmed = false, alt = '', cl
  * @param {string[]} [p.avatars] 여러 개 (대화 시작 안내: 36px · 8px 겹침, Figma start-chat 79:18831)
  * @param {number} [p.more] "+N" — 0 이면 생략
  * @param {number} [p.overlap] 겹치는 폭(px). 기본 = 크기의 절반
+ * @param {36|48} [p.size] 아바타 지름 — 48 = 메시지 목록, 36 이하 = 대화 시작 안내(작은 +N)
  */
 export function AvatarGroup({ src = 'avatar-03', avatars, more = 5, size = 48, overlap } = {}) {
   const list = avatars || [src];

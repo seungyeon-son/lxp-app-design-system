@@ -226,7 +226,9 @@ function Icon(name, { size = 24, color, className = '', label = '' } = {}) {
  * 아바타 (Avata-base: 24/28/32/36/40/48)
  * @param {string} [p.src] 이미지 URL 또는 에셋명 (avatar-02~05). 없으면 이름 첫 글자 플레이스홀더
  * @param {string} [p.name] 플레이스홀더 이니셜용
+ * @param {24|28|32|36|40|48} [p.size] 지름(px)
  * @param {boolean} [p.dimmed] 차단/나간 사용자 (투명도 25%)
+ * @param {string} [p.alt] 스크린리더용 이름 (없으면 name)
  */
 function Avatar({ src, name = '', size = 48, dimmed = false, alt = '', className = '' } = {}) {
   const box = `width:${size}px;height:${size}px`;
@@ -246,6 +248,7 @@ function Avatar({ src, name = '', size = 48, dimmed = false, alt = '', className
  * @param {string[]} [p.avatars] 여러 개 (대화 시작 안내: 36px · 8px 겹침, Figma start-chat 79:18831)
  * @param {number} [p.more] "+N" — 0 이면 생략
  * @param {number} [p.overlap] 겹치는 폭(px). 기본 = 크기의 절반
+ * @param {36|48} [p.size] 아바타 지름 — 48 = 메시지 목록, 36 이하 = 대화 시작 안내(작은 +N)
  */
 function AvatarGroup({ src = 'avatar-03', avatars, more = 5, size = 48, overlap } = {}) {
   const list = avatars || [src];
@@ -260,6 +263,7 @@ function AvatarGroup({ src = 'avatar-03', avatars, more = 5, size = 48, overlap 
 
 /**
  * 카운트 배지 (새 메시지 수 — 민트 배경)
+ * @param {number|string} [p.count] 숫자 (99+ 같은 글자도 됨)
  * @param {'md'|'sm'|'square'} [p.size] md=22px/12SB, sm=18px/11SB, square=radius4/13M
  */
 function Badge({ count = 1, size = 'md', className = '' } = {}) {
@@ -321,6 +325,7 @@ function IconButton({ icon, size = 36, active = false, round = false, tone, labe
  * @param {boolean} [p.checked]
  * @param {string|number} [p.count] 라벨 뒤 빨간 개수 "(3)"
  * @param {string} [p.id] input id (상태 보존용)
+ * @param {boolean} [p.disabled] 누를 수 없음 (흐리게)
  */
 function Checkbox({ label = '미처리만 보기', checked = false, count, id, disabled = false, className = '' } = {}) {
   return `<label class="${cx('lxp-checkbox', className)}">
@@ -443,7 +448,10 @@ function Ratio({ label = '', value = 0, total = 0, className = '' } = {}) {
 /**
  * 이모지 리액션 버튼
  * @param {string} [p.emoji] 문자 이모지 (기본 👍)
- * @param {string} [p.icon] 이모지 대신 쓸 아이콘 에셋명
+ * @param {string} [p.icon] 이모지 대신 쓸 아이콘 에셋명 (예: emoji-grin)
+ * @param {number} [p.count] 누른 사람 수 (없으면 숫자 생략)
+ * @param {boolean} [p.selected] 내가 누른 리액션 (파란 테두리)
+ * @param {boolean} [p.add] 리액션 추가 버튼(웃는 얼굴 +) — 다른 인자는 무시
  */
 function Reaction({ emoji = '👍', icon, count, selected = false, add = false } = {}) {
   if (add) return `<button class="lxp-reaction" aria-label="리액션 추가">${Icon('face-smile-plus', { size: 16 })}</button>`;
@@ -483,7 +491,11 @@ function SwipeAction({ label = '', icon, tone = 'neutral', className = '' } = {}
 // Toast — 2층 요소
 
 
-/** 토스트 (Notice_guide_secondary — "저장되었습니다") */
+/**
+ * 토스트 (Notice_guide_secondary 37:14852 — "저장되었습니다"). 화면에 띄울 때는 Screen({ toast })
+ * @param {string} [p.label]
+ * @param {string|null} [p.icon] 앞 아이콘 에셋명 (null = 아이콘 없음)
+ */
 function Toast({ label = '저장되었습니다', icon = 'check' } = {}) {
   return `<div class="lxp-toast" role="status">${icon ? Icon(icon, { size: 16 }) : ''}<span>${esc(label)}</span></div>`;
 }
@@ -797,7 +809,7 @@ function DateStrip({ items = DEFAULT_DAYS, selected = 3, className = '' } = {}) 
 
 /**
  * 마감 학습 카드 (Card 20:10467 — 오늘 마감 학습)
- * @param {string} [p.module] 모듈 아이콘 (module-vod | module-url ...)
+ * @param {string} [p.module] 모듈 아이콘 (module-vod · module-vod-28 · module-url-28)
  * @param {boolean} [p.faded] 캐러셀 양옆 카드 (흰 80%)
  */
 function DeadlineCard({ label = '오늘 마감 학습', remain = '3시간 남았어요', title = '학습이론 2: 경험주의', course = '물리학수업', module = 'module-vod', faded = false } = {}) {
@@ -1358,7 +1370,10 @@ function WeekPicker({ days, selected = 0 } = {}) {
 // ----- components/sections/deadline-carousel.js
 // DeadlineCarousel — 4층 영역
 
-/** 마감 카드 슬라이드 (가운데 카드 + 양옆 미리보기) */
+/**
+ * 마감 카드 슬라이드 (가운데 카드 + 양옆 미리보기)
+ * @param {object[]} [p.cards] DeadlineCard 인자 배열. 첫 장이 가운데, 두 장 이상이면 양옆에 흐린 카드
+ */
 function DeadlineCarousel({ cards = [{}] } = {}) {
   const c = cards[0] || {};
   return `<div class="lxp-deadline-carousel">
@@ -1500,7 +1515,7 @@ function frame({ tag = 'div', base, mods = [], vars = {}, children, className = 
  * @param {'column'|'row'} [p.direction]
  * @param {'start'|'center'|'end'|'stretch'} [p.align] 교차축 정렬
  * @param {'start'|'center'|'end'|'between'} [p.justify] 주축 정렬
- * @param {'div'|'section'|'ul'} [p.tag]
+ * @param {'section'|'ul'} [p.tag] 감싸는 태그 (없으면 div)
  * @param {boolean} [p.fill] 스크롤 영역 높이를 꽉 채움 (justify: 'end' 와 함께 = 채팅처럼 아래부터 쌓기)
  */
 function Stack({ children = '', gap, pad, direction = 'column', align, justify, tag, fill = false, className = '' } = {}) {
@@ -1630,7 +1645,11 @@ function Screen({ header = '', body = '', bottom = '', overlay = '', toast = '',
   </div>`;
 }
 
-/** 딤 + 가운데 정렬 컨텐츠 */
+/**
+ * 딤(어두운 막) + 내용. Screen({ overlay }) 에 넣습니다
+ * @param {string} [p.content] Popup · BottomSheet · Dropdown 등
+ * @param {'center'|'bottom'} [p.align] center = 팝업, bottom = 바텀시트
+ */
 function Dim({ content = '', align = 'center' } = {}) {
   return `<div class="lxp-dim"></div><div class="${cx('lxp-dim__content', `is-${align}`)}">${slot(content)}</div>`;
 }

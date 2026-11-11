@@ -7,6 +7,8 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, copyFileSync, existsSync } from 'node:fs';
 import { join, dirname, extname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import vm from 'node:vm';
+import { parseDocs, bundleStory, RUNTIME, checkCoverage, layerOf } from './stories-lib.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const r = (...p) => join(ROOT, ...p);
@@ -79,7 +81,7 @@ writeFileSync(r('src/core/assets.generated.js'),
 const compDir = r('src/components');
 // 하위 폴더(primitives · blocks · sections · layout)까지 찾습니다. 키는 'blocks/popup' 처럼 폴더/이름
 const walk = (dir, pre = '') => readdirSync(join(compDir, pre), { withFileTypes: true }).flatMap((e) =>
-  e.isDirectory() ? walk(dir, join(pre, e.name)) : e.name.endsWith('.js') ? [join(pre, basename(e.name, '.js'))] : []);
+  e.isDirectory() ? walk(dir, join(pre, e.name)) : e.name.endsWith('.js') && !e.name.endsWith('.stories.js') ? [join(pre, basename(e.name, '.js'))] : []);
 const LAYER_RANK = { primitives: 0, blocks: 1, sections: 2, layout: 3 };   // 관계 없는 파일끼리는 아래 층부터
 const rank = (n) => LAYER_RANK[n.split('/')[0]] ?? 9;
 const compNames = walk(compDir).sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
@@ -120,6 +122,42 @@ const body = jsOrder.map((f) => {
 const js = `/*! UBION LXP App Design System — window.LXP */\n(function (global) {\n'use strict';\n${body}\nglobal.LXP = { ${[...exported].join(', ')}, tokens: ${JSON.stringify({ primitive: T.primitive, semantic: T.semantic, typography: T.typography, spacing: T.spacing, radius: T.radius, shadow: T.shadow })} };\n})(typeof window !== 'undefined' ? window : globalThis);\n`;
 writeFileSync(join(DIST, 'lxp.js'), js);
 
+// ---------------------------------------------------------------- 4-1. stories (Storybook CSF 모양)
+// src/components/**/<이름>.stories.js 를 모아 dist/stories.js (window.LXP_STORIES) 를 만듭니다.
+// 컴포넌트 JSDoc 은 인자 표(LXP_DOCS)가 되어 Controls 와 빠짐 검사에 쓰입니다.
+const docs = Object.fromEntries(compOrder.map((n) => [n, parseDocs(readFileSync(join(compDir, n + '.js'), 'utf8'))]));
+const storyKeys = [];
+const walkStories = (pre = '') => readdirSync(join(compDir, pre), { withFileTypes: true }).forEach((e) => {
+  if (e.isDirectory()) walkStories(join(pre, e.name));
+  else if (e.name.endsWith('.stories.js')) storyKeys.push(join(pre, e.name.replace('.stories.js', '')));
+});
+walkStories();
+storyKeys.sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
+// 컴포넌트 파일 하나에 함수가 여럿이면(header = Header·AppHeader) stories 파일은 함수마다: app-header.stories.js
+// 어느 파일의 JSDoc 인지는 같은 폴더의 컴포넌트 파일 전체에서 함수 이름으로 찾습니다.
+const docsByFn = {};
+for (const [n, d] of Object.entries(docs)) for (const [fn, v] of Object.entries(d)) docsByFn[fn] = { ...v, source: n };
+const storiesJs = `/*! UBION LXP — stories (자동 생성: src/components 의 *.stories.js) */
+(function (global) {
+'use strict';
+const { ${[...exported].join(', ')} } = global.LXP;
+const FILES = [
+${storyKeys.map((k) => bundleStory(k, readFileSync(join(compDir, k + '.stories.js'), 'utf8')).replace('{ file:', `{ layer: ${JSON.stringify(layerOf(k))}, file:`)).join(',\n')}
+];
+${RUNTIME}
+const DOCS_BY_FN = ${JSON.stringify(docsByFn)};
+global.LXP_DOCS = DOCS_BY_FN;
+global.LXP_FMT = fmt;
+global.LXP_STORIES = normalize(FILES, DOCS_BY_FN);
+})(typeof window !== 'undefined' ? window : globalThis);
+`;
+writeFileSync(join(DIST, 'stories.js'), storiesJs);
+const storyCtx = { console }; storyCtx.window = storyCtx; storyCtx.globalThis = storyCtx;
+vm.createContext(storyCtx);
+vm.runInContext(js, storyCtx);
+vm.runInContext(storiesJs, storyCtx);
+const STORIES = storyCtx.LXP_STORIES;
+
 // ---------------------------------------------------------------- 5. static
 copyFileSync(r('src/assets/fonts/PretendardVariable.woff2'), join(DIST, 'fonts/PretendardVariable.woff2'));
 // docs/*.html 은 <head>/<body> 없는 조각(아티팩트 게시용). 로컬 열람용으로 전체 문서를 함께 만듭니다.
@@ -150,16 +188,21 @@ if (existsSync(r('templates/mockups'))) {
 
 console.log(`✓ tokens ${lines.length} vars · assets ${Object.keys(assets).length} · exports ${exported.size}`);
 // ---------------------------------------------------------------- 6. 빠짐 검사 (경고만)
-// export 한 컴포넌트 함수가 README 컴포넌트 표와 쇼케이스 예시에 모두 있는지 봅니다.
+//  - export 한 컴포넌트 함수마다 README 컴포넌트 표 행과 stories 파일이 있는지
+//  - stories 가 JSDoc 의 선택지(variant·size·tone …) 값과 boolean 인자를 모두 보여 주는지
 {
   const readme = readFileSync(r('README.md'), 'utf8');
-  const showcase = readFileSync(r('docs/index.html'), 'utf8');
   const notComponent = new Set(['Icon', 'TAB_ITEMS', 'ASSETS']);
   const comps = [...exported].filter((n) => /^[A-Z]/.test(n) && !notComponent.has(n));
   const noReadme = comps.filter((n) => !readme.includes('`' + n + '`'));
-  const noDemo = comps.filter((n) => !new RegExp(`\\b${n}\\(`).test(showcase));
+  const withStories = new Set(STORIES.map((c) => c.component && c.component.name));
+  const noStories = comps.filter((n) => !withStories.has(n));
   if (noReadme.length) console.warn(`! README 컴포넌트 표에 없음: ${noReadme.join(', ')}`);
-  if (noDemo.length) console.warn(`! 쇼케이스(docs/index.html) 예시에 없음: ${noDemo.join(', ')}`);
+  if (noStories.length) console.warn(`! stories 파일 없음 (${noStories.length}): ${noStories.join(', ')}`);
+  const lack = checkCoverage(STORIES);
+  if (lack.length) console.warn(`! story 로 보여 주지 않은 값 (${lack.length}):\n${lack.map((x) => '    ' + x).join('\n')}`);
+  const nStories = STORIES.reduce((a, c) => a + c.stories.length, 0);
+  console.log(`✓ stories ${STORIES.length}개 컴포넌트 · ${nStories}개 story → dist/stories.js`);
 }
 
 console.log(`✓ 컴포넌트 순서: ${compOrder.join(' → ')}`);

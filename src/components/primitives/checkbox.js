@@ -8,6 +8,7 @@ import { esc, cx } from '../../core/html.js';
  * @param {boolean} [p.checked]
  * @param {string|number} [p.count] 라벨 뒤 빨간 개수 "(3)"
  * @param {string} [p.id] input id (상태 보존용)
+ * @param {boolean} [p.disabled] 누를 수 없음 (흐리게)
  */
 export function Checkbox({ label = '미처리만 보기', checked = false, count, id, disabled = false, className = '' } = {}) {
   return `<label class="${cx('lxp-checkbox', className)}">

@@ -124,20 +124,68 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
 .icons .ic { height: 40px; display: flex; align-items: center; justify-content: center; }
 .icons .ic img { max-height: 40px; }
 
-/* 컴포넌트 데모 */
-.comp { border: 1px solid var(--d-line); border-radius: 14px; overflow: hidden; background: var(--d-surface); margin-bottom: 20px; }
-.comp__head { padding: 16px 20px 0; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
-.comp__head h4 { margin: 0; font-size: 16px; }
-.comp__head code { color: var(--d-fg-3); }
-.comp__head p { flex-basis: 100%; margin: 4px 0 0; color: var(--d-fg-2); font-size: 13.5px; }
-.demos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 12px; padding: 16px 20px 20px; }
-.demo { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.demo__label { font-size: 12px; color: var(--d-fg-3); }
-.stage { background: var(--d-stage); border-radius: 10px; padding: 20px; display: flex; align-items: center; justify-content: center; overflow-x: auto; min-height: 80px; }
-.stage > .lxp { width: 360px; flex-shrink: 0; background: #fcfcfc; }
-.stage > .lxp.is-bare { width: auto; background: transparent; }
+/* 컴포넌트 — Storybook 형식 뷰어: 트리 | (머리 · 탭 · 캔버스 · Controls · 코드) */
+.sb { display: grid; grid-template-columns: 228px minmax(0, 1fr); border: 1px solid var(--d-line); border-radius: 14px; background: var(--d-surface); min-height: 720px; }
+.sb__tree { border-right: 1px solid var(--d-line); padding: 12px 8px 16px; position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; }
+.sb__search { width: 100%; font: 13px var(--d-font); padding: 7px 10px; border-radius: 8px; border: 1px solid var(--d-line); background: var(--d-bg); color: var(--d-fg); margin-bottom: 8px; }
+.sb__layer { font-size: 11px; font-weight: 600; letter-spacing: .06em; color: var(--d-fg-3); margin: 14px 8px 4px; }
+.sb__comp > a, .sb__story { display: flex; justify-content: space-between; gap: 6px; padding: 4px 8px; border-radius: 6px; color: var(--d-fg-2); text-decoration: none; font-size: 13px; line-height: 1.45; }
+.sb__comp > a small { color: var(--d-fg-3); font: 11px var(--d-mono); }
+.sb__comp > a:hover, .sb__story:hover { background: var(--d-sunken); color: var(--d-fg); }
+.sb__comp.is-open > a { color: var(--d-fg); font-weight: 600; }
+.sb__stories { display: none; padding-left: 10px; margin: 2px 0 6px; border-left: 1px solid var(--d-line); margin-left: 12px; }
+.sb__comp.is-open .sb__stories { display: block; }
+.sb__story { font-size: 12.5px; }
+.sb__story[aria-current="true"], .sb__comp > a[aria-current="true"] { background: var(--d-accent-soft); color: var(--d-accent); }
+.sb__main { min-width: 0; padding: 20px 24px 28px; display: flex; flex-direction: column; gap: 16px; }
+.sb__head h3 { margin: 0; font-size: 22px; letter-spacing: -0.01em; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.sb__head h3 span { font: 500 12px var(--d-mono); color: var(--d-fg-3); }
+.sb__meta { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 6px; font: 12px var(--d-mono); color: var(--d-fg-3); }
+.sb__meta b { font-weight: 500; color: var(--d-fg-2); }
+.sb__head p { margin: 8px 0 0; color: var(--d-fg-2); font-size: 14px; max-width: 75ch; }
+.sb__tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--d-line); }
+.sb__tabs a { padding: 8px 12px; font-size: 13.5px; color: var(--d-fg-2); text-decoration: none; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.sb__tabs a[aria-selected="true"] { color: var(--d-accent); border-color: var(--d-accent); font-weight: 600; }
+.sb__name { font-size: 15px; font-weight: 600; margin: 0; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.sb__name code { font-weight: 400; color: var(--d-fg-3); font-size: 11.5px; }
+.sb__name a { font-weight: 400; font-size: 12px; }
+.stage { background: #eceef0; box-shadow: inset 0 0 0 1px var(--d-line); border-radius: 10px; padding: 24px; display: flex; align-items: center; justify-content: center; overflow-x: auto; min-height: 96px; }
+.stage > .lxp { width: 360px; flex-shrink: 0; background: #fcfcfc; position: relative; }
+.stage > .lxp.is-centered { width: auto; background: transparent; }
+.stage > .lxp.is-padded { padding: 12px 20px; }
+.stage > .lxp.is-sky { background: linear-gradient(#cbe3ff, #e5f1ff); padding-top: 8px; padding-bottom: 8px; }
+.stage > .lxp.is-subtle { background: var(--bg-hierarchy-primary-subtle); }
 .stage > .lxp.is-dark { background: #575e64; padding: 16px; border-radius: 8px; }
-.demo .code pre { max-height: 200px; }
+.stage > .lxp.is-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.stage > .lxp.is-column { display: flex; flex-direction: column; gap: 8px; }
+.stage > .lxp.is-phone { height: 780px; border-radius: 28px; overflow: hidden; box-shadow: 0 0 0 1px var(--d-line); }
+.stage--err { color: #f04438; font: 12px var(--d-mono); white-space: pre-wrap; }
+.ctl { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ctl th { text-align: left; font-weight: 600; font-size: 11.5px; color: var(--d-fg-3); padding: 6px 8px; border-bottom: 1px solid var(--d-line); }
+.ctl td { padding: 8px; border-bottom: 1px solid var(--d-line); vertical-align: top; }
+.ctl td:first-child { font: 500 12.5px var(--d-mono); white-space: nowrap; }
+.ctl td:first-child small { display: block; font-weight: 400; color: var(--d-fg-3); font-size: 11px; max-width: 220px; white-space: normal; word-break: break-all; }
+.ctl td.desc { color: var(--d-fg-2); white-space: pre-line; min-width: 180px; }
+.ctl-wrap { overflow-x: auto; }
+.ctl td.def { font: 11.5px var(--d-mono); color: var(--d-fg-3); max-width: 200px; word-break: break-all; }
+.ctl tr.is-set td:first-child { color: var(--d-accent); }
+.ctl input[type=text], .ctl input[type=number], .ctl select, .ctl textarea { font: 12.5px var(--d-mono); width: 100%; min-width: 140px; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--d-line); background: var(--d-bg); color: var(--d-fg); }
+.ctl textarea { min-height: 54px; resize: vertical; }
+.ctl textarea.is-bad { border-color: #f04438; }
+.sb__note { font-size: 12.5px; color: var(--d-fg-3); margin: 0; }
+.sb__bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.sb__bar h4 { margin: 0; font-size: 13px; }
+.sb__btn { font: 500 12px var(--d-font); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--d-line); background: var(--d-surface); color: var(--d-fg-2); cursor: pointer; }
+.sb__docs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); gap: 24px 16px; align-items: start; }
+.sb__docs > div { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.sb__docs > .sb__wide { grid-column: 1 / -1; }
+.sb__docs .code pre { max-height: 160px; }
+@media (max-width: 900px) {
+  .sb { grid-template-columns: minmax(0, 1fr); }
+  .sb__tree { position: static; max-height: 260px; border-right: 0; border-bottom: 1px solid var(--d-line); }
+  .sb__main { padding: 16px; }
+  .ctl td.desc, .ctl th.desc { display: none; }
+}
 
 .notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; }
 .note { background: var(--d-surface); border: 1px solid var(--d-line); border-radius: 12px; padding: 16px 18px; }
@@ -196,7 +244,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
 │  ├─ styles/tokens.css      ← 빌드가 tokens.json 으로 생성
 │  ├─ styles/base.css        ← 폰트, 리셋(:where), Screen 프레임
 │  ├─ core/                  ← esc/cx 유틸, Icon·asset 로더
-│  ├─ components/            ← 컴포넌트 하나 = 파일 하나 (.js + .css), 계층별 폴더
+│  ├─ components/            ← 컴포넌트 하나 = 파일 하나 (.js + .css + .stories.js), 계층별 폴더
 │  │  ├─ primitives/         ← 2층 요소: Button · Chip · Badge · Avatar · Input …
 │  │  ├─ blocks/             ← 3층 블록: ModuleItem · MemberRow · Popup · StatGrid …
 │  │  ├─ sections/           ← 4층 영역: Header · TabBar · Footer · Section
@@ -246,15 +294,18 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
 
     <section id="components">
       <h2>컴포넌트</h2>
-      <p class="lead">각 예시의 코드가 바로 위 미리보기를 그린 코드입니다(<code>const { Header, ... } = LXP</code> 로 꺼내 쓴다고 가정). Figma 노드 ID를 함께 적어 두었으니 원본과 비교할 때 쓰세요.</p>
-      <div id="comp-list"></div>
+      <p class="lead">Storybook 형식입니다. 컴포넌트마다 <code>src/components/&lt;층&gt;/&lt;이름&gt;.stories.js</code> 에 변형·상태별 story 가 있고, 이 화면과 스냅샷 테스트가 그 파일을 그대로 씁니다. <b>Canvas</b> 에서 Controls 로 인자를 바꿔 보고, <b>Docs</b> 에서 모든 story 를 한눈에 봅니다.</p>
+      <div class="sb" id="sb">
+        <nav class="sb__tree" aria-label="컴포넌트 목록"><input class="sb__search" id="sb-search" type="search" placeholder="컴포넌트 · story 찾기" aria-label="컴포넌트 찾기"><div id="sb-tree"></div></nav>
+        <div class="sb__main" id="sb-main"></div>
+      </div>
     </section>
 
     <section id="notes">
       <h2>운영 메모</h2>
       <div class="notes">
         <div class="note"><h4>토큰 바꾸기</h4><p><code>tokens/tokens.json</code>만 수정한 뒤 <code>npm run build</code>를 실행합니다. CSS 변수와 <code>LXP.tokens</code>가 함께 갱신됩니다.</p></div>
-        <div class="note"><h4>컴포넌트 추가</h4><p><code>src/components/</code>에 <code>.js</code>와 <code>.css</code>를 만들고, <code>src/index.js</code>와 <code>scripts/build.mjs</code>의 순서 목록에 추가합니다.</p></div>
+        <div class="note"><h4>컴포넌트 추가</h4><p><code>src/components/&lt;층&gt;/</code>에 <code>.js</code>(JSDoc 포함) · <code>.css</code> · <code>.stories.js</code>를 만들고 <code>src/index.js</code>에 export 합니다. 빌드가 stories 를 모아 이 화면에 보여 주고, 빠진 변형을 경고합니다. 규칙: <code>docs/stories.md</code></p></div>
         <div class="note"><h4>Figma와 다른 점</h4><ul><li>모바일 전용이라 hover/pressed 색, 웹 LNB 색, 56·40·32px 헤드와 10px 캡션은 두지 않습니다.</li><li>그림자는 x·y 오프셋 0에 blur와 농도만 다른 단계(xsm–xl)입니다.</li><li>LineTabs, ChatDate, BottomSheet, 섹션 카운트 배지는 화면 캡처와 토큰으로 구성한 근사치입니다.</li><li>카드 썸네일 패턴은 Figma 렌더 이미지(1x)를 잘라 썼습니다.</li></ul></div>
       </div>
     </section>
@@ -264,6 +315,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
 
 <script src="lxp.js"></script>
 <script src="templates/screens.js"></script>
+<script src="stories.js"></script>
 <script>
 (function () {
   const L = window.LXP;
@@ -293,8 +345,9 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
   // ---- facts
   const nSem = Object.keys(T.semantic).length;
   const nIcons = L.iconNames().length;
-  const comps = ['Screen','StatusBar','Header','AppHeader','TabBar','Dropdown','Button','IconButton','Input','MessageInput','Footer','ChipTabs','SegmentedControl','LineTabs','Chip','Badge','Avatar','AvatarGroup','Tag','Toast','CourseCard','DeadlineCard','DeadlineCarousel','ModuleItem','WeekPicker','MessageItem','ChatMessage','Reaction','ChatDate','Popup','BottomSheet','Dim','DateStrip','ToggleGroup','Checkbox','StatGrid','InfoBar','MemberRow','Stack','Grid','Surface','Section','Ratio','SwipeAction','Pill','MenuList','AlertItem','ClassEditRow','FriendRow','ChatGroupCard','StartChat','ChatReplyBar','ChatNotice','PopoverAlert','ShareLinkCard','ShareFileCard','EmptyState','Flag','SelectCheck','ImageTile','ListItem','ListGroup','EmojiBar','SettingCard','SelectAllRow'];
-  $('#facts').innerHTML = `<span><b>${nSem}</b> 시맨틱 컬러 토큰</span><span><b>${Object.keys(T.typography.styles).length}</b> 텍스트 스타일</span><span><b>${comps.length}</b> 컴포넌트 함수</span><span><b>${nIcons}</b> 아이콘·에셋</span><span>기준 화면 <b>360 × 780</b></span>`;
+  const comps = window.LXP_STORIES || [];
+  const nStories = comps.reduce((a, c) => a + c.stories.length, 0);
+  $('#facts').innerHTML = `<span><b>${nSem}</b> 시맨틱 컬러 토큰</span><span><b>${Object.keys(T.typography.styles).length}</b> 텍스트 스타일</span><span><b>${comps.length}</b> 컴포넌트 · <b>${nStories}</b> story</span><span><b>${nIcons}</b> 아이콘·에셋</span><span>기준 화면 <b>360 × 780</b></span>`;
 
   // ---- start code
   $('#start-code').textContent = `<!-- 1) 디자인 시스템 불러오기 (아티팩트에서는 이 아티팩트의 lxp.css · lxp.js 를 files 로 복사) -->
@@ -319,7 +372,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
 
   // ---- screens
   const SC = window.LXP_SCREENS || {};
-  const scList = [['home', '홈 · 오늘 마감'], ['classGrid', '내 강의실 · 카드형'], ['classList', '내 강의실 · 목록형'], ['messages', '메시지 목록'], ['chat', '대화방 · 1:1 대화 중'], ['chatDelete', '대화방 · 메시지 삭제 팝업'], ['rollBookEntry', '스마트 출석부 · 진입'], ['rollBookChecking', '스마트 출석부 · 출석체크 진행중'], ['more', '더보기'], ['alerts', '홈 > 알림'], ['networkError', '네트워크 오류'], ['classEditDefault', '내 강의실 편집'], ['classEditChanged', '내 강의실 편집 · 순서 변경'], ['classEditSaved', '내 강의실 편집 · 저장 완료'], ['messagesMenu', '메시지 · 메뉴 열림'], ['messagesSwipeRight', '메시지 · 오른쪽 밀기'], ['messagesSwipeLeft', '메시지 · 왼쪽 밀기'], ['messagesSearch', '메시지 · 검색'], ['messagesEmpty', '메시지 · 대화방 없음'], ['blockedChats', '차단 대화 관리'], ['blockedChatsEmpty', '차단 대화 관리 · 없음'], ['createChat', '대화방 생성 · 강의 선택'], ['createChatSearch', '대화방 생성 · 검색'], ['createChatUsers', '대화방 생성 · 상대 선택'], ['createChatSelected', '대화방 생성 · 2명 선택'], ['inviteMembers', '대화 멤버 초대'], ['chatStartDm', '대화방 · 1:1 첫 대화'], ['chatStartGroup', '대화방 · 단체 첫 대화'], ['chatGroup', '대화방 · 단체 대화'], ['chatSystem', '대화방 · 초대·나감 안내'], ['chatPressed', '대화방 · 메시지 누름'], ['chatBlocked', '대화방 · 차단'], ['chatReplying', '대화방 · 답장 중'], ['chatReplied', '대화방 · 답장 메시지'], ['chatLongPressMine', '대화방 · 내 메시지 길게 누름'], ['chatLongPressOther', '대화방 · 다른 사람 메시지 길게 누름'], ['chatRename', '대화방 · 이름 변경'], ['chatPinned', '대화방 · 고정 메시지'], ['chatPinnedOpen', '대화방 · 고정 메시지 열림'], ['chatSettingsSheet', '대화방 설정 시트'], ['chatSettingsDm', '대화방 관리 · 1:1'], ['chatSettingsGroup', '대화방 관리 · 단체'], ['chatSettingsLeave', '대화방 관리 · 나가기 팝업'], ['historyPhotos', '대화방 기록 · 사진/동영상'], ['photoViewer', '사진·동영상 뷰어'], ['historyDocs', '대화방 기록 · 문서'], ['historyLinks', '대화방 기록 · 링크'], ['historyNotices', '대화방 기록 · 공지']];
+  const scList = [['home', '홈 · 오늘 마감'], ['classGrid', '내 강의실 · 카드형'], ['classList', '내 강의실 · 목록형'], ['messages', '메시지 목록'], ['chat', '대화방 · 1:1 대화 중'], ['chatDelete', '대화방 · 메시지 삭제 팝업'], ['rollBookEntry', '스마트 출석부 · 진입'], ['rollBookChecking', '스마트 출석부 · 출석체크 진행중'], ['more', '더보기'], ['alerts', '홈 > 알림'], ['networkError', '네트워크 오류'], ['classEditDefault', '내 강의실 편집'], ['classEditChanged', '내 강의실 편집 · 순서 변경'], ['classEditSaved', '내 강의실 편집 · 저장 완료'], ['messagesMenu', '메시지 · 메뉴 열림'], ['messagesSwipeRight', '메시지 · 오른쪽 밀기'], ['messagesSwipeLeft', '메시지 · 왼쪽 밀기'], ['messagesSearch', '메시지 · 검색'], ['messagesEmpty', '메시지 · 대화방 없음'], ['blockedChats', '차단 대화 관리'], ['blockedChatsEmpty', '차단 대화 관리 · 없음'], ['createChat', '대화방 생성 · 강의 선택'], ['createChatSearch', '대화방 생성 · 검색'], ['createChatUsers', '대화방 생성 · 상대 선택'], ['createChatSelected', '대화방 생성 · 2명 선택'], ['inviteMembers', '대화 멤버 초대'], ['chatStartDm', '대화방 · 1:1 첫 대화'], ['chatStartGroup', '대화방 · 단체 첫 대화'], ['chatGroup', '대화방 · 단체 대화'], ['chatSystem', '대화방 · 초대·나감 안내'], ['chatPressed', '대화방 · 메시지 누름'], ['chatBlocked', '대화방 · 차단'], ['chatReplying', '대화방 · 답장 중'], ['chatReplied', '대화방 · 답장 메시지'], ['chatLongPressMine', '대화방 · 내 메시지 길게 누름'], ['chatLongPressOther', '대화방 · 다른 사람 메시지 길게 누름'], ['chatRename', '대화방 · 이름 변경'], ['chatPinned', '대화방 · 고정 메시지'], ['chatPinnedOpen', '대화방 · 고정 메시지 열림'], ['chatSettingsSheet', '대화방 설정 시트'], ['chatTranslate', '대화방 설정 · 번역 언어 선택'], ['chatSettingsDm', '대화방 관리 · 1:1'], ['chatSettingsGroup', '대화방 관리 · 단체'], ['chatSettingsLeave', '대화방 관리 · 나가기 팝업'], ['historyPhotos', '대화방 기록 · 사진/동영상'], ['photoViewer', '사진·동영상 뷰어'], ['historyDocs', '대화방 기록 · 문서'], ['historyLinks', '대화방 기록 · 링크'], ['historyNotices', '대화방 기록 · 공지']];
   $('#screens-row').innerHTML = scList.filter(([k]) => SC[k]).map(([k, label]) =>
     `<figure><div class="phone">${SC[k]()}</div><figcaption><span>${label}</span><code>LXP_SCREENS.${k}()</code></figcaption></figure>`).join('');
 
@@ -371,170 +424,138 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
     ['avatar-02', 'avatar-03', 'avatar-04', 'avatar-05', 'thumb-blue', 'thumb-yellow', 'thumb-orange', 'thumb-green', 'thumb-purple']
       .map((n) => `<button type="button" data-copy="${n}"><span class="ic"><img src="${L.asset(n)}" alt="" style="max-width:96px;border-radius:6px"></span><span>${n}</span></button>`).join('');
 
-  // ---- components
-  const S = (code, label, opts = {}) => ({ code, label, ...opts });
-  const groupsC = [
-    ['Screen', 'Screen 조립', '—', '360×780 프레임. StatusBar를 넣고 header · body(스크롤) · bottom · overlay · toast를 쌓습니다. 화면 템플릿 섹션 참고.', []],
-    ['Stack', 'Stack · Grid · Surface · Section', '—', '틀(배치 전용). 화면과 블록에서 style="display:flex;gap…" 대신 씁니다. 간격은 숫자(px)로 주고, 토큰 단계(2–32)면 --spac-* 로 바뀝니다. Section 은 제목 줄 + 내용을 묶는 4층 영역입니다.', [
-      S(`Stack({ gap: 8, pad: [12, 16], children: [ModuleItem({ dday: 2 }), ModuleItem({})] })`, 'Stack — 세로 쌓기'),
-      S(`Stack({ direction: 'row', justify: 'between', pad: [8, 20], children: [Chip({ label: 'D-3' }), Button({ label: '편집', variant: 'secondary', size: 'xs' })] })`, 'Stack — 가로 · 양끝 정렬'),
-      S(`Grid({ cols: 2, colWidth: 156, gap: [16, 8], justify: 'center', pad: [12, 0], children: [CourseCard({}), CourseCard({ color: 'green', title: '창의적 문제해결' })] })`, 'Grid — 2열'),
-      S(`Surface({ tone: 'subtle', pad: 16, gap: 12, children: [Surface({ tone: 'white', pad: 16, children: InfoBar({}) }), Ratio({ label: '처리 현황', value: 3, total: 40 })] })`, 'Surface — 회색 바탕 · 흰 바탕'),
-      S(`Section({ title: '이번 주 학습', count: 2, pad: [20, 0], children: Stack({ gap: 8, pad: [0, 16], children: [ModuleItem({ dday: 2 }), ModuleItem({})] }) })`, 'Section — 제목 + 개수 + 내용', { sky: true }),
-    ]],
-    ['Header', 'Header', '5:12707', '메인 탭 상단 헤더(h68). variant 프리셋 또는 title/actions/menu로 직접 구성합니다.', [
-      S(`StatusBar({})`, 'StatusBar (Screen 이 자동으로 넣음)'),
-      S(`Header({ variant: 'home' })`, 'home'),
-      S(`Header({ variant: 'class' })`, 'class (카드형 선택)'),
-      S(`Header({ variant: 'message' })`, 'message'),
-      S(`Header({ variant: 'message-open' })`, 'message-open (드롭다운)', { tall: 120 }),
-    ]],
-    ['AppHeader', 'AppHeader', '24:13004', '서브 페이지 헤더(h56, 하단 보더). 왼쪽은 type에 따라 메뉴 · 닫기 · 뒤로.', [
-      S(`AppHeader({ type: 'default' })`, 'default'),
-      S(`AppHeader({ type: 'popup_pull', title: '친구 추가' })`, 'popup_pull'),
-      S(`AppHeader({ type: 'page', title: '관리' })`, 'page'),
-      S(`AppHeader({ type: 'photo-viewer', title: '발신 유저명', subtitle: '2026.01.21' })`, 'photo-viewer'),
-    ]],
-    ['TabBar', 'TabBar', '5:12712', '하단 탭바(h82). badges로 숫자 배지, newDots로 빨간 점을 표시합니다.', [
-      S(`TabBar({ active: 'home' })`, 'home'),
-      S(`TabBar({ active: 'more', newDots: ['more'] })`, 'more_new'),
-    ]],
-    ['Button', 'Button · IconButton', 'btn-base-state', 'xl 48 · lg 44 · md 40 · xs 28. primary / secondary / outline / outline-primary / gray / ghost. attrs 로 id · data-* 를 넘깁니다.', [
-      S(`Button({ label: '저장하기', block: true })`, 'primary lg block'),
-      S(`[Button({ label: '내 강의실 편집', variant: 'secondary', size: 'xs', icon: 'settings' }), Button({ label: '차단 해제', variant: 'outline', size: 'xs', icon: 'block-12' })].join(' ')`, 'xs', { bare: true }),
-      S(`Button({ label: '차단 해제', variant: 'gray', size: 'md', icon: 'block' })`, 'gray md', { bare: true }),
-      S(`Button({ label: '변경', variant: 'ghost', size: 'sm', iconRight: 'chevron-right' })`, 'ghost sm (32)', { bare: true }),
-      S(`[IconButton({ icon: 'bell-18' }), IconButton({ icon: 'grid-active', active: true }), IconButton({ icon: 'plus', round: true })].join('')`, 'IconButton 36 · active · round', { bare: true }),
-      S(`[Button({ label: '자동출결', variant: 'outline-primary', size: 'xl', iconRight: 'check-circle' }), Button({ label: '출결 일괄 처리', size: 'xl', attrs: { 'data-act': 'bulk' } })].join(' ')`, 'xl 48 · outline-primary · iconRight · attrs', { bare: true }),
-    ]],
-    ['Input', 'Input', '86:18467', 'state × validation 9가지. 실제 포커스 시 파란 보더가 자동 적용됩니다.', [
-      S(`Input({})`, 'enabled · normal'),
-      S(`Input({ value: '검색어를 입력하세요.' })`, 'enabled · filled'),
-      S(`Input({ state: 'focused' })`, 'focused'),
-      S(`Input({ validation: 'invalid', value: '잘못된 입력' })`, 'invalid'),
-      S(`Input({ state: 'disabled' })`, 'disabled'),
-    ]],
-    ['Footer', 'Footer', '37:14876', '하단 고정 영역. 버튼 · 인원수 + 버튼 · 메시지 입력 · 차단 안내.', [
-      S(`Footer({ type: 'button' })`, 'button'),
-      S(`Footer({ type: 'count-button', count: 2 })`, 'count-button'),
-      S(`Footer({ type: 'count-button', prefix: '미체크', count: 3, label: '출석부 저장', disabled: true })`, 'count-button · 문구 변경 · 비활성'),
-      S(`Footer({ type: 'message-input' })`, 'message-input'),
-      S(`MessageInput({ placeholder: '메세지를 입력하세요.' })`, 'MessageInput (단독)', { pad: true }),
-      S(`Footer({ type: 'message-block' })`, 'message-block'),
-      S(`Footer({ type: 'button-pair', label: '출결 일괄 처리' })`, 'button-pair (출석부 BottomCTA)'),
-    ]],
-    ['ChipTabs', 'ChipTabs · SegmentedControl · LineTabs', '5:12886 · 37:15014', '강좌 분류 전환. LineTabs는 근사치입니다.', [
-      S(`ChipTabs({ active: 0 })`, 'ChipTabs'),
-      S(`SegmentedControl({ active: 1 })`, 'SegmentedControl'),
-      S(`LineTabs({ items: ['사진', '파일', '링크', '공지'], active: 0 })`, 'LineTabs'),
-    ]],
-    ['CourseCard', 'CourseCard', '5:12819', '강의 카드. grid 156×176 / list 320×68, 색 5종.', [
-      S(`['blue','yellow','orange'].map(c => CourseCard({ color: c })).join('')`, 'grid', { bare: true, row: true }),
-      S(`CourseCard({ layout: 'list', color: 'green', title: '사물인터넷과 4차산업사회' })`, 'list', { pad: true }),
-    ]],
-    ['DeadlineCard', 'DeadlineCard · ModuleItem', '20:10530 · 21:10764', '홈의 마감 카드와 주간 학습 아이템. dday ≤ 3이면 파란 칩으로 강조합니다.', [
-      S(`DeadlineCard({})`, 'DeadlineCard', { bare: true }),
-      S(`DeadlineCarousel({ cards: [{}, { title: '3-1. 스마트 팜 기술', course: '사물인터넷과 4차산업사회' }] })`, 'DeadlineCarousel', { sky: true }),
-      S(`[ModuleItem({ dday: 4 }), ModuleItem({ title: '3-1. 스마트 팜 기술 도입 현황 및 효과 분석', dday: 3, module: 'module-url-28' })].join('')`, 'ModuleItem', { pad: true, col: true }),
-    ]],
-    ['WeekPicker', 'WeekPicker', '24:12363', '주간 날짜 선택. dot은 학습이 있는 날입니다.', [
-      S(`WeekPicker({ selected: 0 })`, '기본', { sky: true }),
-      S(`WeekPicker({ selected: 3 })`, '중간 요일 선택', { sky: true }),
-    ]],
-    ['MessageItem', 'MessageItem', '19:8837', '메시지 목록 아이템. option(dm/group) × state(enabled/focused/update/block), swipe.', [
-      S(`MessageItem({})`, 'dm · enabled'),
-      S(`MessageItem({ option: 'group', state: 'update' })`, 'group · update'),
-      S(`MessageItem({ state: 'block', name: '홍길동', avatar: 'avatar-03' })`, 'dm · block'),
-      S(`MessageItem({ swipe: 'right', name: '김연아', preview: '감사합니다.', avatar: 'avatar-03', unread: 10, muted: false, pinned: false })`, 'swipe right'),
-      S(`MessageItem({ swipe: 'left', name: '김연아', preview: '감사합니다.', avatar: 'avatar-03', unread: 10, muted: false })`, 'swipe left'),
-      S(`[SwipeAction({ label: '읽음' }), SwipeAction({ label: '차단', tone: 'strong' }), SwipeAction({ label: '나가기', tone: 'danger' }), SwipeAction({ label: '고정', icon: 'pin-20-white', tone: 'info' })].join('')`, 'SwipeAction (스와이프 액션 칸)', { bare: true, row: true }),
-    ]],
-    ['ChatMessage', 'ChatMessage · Reaction · ChatDate', '80:20270', '채팅 메시지와 이모지 리액션.', [
-      S(`ChatMessage({})`, '기본', { pad: true }),
-      S(`[Reaction({ count: 1 }), Reaction({ count: 3, selected: true }), Reaction({ emoji: '🎉', count: 2 }), Reaction({ add: true })].join(' ')`, 'Reaction', { bare: true }),
-      S(`ChatDate({})`, 'ChatDate'),
-    ]],
-    ['Avatar', 'Avatar · AvatarGroup · Tag · Badge · Chip', '72:11136 · 63:11157', '사용자 표시 요소.', [
-      S(`[24,28,32,36,40,48].map(s => Avatar({ src: 'avatar-05', size: s })).join(' ') + ' ' + Avatar({ name: '홍길동', size: 48 })`, 'Avatar 24–48 · 이미지 없음', { bare: true }),
-      S(`AvatarGroup({ more: 5 })`, 'AvatarGroup', { bare: true }),
-      S(`[Tag({ label: '김연아' }), Tag({ label: '1조', avatar: false, icon: 'plus' })].join(' ')`, 'Tag', { bare: true }),
-      S(`[Badge({ count: 1 }), Badge({ count: 11, size: 'sm' }), Chip({ label: '3시간 남았어요' }), Chip({ label: 'D-4', tone: 'neutral' })].join(' ')`, 'Badge · Chip', { bare: true }),
-      S(`[Chip({ label: '1교시', tone: 'label' }), Pill({ label: '보강' })].join(' ')`, 'Chip label · Pill (출석부 InfoBar)', { bare: true }),
-    ]],
-    ['DateStrip', 'DateStrip · InfoBar', '7062:38201 · 7062:38223', '스마트 출석부 상단. 날짜 칸(62×60)은 가운데 정렬되고 양 끝은 잘립니다. 달이 바뀌는 날에만 월 표기.', [
-      S(`DateStrip({ selected: 3 })`, 'DateStrip'),
-      S(`InfoBar({})`, 'InfoBar', { pad: true }),
-    ]],
-    ['ToggleGroup', 'ToggleGroup · MemberRow', '7062:38277 · 7062:38271', '단일 선택 버튼 묶음. 고르면 선택 버튼만 tone 테두리, 나머지는 흐려집니다. overflow 로 ⋯ 메뉴(조퇴·지각조퇴)를 붙입니다.', [
-      S(`MemberRow({ right: ToggleGroup({ overflow: { items: [{ value: 'early', label: '조퇴', icon: 'status-early', tone: 'warn' }, { value: 'lateearly', label: '지각조퇴', icon: 'status-lateearly', tone: 'neutral' }] } }) })`, '기본 (미처리)', { bare: true }),
-      S(`MemberRow({ name: '남궁길동', right: ToggleGroup({ value: 'absent', overflow: { items: [{ value: 'early', label: '조퇴', icon: 'status-early', tone: 'warn' }] } }) })`, 'selected · 결석', { bare: true }),
-      S(`MemberRow({ name: '송길동', right: ToggleGroup({ value: 'early', overflow: { items: [{ value: 'early', label: '조퇴', icon: 'status-early', tone: 'warn' }, { value: 'lateearly', label: '지각조퇴', icon: 'status-lateearly', tone: 'neutral' }] } }) })`, 'overflow 선택 · 조퇴', { bare: true }),
-      S(`MemberRow({ name: '박길동', right: ToggleGroup({ overflow: { open: true, items: [{ value: 'early', label: '조퇴', icon: 'status-early', tone: 'warn' }, { value: 'lateearly', label: '지각조퇴', icon: 'status-lateearly', tone: 'neutral' }] } }) })`, '⋯ 메뉴 열림', { bare: true, tall: 150 }),
-    ]],
-    ['StatGrid', 'StatGrid · Checkbox', '7062:38229', '상태별 개수. 0이면 누를 수 없고, linked 면 0이 아닌 칸에 › 가 붙습니다. footer 슬롯에 처리 현황과 필터.', [
-      S(`StatGrid({ footer: Ratio({ label: '처리 현황', value: 0, total: 40 }) })`, 'Default'),
-      S(`StatGrid({ linked: true, items: [{ label: '출석', count: 32, icon: 'status-present' }, { label: '결석', count: 0, icon: 'status-absent' }, { label: '지각', count: 2, icon: 'status-late' }, { label: '조퇴', count: 1, icon: 'status-early' }, { label: '지각조퇴', count: 1, icon: 'status-lateearly-muted' }], footer: [Ratio({ label: '처리 현황', value: 36, total: 40 }), Checkbox({ count: 3 })] })`, 'Active · 미처리만 보기'),
-    ]],
-    ['MenuList', 'MenuList · AlertItem · ClassEditRow', '21:11720 · 25:13296 · 51:9191', '더보기 메뉴, 홈 알림 목록 행, 내 강의실 편집 행. 행 사이 구분선은 높이를 차지하지 않습니다(Figma 와 같은 크기).', [
-      S(`MenuList({})`, 'MenuList — 더보기 (more_menu)', { pad: true }),
-      S(`MenuList({ tone: 'gray', items: [{ label: '외부링크 메뉴', trailing: 'link-external-20' }] })`, 'MenuList gray — 외부링크 (more_externel_menu)', { pad: true }),
-      S(`[AlertItem({}), AlertItem({ course: '물리학수업', time: '오전09:10', title: '[공지] 중간고사 일정이 변경되었습니다.' })].join('')`, 'AlertItem — 홈 > 알림'),
-      S(`[ClassEditRow({}), ClassEditRow({ title: '교육공학 개론', professor: '최지은 교수', visible: false })].join('')`, 'ClassEditRow — 공개 · 비공개', { pad: true }),
-    ]],
-    ['ChatGroupCard', 'ChatGroupCard · FriendRow · StartChat', '57:20087 · 60:20862 · 79:18831', '메시지방 만들기와 새 대화방 안내.', [
-      S(`ChatGroupCard({})`, 'ChatGroupCard — 닫힘', { pad: true }),
-      S(`ChatGroupCard({ title: '물리학실험실 2 [001]', count: null, members: [{ name: '김연아(2251****)', avatar: 'avatar-03' }, { name: '이상화(2251****)', avatar: 'avatar-02' }] })`, 'ChatGroupCard — 펼침 (FriendRow 목록)', { pad: true }),
-      S(`FriendRow({ name: '봉준호(2251****)', avatar: 'avatar-04', right: Checkbox({ label: '', checked: true }) })`, 'FriendRow — 오른쪽 슬롯에 선택 표시'),
-      S(`StartChat({})`, 'StartChat — 1:1', { pad: true }),
-      S(`StartChat({ names: ['김연아', '이상화', '봉준호', '손흥민', '박지성'], avatars: ['avatar-05', 'avatar-02', 'avatar-06'], more: 5 })`, 'StartChat — 단체', { pad: true }),
-    ]],
-    ['ChatNotice', 'ChatNotice · PopoverAlert · ChatReplyBar', '93:23602 · 82:25752 · 112:17153', '채팅방 공지, 고정 메시지 팝오버, 답장 중 바.', [
-      S(`ChatNotice({})`, 'ChatNotice — 닫힘'),
-      S(`ChatNotice({ open: true })`, 'ChatNotice — 열림'),
-      S(`PopoverAlert({})`, 'PopoverAlert — 닫힘', { pad: true }),
-      S(`PopoverAlert({ open: true })`, 'PopoverAlert — 열림', { pad: true }),
-      S(`ChatReplyBar({})`, 'ChatReplyBar'),
-    ]],
-    ['ShareLinkCard', 'ShareLinkCard · ShareFileCard · EmptyState', '89:23365 · 87:23224 · 70:22686', '채팅방 기록(링크·문서)과 빈 화면 안내. Avatar 는 avatar-01~06 6명을 씁니다(70:25318).', [
-      S(`ShareLinkCard({})`, 'ShareLinkCard', { bare: true }),
-      S(`ShareFileCard({})`, 'ShareFileCard', { pad: true }),
-      S(`EmptyState({})`, 'EmptyState', { bare: true }),
-      S(`MediaViewer({})`, 'MediaViewer — 사진/동영상 보기', { tall: 560 }),
-      S(`['avatar-01','avatar-02','avatar-03','avatar-04','avatar-05','avatar-06'].map(s => Avatar({ src: s, size: 48 })).join(' ')`, 'Avatar 이미지 6종', { bare: true }),
-    ]],
-    ['SettingCard', 'SettingCard · SelectAllRow · SelectCheck', '83:17411 · 87:22551', '채팅방 설정 카드. 사진 칸은 ImageTile, 사람 목록은 FriendRow(선택 · 비활성)를 조합합니다.', [
-      S(`SettingCard({ icon: 'file-img-24', title: '사진/동영상', children: Grid({ cols: 4, gap: 8, pad: [0, 20], children: [1, 2, 3, 4].map(() => ImageTile({})) }) })`, '사진/동영상', { pad: true }),
-      S(`[SettingCard({ icon: 'file-info-24', title: '문서' }), SettingCard({ icon: 'link-24', title: '링크' }), SettingCard({ icon: 'pin-24-blue', title: '공지' })].join('')`, '문서 · 링크 · 공지', { pad: true, col: true }),
-      S(`SettingCard({ title: '대화 멤버', count: 5, more: false, list: true, children: [FriendRow({ icon: 'plus-circle-48', name: '초대하기' }), FriendRow({ name: '이병헌(2251****)', avatar: 'avatar-04' }), FriendRow({ name: '유비온(2251****)', avatar: 'avatar-07' })] })`, '대화 멤버', { pad: true }),
-      S(`SettingCard({ heading: 'md', title: '물리학실험실 2 [001]', more: false, list: true, aside: IconButton({ icon: 'caret-up-18', size: 32, label: '접기' }), children: Stack({ gap: 8, children: [SelectAllRow({}), Stack({ children: [FriendRow({ name: '학습자3(2251****)', avatar: 'avatar-03', disabled: true }), FriendRow({ name: '원슈타인(2251****)', avatar: 'avatar-04', right: SelectCheck({}) }), FriendRow({ name: '강동원(2251****)', avatar: 'avatar-05', selected: true, right: SelectCheck({ checked: true }) })] })] }) })`, '멤버 초대 (선택 · 비활성)', { pad: true }),
-      S(`[Flag({ code: 'kr' }), Flag({ code: 'us' }), Flag({ code: 'jp' }), Flag({ code: 'cn' })].join(' ')`, 'Flag', { bare: true }),
-    ]],
-    ['Popup', 'Popup · Toast · Dropdown · BottomSheet', '80:22498 · 37:14852', '오버레이 요소. 팝업·바텀시트는 Screen({ overlay: Dim({ content }) }), 토스트는 Screen({ toast: Toast({ label }) }).', [
-      S(`Popup({})`, 'Popup delete', { bare: true }),
-      S(`Popup({ title: '대화방 이름 변경', body: '변경한 이름은 나에게만 보입니다.', actions: [{ label: '취소' }, { label: '확인', tone: 'primary' }] })`, 'Popup confirm', { bare: true }),
-      S(`Toast({})`, 'Toast', { bare: true }),
-      S(`Fab({})`, 'Fab — 새 대화 (화면에 띄울 때는 Screen({ fab }))', { bare: true }),
-      S(`Dropdown({ items: [{ icon: 'message-chat-circle', label: '차단 대화 관리' }] })`, 'Dropdown', { bare: true }),
-      S(`BottomSheet({ content: Stack({ gap: 8, children: [EmojiBar({}), Divider({}), Stack({ gap: 4, children: [ListItem({ icon: 'reply-20', label: '메시지 답장' }), ListItem({ icon: 'pin-20', label: '공지 등록' }), ListItem({ icon: 'trash-20-red', label: '메시지 삭제', tone: 'danger' })] })] }) })`, 'BottomSheet — 길게 누르기 (long_press)'),
-      S(`BottomSheet({ tone: 'subtle', title: '대화방 설정', gap: 20, content: Stack({ gap: 32, children: [ListGroup({ label: '메시지 번역', card: false, items: [{ icon: 'translate-20', label: '번역 언어 선택', tone: 'muted', trailing: 'chevron' }] }), ListGroup({ label: '대화방 관리', items: [{ icon: 'edit-20', label: '대화방 이름 변경', tone: 'muted' }, { icon: 'bell-setting-20', label: '대화방 알림 끄기', tone: 'muted' }, { icon: 'settings-20', label: '대화방 관리', tone: 'muted' }] }), ListItem({ icon: 'log-out-20-red', label: '대화방 나가기', tone: 'danger' })] }) })`, 'BottomSheet — 대화방 설정 (chat_setting)'),
-      S(`BottomSheet({ tone: 'subtle', title: '메시지 번역', gap: 12, content: [ListGroup({ label: '언어 선택', items: [{ flag: 'kr', label: '한국어', trailing: 'check' }, { flag: 'us', label: '영어' }, { flag: 'jp', label: '일본어' }, { flag: 'cn', label: '중국어' }] }), Stack({ direction: 'row', justify: 'end', children: Button({ label: '원문 보기', variant: 'outline' }) })] })`, 'BottomSheet — 메시지 번역 (translate)'),
-    ]],
-  ];
+  // ---- components (Storybook 형식 뷰어 — dist/stories.js 의 LXP_STORIES)
+  const SB = window.LXP_STORIES || [];
+  const LAYERS = ['2 요소', '3 블록', '4 영역', '틀'];
+  const byId = Object.fromEntries(SB.map((c) => [c.id, c]));
+  const tocComps = $('#toc-comps');
+  tocComps.innerHTML = LAYERS.map((ly) => { const c = SB.find((x) => x.layer === ly); return c ? `<a href="#/${c.id}">${ly} <small style="color:var(--d-fg-3)">${SB.filter((x) => x.layer === ly).length}</small></a>` : ''; }).join('');
 
-  const evalCode = (code) => { try { return new Function('L', `with (L) { return (${code}); }`)(L); } catch (e) { return `<pre style="color:#f04438">${esc(e.message)}</pre>`; } };
-  $('#toc-comps').innerHTML = groupsC.map(([id, title]) => `<a href="#c-${id}">${title.split(' · ')[0]}</a>`).join('');
-  $('#comp-list').innerHTML = groupsC.map(([id, title, node, desc, demos]) => `
-    <article class="comp" id="c-${id}" style="scroll-margin-top:24px">
-      <div class="comp__head"><h4>${title}</h4><code>Figma ${node}</code><p>${desc}</p></div>
-      ${demos.length ? `<div class="demos">${demos.map((d) => {
-        const inner = evalCode(d.code);
-        const style = [d.pad && 'padding:12px 20px', d.row && 'display:flex;gap:8px;flex-wrap:wrap', d.col && 'display:flex;flex-direction:column;gap:8px;padding:12px 16px', d.sky && 'background:linear-gradient(#cbe3ff,#e5f1ff);padding:8px 0', d.tall && `min-height:${d.tall}px`].filter(Boolean).join(';');
-        return `<div class="demo"><span class="demo__label">${d.label}</span>
-          <div class="stage"><div class="lxp${d.bare ? ' is-bare' : ''}" style="${style}">${inner}</div></div>
-          <div class="code"><button class="copy" type="button">복사</button><pre>${esc(d.code)}</pre></div>
-        </div>`;
-      }).join('')}</div>` : ''}
-    </article>`).join('');
+  const DEFAULT_LAYOUT = { '2 요소': 'centered' };
+  function stageHtml(story, comp, args) {
+    const p = Object.assign({ layout: DEFAULT_LAYOUT[comp.layer] || 'fullscreen' }, story.parameters);
+    let inner;
+    try { inner = story.run(args); } catch (e) { return `<div class="stage"><pre class="stage--err">${esc(e.stack || e.message)}</pre></div>`; }
+    const cls = ['lxp', 'is-' + p.layout, p.background && 'is-' + p.background, p.arrange && 'is-' + p.arrange].filter(Boolean).join(' ');
+    return `<div class="stage"><div class="${cls}"${p.height ? ` style="min-height:${p.height}px"` : ''}>${inner}</div></div>`;
+  }
+  const codeHtml = (code) => `<div class="code"><button class="copy" type="button">복사</button><pre>${esc(code)}</pre></div>`;
+  const kw = (s) => s.toLowerCase();
+
+  // 트리
+  let filter = '';
+  function drawTree(cur) {
+    const q = kw(filter);
+    $('#sb-tree').innerHTML = LAYERS.map((ly) => {
+      const items = SB.filter((c) => c.layer === ly).filter((c) => !q || kw(c.name).includes(q) || c.stories.some((s) => kw(s.name).includes(q)));
+      if (!items.length) return '';
+      return `<div class="sb__layer">${ly}</div>` + items.map((c) => {
+        const open = q || (cur && cur.comp === c);
+        return `<div class="sb__comp${open ? ' is-open' : ''}"><a href="#/${c.id}"${cur && cur.comp === c && !cur.story ? ' aria-current="true"' : ''}>${esc(c.name)} <small>${c.stories.length}</small></a>
+          <div class="sb__stories">${c.stories.map((s) => `<a class="sb__story" href="#/${s.id}"${cur && cur.story === s ? ' aria-current="true"' : ''}>${esc(s.name)}</a>`).join('')}</div></div>`;
+      }).join('');
+    }).join('') || '<p class="sb__note" style="padding:8px">없음</p>';
+  }
+  $('#sb-search').addEventListener('input', (e) => { filter = e.target.value; drawTree(parse()); });
+
+  // 주소: #/button (Docs) · #/button--outline (Canvas)
+  function parse() {
+    const h = decodeURIComponent(location.hash.slice(1));
+    if (!h.startsWith('/')) return null;
+    const id = h.slice(1);
+    const comp = byId[id.split('--')[0]];
+    if (!comp) return null;
+    return { comp, story: comp.stories.find((s) => s.id === id) || null };
+  }
+
+  const figmaLink = (n) => n && /^\d+:\d+$/.test(n) ? `<a href="https://www.figma.com/design/E5xzHTfMeooeU4BXCykmiA/?node-id=${n.replace(':', '-')}" target="_blank" rel="noopener">Figma ${n}</a>` : n ? `Figma ${esc(n)}` : '';
+  function head(c, tab, story) {
+    const first = story || c.stories[0];
+    return `<div class="sb__head"><h3>${esc(c.name)} <span>${c.layer}</span></h3>
+      <div class="sb__meta"><b>src/components/${esc(c.file)}.stories.js</b>${c.figma ? `<span>${figmaLink(c.figma)}</span>` : ''}<span>story ${c.stories.length}</span></div>
+      ${c.description ? `<p>${esc(c.description)}</p>` : ''}${c.notes ? `<p>${esc(c.notes)}</p>` : ''}</div>
+      <div class="sb__tabs" role="tablist"><a role="tab" href="#/${first.id}" aria-selected="${tab === 'canvas'}">Canvas</a><a role="tab" href="#/${c.id}" aria-selected="${tab === 'docs'}">Docs</a></div>`;
+  }
+  const show = (v) => v === undefined ? '' : typeof v === 'string' ? `'${v}'` : JSON.stringify(v);
+  function propsTable(c, args, editable) {
+    if (!c.params.length) return '<p class="sb__note">인자 없음</p>';
+    return `<div class="ctl-wrap"><table class="ctl"><thead><tr><th>인자</th><th class="desc">설명</th><th>기본값</th>${editable ? '<th>값</th>' : ''}</tr></thead><tbody>${c.params.map((p) => {
+      const v = args[p.name];
+      const set = editable && v !== undefined && v !== p.default;
+      let input = '';
+      if (editable) {
+        const a = `data-arg="${p.name}"`;
+        if (p.control === 'select') input = `<select ${a}><option value="">—</option>${p.options.map((o) => `<option value='${esc(JSON.stringify(o))}'${o === v ? ' selected' : ''}>${esc(String(o))}</option>`).join('')}</select>`;
+        else if (p.control === 'boolean') input = `<input type="checkbox" ${a}${(v ?? p.default) ? ' checked' : ''}>`;
+        else if (p.control === 'number') input = `<input type="number" ${a} value="${v ?? ''}">`;
+        else if (p.control === 'text') input = `<input type="text" ${a} value="${esc(v ?? '')}">`;
+        else input = `<textarea ${a} spellcheck="false">${v === undefined ? '' : esc(JSON.stringify(v, null, 1))}</textarea>`;
+      }
+      return `<tr${set ? ' class="is-set"' : ''}><td>${p.name}${p.optional ? '' : ' *'}<small>${p.control === 'select' ? '선택 ' + p.options.length + '개' : esc(p.type)}</small></td><td class="desc">${esc(p.desc)}</td><td class="def">${esc(p.defaultSrc ?? '')}</td>${editable ? `<td>${input}</td>` : ''}</tr>`;
+    }).join('')}</tbody></table></div>`;
+  }
+
+  // Canvas: story 하나 + Controls
+  let live = null;   // { comp, story, args }
+  function canvas(c, s) {
+    live = { comp: c, story: s, args: Object.assign({}, s.args) };
+    $('#sb-main').innerHTML = head(c, 'canvas', s) + `
+      <p class="sb__name">${esc(s.name)} <code>${s.key}</code></p>
+      ${s.description ? `<p class="sb__note">${esc(s.description)}</p>` : ''}
+      <div id="sb-stage"></div>
+      <div class="sb__bar"><h4>Controls</h4><button class="sb__btn" type="button" id="sb-reset">처음 값으로</button></div>
+      ${s.render ? '<p class="sb__note">여러 컴포넌트를 조합한 story 라 Controls 가 미리보기에 적용되지 않습니다. 아래 표는 인자 설명으로 보세요.</p>' : ''}
+      <div id="sb-ctl"></div>
+      <div id="sb-code"></div>`;
+    drawLive();
+  }
+  function argCode(c, args) {
+    const own = {};
+    for (const [k, v] of Object.entries(args)) { const p = c.params.find((x) => x.name === k); if (v !== undefined && !(p && p.default === v)) own[k] = v; }
+    return c.name + '(' + LXP_FMT(own) + ')';
+  }
+  function drawLive() {
+    const { comp: c, story: s, args } = live;
+    $('#sb-stage').innerHTML = stageHtml(s, c, args);
+    $('#sb-ctl').innerHTML = propsTable(c, args, !s.render);
+    $('#sb-code').innerHTML = codeHtml(s.render ? s.code : argCode(c, args));
+  }
+  $('#sb-main').addEventListener('input', (e) => {
+    const el = e.target.closest('[data-arg]'); if (!el || !live) return;
+    const p = live.comp.params.find((x) => x.name === el.dataset.arg);
+    let v;
+    if (p.control === 'boolean') v = el.checked;
+    else if (p.control === 'select') v = el.value === '' ? undefined : JSON.parse(el.value);
+    else if (p.control === 'number') v = el.value === '' ? undefined : Number(el.value);
+    else if (p.control === 'text') v = el.value;
+    else { try { v = el.value.trim() === '' ? undefined : new Function(`return (${el.value})`)(); el.classList.remove('is-bad'); } catch (_) { el.classList.add('is-bad'); return; } }
+    live.args[p.name] = v;
+    $('#sb-stage').innerHTML = stageHtml(live.story, live.comp, live.args);
+    $('#sb-code').innerHTML = codeHtml(argCode(live.comp, live.args));
+    el.closest('tr').classList.toggle('is-set', v !== undefined && v !== p.default);
+  });
+  $('#sb-main').addEventListener('click', (e) => { if (e.target.id === 'sb-reset' && live) { live.args = Object.assign({}, live.story.args); drawLive(); } });
+
+  // Docs: 모든 story + 인자 표
+  function docs(c) {
+    live = null;
+    $('#sb-main').innerHTML = head(c, 'docs') + `<div class="sb__docs">${c.stories.map((s) => `<div>
+        <p class="sb__name">${esc(s.name)} <code>${s.key}</code> <a href="#/${s.id}">Canvas ›</a></p>
+        ${s.description ? `<p class="sb__note">${esc(s.description)}</p>` : ''}
+        ${stageHtml(s, c, s.args)}${codeHtml(s.code)}</div>`).join('')}
+      <div class="sb__wide"><p class="sb__name">인자</p>${propsTable(c, {}, false)}</div></div>`;
+  }
+
+  window.LXP_FMT = window.LXP_FMT || ((v) => JSON.stringify(v));
+  function route() {
+    const cur = parse();
+    if (!cur) { if (!$('#sb-main').innerHTML && SB[0]) { drawTree({ comp: SB[0] }); docs(SB[0]); } return; }
+    drawTree(cur);
+    if (cur.story) canvas(cur.comp, cur.story); else docs(cur.comp);
+    const sec = $('#components'); if (sec.getBoundingClientRect().top > window.innerHeight || sec.getBoundingClientRect().bottom < 0) sec.scrollIntoView();
+  }
+  window.addEventListener('hashchange', route);
+  route();
 })();
 </script>
 
