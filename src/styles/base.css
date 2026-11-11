@@ -56,6 +56,9 @@
 /* 토스트: body 와 bottom 사이 높이 0 기준점 → 하단 영역 높이와 상관없이 그 바로 위 16px. 터치는 통과 */
 .lxp-screen__toast { height: 0; z-index: 6 !important; pointer-events: none; }
 .lxp-screen__toast > * { position: absolute; left: 50%; bottom: var(--spac-16); transform: translateX(-50%); }
+/* 떠 있는 버튼(Fab): 하단 영역 바로 위 오른쪽 20 · 위로 30 (Figma 메시지 5:11732) */
+.lxp-screen__fab { height: 0; z-index: 6 !important; }
+.lxp-screen__fab > * { position: absolute; right: var(--spac-20); bottom: 30px; }
 .lxp-screen__bottom { position: absolute !important; left: 0; right: 0; bottom: 0; z-index: 5; }
 
 .lxp-dim { position: absolute; inset: 0; background: var(--alpha-b30); }

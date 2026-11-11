@@ -312,7 +312,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
 
   // ---- screens
   const SC = window.LXP_SCREENS || {};
-  const scList = [['home', '홈 · 오늘 마감'], ['classGrid', '내 강의실 · 카드형'], ['classList', '내 강의실 · 목록형'], ['messages', '메시지 목록'], ['chat', '채팅방'], ['chatDelete', '메시지 삭제 팝업'], ['rollBookEntry', '스마트 출석부 · 진입'], ['rollBookChecking', '스마트 출석부 · 출석체크 진행중']];
+  const scList = [['home', '홈 · 오늘 마감'], ['classGrid', '내 강의실 · 카드형'], ['classList', '내 강의실 · 목록형'], ['messages', '메시지 목록'], ['chat', '대화방 · 1:1 대화 중'], ['chatDelete', '대화방 · 메시지 삭제 팝업'], ['rollBookEntry', '스마트 출석부 · 진입'], ['rollBookChecking', '스마트 출석부 · 출석체크 진행중'], ['more', '더보기'], ['alerts', '홈 > 알림'], ['networkError', '네트워크 오류'], ['classEditDefault', '내 강의실 편집'], ['classEditChanged', '내 강의실 편집 · 순서 변경'], ['classEditSaved', '내 강의실 편집 · 저장 완료'], ['messagesMenu', '메시지 · 메뉴 열림'], ['messagesSwipeRight', '메시지 · 오른쪽 밀기'], ['messagesSwipeLeft', '메시지 · 왼쪽 밀기'], ['messagesSearch', '메시지 · 검색'], ['messagesEmpty', '메시지 · 대화방 없음'], ['blockedChats', '차단 대화 관리'], ['blockedChatsEmpty', '차단 대화 관리 · 없음'], ['createChat', '대화방 생성 · 강의 선택'], ['createChatSearch', '대화방 생성 · 검색'], ['createChatUsers', '대화방 생성 · 상대 선택'], ['createChatSelected', '대화방 생성 · 2명 선택'], ['inviteMembers', '대화 멤버 초대'], ['chatStartDm', '대화방 · 1:1 첫 대화'], ['chatStartGroup', '대화방 · 단체 첫 대화'], ['chatGroup', '대화방 · 단체 대화'], ['chatSystem', '대화방 · 초대·나감 안내'], ['chatPressed', '대화방 · 메시지 누름'], ['chatBlocked', '대화방 · 차단'], ['chatReplying', '대화방 · 답장 중'], ['chatReplied', '대화방 · 답장 메시지'], ['chatLongPressMine', '대화방 · 내 메시지 길게 누름'], ['chatLongPressOther', '대화방 · 다른 사람 메시지 길게 누름'], ['chatRename', '대화방 · 이름 변경'], ['chatPinned', '대화방 · 고정 메시지'], ['chatPinnedOpen', '대화방 · 고정 메시지 열림'], ['chatSettingsSheet', '대화방 설정 시트'], ['chatSettingsDm', '대화방 관리 · 1:1'], ['chatSettingsGroup', '대화방 관리 · 단체'], ['chatSettingsLeave', '대화방 관리 · 나가기 팝업'], ['historyPhotos', '대화방 기록 · 사진/동영상'], ['photoViewer', '사진·동영상 뷰어'], ['historyDocs', '대화방 기록 · 문서'], ['historyLinks', '대화방 기록 · 링크'], ['historyNotices', '대화방 기록 · 공지']];
   $('#screens-row').innerHTML = scList.filter(([k]) => SC[k]).map(([k, label]) =>
     `<figure><div class="phone">${SC[k]()}</div><figcaption><span>${label}</span><code>LXP_SCREENS.${k}()</code></figcaption></figure>`).join('');
 
@@ -492,6 +492,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
       S(`ShareLinkCard({})`, 'ShareLinkCard', { bare: true }),
       S(`ShareFileCard({})`, 'ShareFileCard', { pad: true }),
       S(`EmptyState({})`, 'EmptyState', { bare: true }),
+      S(`MediaViewer({})`, 'MediaViewer — 사진/동영상 보기', { tall: 560 }),
       S(`['avatar-01','avatar-02','avatar-03','avatar-04','avatar-05','avatar-06'].map(s => Avatar({ src: s, size: 48 })).join(' ')`, 'Avatar 이미지 6종', { bare: true }),
     ]],
     ['SettingCard', 'SettingCard · SelectAllRow · SelectCheck', '83:17411 · 87:22551', '채팅방 설정 카드. 사진 칸은 ImageTile, 사람 목록은 FriendRow(선택 · 비활성)를 조합합니다.', [
@@ -505,8 +506,9 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
       S(`Popup({})`, 'Popup delete', { bare: true }),
       S(`Popup({ title: '대화방 이름 변경', body: '변경한 이름은 나에게만 보입니다.', actions: [{ label: '취소' }, { label: '확인', tone: 'primary' }] })`, 'Popup confirm', { bare: true }),
       S(`Toast({})`, 'Toast', { bare: true }),
+      S(`Fab({})`, 'Fab — 새 대화 (화면에 띄울 때는 Screen({ fab }))', { bare: true }),
       S(`Dropdown({ items: [{ icon: 'message-chat-circle', label: '차단 대화 관리' }] })`, 'Dropdown', { bare: true }),
-      S(`BottomSheet({ content: Stack({ gap: 8, children: [EmojiBar({}), '<i class="lxp-sheet__line"></i>', Stack({ gap: 4, children: [ListItem({ icon: 'reply-20', label: '메시지 답장' }), ListItem({ icon: 'pin-20', label: '공지 등록' }), ListItem({ icon: 'trash-20-red', label: '메시지 삭제', tone: 'danger' })] })] }) })`, 'BottomSheet — 길게 누르기 (long_press)'),
+      S(`BottomSheet({ content: Stack({ gap: 8, children: [EmojiBar({}), Divider({}), Stack({ gap: 4, children: [ListItem({ icon: 'reply-20', label: '메시지 답장' }), ListItem({ icon: 'pin-20', label: '공지 등록' }), ListItem({ icon: 'trash-20-red', label: '메시지 삭제', tone: 'danger' })] })] }) })`, 'BottomSheet — 길게 누르기 (long_press)'),
       S(`BottomSheet({ tone: 'subtle', title: '대화방 설정', gap: 20, content: Stack({ gap: 32, children: [ListGroup({ label: '메시지 번역', card: false, items: [{ icon: 'translate-20', label: '번역 언어 선택', tone: 'muted', trailing: 'chevron' }] }), ListGroup({ label: '대화방 관리', items: [{ icon: 'edit-20', label: '대화방 이름 변경', tone: 'muted' }, { icon: 'bell-setting-20', label: '대화방 알림 끄기', tone: 'muted' }, { icon: 'settings-20', label: '대화방 관리', tone: 'muted' }] }), ListItem({ icon: 'log-out-20-red', label: '대화방 나가기', tone: 'danger' })] }) })`, 'BottomSheet — 대화방 설정 (chat_setting)'),
       S(`BottomSheet({ tone: 'subtle', title: '메시지 번역', gap: 12, content: [ListGroup({ label: '언어 선택', items: [{ flag: 'kr', label: '한국어', trailing: 'check' }, { flag: 'us', label: '영어' }, { flag: 'jp', label: '일본어' }, { flag: 'cn', label: '중국어' }] }), Stack({ direction: 'row', justify: 'end', children: Button({ label: '원문 보기', variant: 'outline' }) })] })`, 'BottomSheet — 메시지 번역 (translate)'),
     ]],

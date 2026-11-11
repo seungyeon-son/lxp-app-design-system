@@ -17,7 +17,7 @@
 2. **틀을 복사한다.** `templates/mockups/_starter.html` → `templates/mockups/<영문-슬러그>.html`.
    헤더 주석(`@mockup` `@status` `@date` …)을 채웁니다.
 3. **조립한다.** `LXP.Screen({ header, body, bottom, overlay, toast, bg })` 안에 시스템 함수를 넣습니다.
-   비슷한 기존 화면이 있으면 `templates/screens.js`(홈·내강의실·메시지·채팅·출석부)에서 시작합니다.
+   비슷한 기존 화면이 있으면 `templates/screens.js`(홈·알림·내강의실·강의실 편집·메시지·채팅·더보기·네트워크 오류·출석부)에서 시작합니다.
    **출석 관련 요청은 `rollBook({ statuses, onlyTodo, menu })`·`rollBookEntry()`·`rollBookChecking()` 에서 시작하고 새로 그리지 않습니다**(Figma 확정안).
    샘플 데이터(강의명, 교수명, 아바타 `avatar-02~05`, 썸네일 색)도 `screens.js` 것을 재사용합니다.
 4. **시스템에 없는 UI만** 시안 `<style>` 에 직접 만들고, 헤더 `@local-ui` 에 적습니다. 우회한 것은 `@gaps` 에 적습니다.

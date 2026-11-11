@@ -8,5 +8,6 @@
 .lxp-tag--md { height: 40px; }
 .lxp-tag--lg { height: 44px; }
 .lxp-tag.has-avatar { padding: 0 9px 0 2px; }
+.lxp-tag.has-text { padding: 0 9px 0 14px; }   /* 글자만 ('물리학실험실 전체') */
 .lxp-tag.has-icon { padding: 0 9px 0 14px; }
 .lxp-tag .lxp-avatar { border: 0; }

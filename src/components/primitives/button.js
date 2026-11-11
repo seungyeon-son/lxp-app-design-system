@@ -16,7 +16,7 @@ import { Icon } from '../../core/assets.js';
  * @param {string} [p.iconRight] 오른쪽 아이콘 이름
  * @param {boolean} [p.block] 가로 100%
  * @param {boolean} [p.disabled]
- * @param {'danger'|'primary'} [p.tone] 글자색만 바꿈 — ghost 버튼용. danger=nega-secondary(팝업 '삭제'), primary=info-secondary(팝업 '확인')
+ * @param {'danger'|'primary'} [p.tone] ghost: 글자색(danger=nega-secondary 팝업 '삭제', primary=info-secondary 팝업 '확인') · outline: danger = 빨강 테두리+글자('대화방 나가기')
  * @param {Record<string,string|number|boolean>} [p.attrs] 추가 속성 (id, type, data-* 등)
  */
 export function Button({ label = '', variant = 'primary', size = 'lg', tone, icon, iconRight, block = false, disabled = false, attrs, className = '' } = {}) {
@@ -33,11 +33,12 @@ export function Button({ label = '', variant = 'primary', size = 'lg', tone, ico
  *   16·20 = 여백 없는 아이콘만(입력칸 지우기, 답장 바 닫기) · 28 = Figma btn-icon-basic 28(공지 펼치기, 강의 › )
  * @param {boolean} [p.active] 선택 상태 (연회색 배경)
  * @param {boolean} [p.round] 원형 + 연회색 배경 (메시지 입력 +/↑)
+ * @param {'primary'} [p.tone] primary = 파란 바탕 (흰 아이콘과 함께 — download-18-white)
  * @param {Record<string,string|number|boolean>} [p.attrs] 추가 속성 (id, data-* 등)
  */
-export function IconButton({ icon, size = 36, active = false, round = false, label = '', attrs, className = '' } = {}) {
+export function IconButton({ icon, size = 36, active = false, round = false, tone, label = '', attrs, className = '' } = {}) {
   const iconSize = { 16: 16, 20: 20, 24: 14, 28: 16, 32: 18, 36: 18, 40: 20 }[size] || 18;
-  return `<button class="${cx('lxp-icon-btn', `lxp-icon-btn--${size}`, active && 'is-active', round && 'lxp-icon-btn--round', className)}" aria-label="${esc(label || icon)}"${htmlAttrs(attrs)}>
+  return `<button class="${cx('lxp-icon-btn', `lxp-icon-btn--${size}`, active && 'is-active', round && 'lxp-icon-btn--round', tone && `is-${tone}`, className)}" aria-label="${esc(label || icon)}"${htmlAttrs(attrs)}>
     ${Icon(icon, { size: iconSize })}
   </button>`;
 }

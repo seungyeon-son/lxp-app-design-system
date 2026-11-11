@@ -24,3 +24,4 @@
   background: var(--bg-hierarchy-secondary); border-top: 1px solid var(--bo-hierarchy-secondary);
 }
 .lxp-footer__caption { text-align: center; font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-footer--chat.is-safe { padding-bottom: 38px; }   /* 60 + 홈 표시줄 26 = 86 (Figma 채팅방 Footer) */

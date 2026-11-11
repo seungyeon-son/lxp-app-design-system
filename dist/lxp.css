@@ -343,6 +343,9 @@
 /* 토스트: body 와 bottom 사이 높이 0 기준점 → 하단 영역 높이와 상관없이 그 바로 위 16px. 터치는 통과 */
 .lxp-screen__toast { height: 0; z-index: 6 !important; pointer-events: none; }
 .lxp-screen__toast > * { position: absolute; left: 50%; bottom: var(--spac-16); transform: translateX(-50%); }
+/* 떠 있는 버튼(Fab): 하단 영역 바로 위 오른쪽 20 · 위로 30 (Figma 메시지 5:11732) */
+.lxp-screen__fab { height: 0; z-index: 6 !important; }
+.lxp-screen__fab > * { position: absolute; right: var(--spac-20); bottom: 30px; }
 .lxp-screen__bottom { position: absolute !important; left: 0; right: 0; bottom: 0; z-index: 5; }
 
 .lxp-dim { position: absolute; inset: 0; background: var(--alpha-b30); }
@@ -415,6 +418,7 @@
 
 .lxp-btn--secondary { background: var(--bg-hierarchy-secondary); color: var(--tx-hierarchy-secondary); }
 
+.lxp-btn--outline.is-danger { color: var(--tx-semantic-nega-secondary); border-color: var(--bo-semantic-nega-primary); }   /* 대화방 나가기 */
 .lxp-btn--outline { background: var(--bg-neutral-white); color: var(--tx-hierarchy-secondary); border: 1px solid var(--bo-hierarchy-quaternary); }
 
 .lxp-btn--outline-primary { background: var(--bg-neutral-white); color: var(--tx-coursmos-secondary); border: 1px solid var(--bo-coursmos-quaternary); }
@@ -439,6 +443,7 @@
 .lxp-icon-btn--36 { width: 36px; height: 36px; }
 .lxp-icon-btn--40 { width: 40px; height: 40px; }
 .lxp-icon-btn.is-active { background: var(--bg-hierarchy-secondary); }
+.lxp-icon-btn.is-primary { background: var(--bg-coursmos-primary); }   /* 채운 파란 아이콘 버튼 (사진 뷰어 내려받기) */
 .lxp-icon-btn--round { border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary); }
 
 /* ===== components/primitives/checkbox.css ===== */
@@ -477,6 +482,15 @@
 /* warn 은 Figma chip/times 에 없는 코드 확장 톤. 글자 토큰 --tx-semantic-noti-primary(warn50)는 이 배경에서 대비 1.55:1 이라
    못 씀 → warn30(4.0:1, posi·nega 칩과 비슷)을 쓰는데, 그 단계의 글자 토큰이 없어 배경 토큰을 빌림. Figma에 글자 변수가 생기면 교체 */
 .lxp-chip--warn { background: var(--bg-semantic-warn-senary); color: var(--bg-semantic-warn-tertiary); }
+
+/* ===== components/primitives/divider.css ===== */
+/* ---------- Divider ---------- */
+.lxp-divider { flex-shrink: 0; height: 0; margin: 0 var(--lxp-inset, 0); border: 0; border-top: 1px solid var(--bo-hierarchy-primary); }
+
+/* ===== components/primitives/fab.css ===== */
+/* ---------- Fab ---------- */
+.lxp-fab { display: inline-flex; border-radius: var(--radi-full); box-shadow: var(--shadow-md); }
+.lxp-fab img { display: block; }
 
 /* ===== components/primitives/flag.css ===== */
 /* ---------- Flag (icon/flag/*_02) ---------- */
@@ -597,7 +611,6 @@
 .lxp-sheet__handle { position: absolute; top: 4px; left: 50%; margin-left: -24px; display: block; }
 .lxp-sheet__title { text-align: center; font: var(--font-label-15sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary); }
 .lxp-sheet__list { display: flex; flex-direction: column; gap: 4px; }
-.lxp-sheet__line { display: block; height: 1px; background: var(--bo-hierarchy-primary); }
 
 /* ===== components/blocks/friend-row.css ===== */
 /* ---------- FriendRow (Friends list_state) ---------- */
@@ -608,6 +621,12 @@
 .lxp-friend-row.is-action .lxp-friend-row__who p { font: var(--font-label-14sb); }
 .lxp-friend-row.is-selected { background: var(--bg-hierarchy-secondary); }
 .lxp-friend-row.is-disabled .lxp-friend-row__who p { color: var(--tx-hierarchy-quinary); }   /* 비활성 표시 — 대비 규칙 예외 */
+
+/* ===== components/blocks/select-all-row.css ===== */
+/* ---------- SelectAllRow (87:22551) ---------- */
+.lxp-select-all { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--spac-20); }
+.lxp-select-all p { display: flex; align-items: center; gap: 4px; white-space: nowrap; font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-select-all b { font: var(--font-label-14sb); color: var(--tx-coursmos-secondary); }
 
 /* ===== components/blocks/chat-group-card.css ===== */
 /* ---------- ChatGroupCard (generator_chat/group 57:20087 · search-student 60:20862) ---------- */
@@ -624,21 +643,32 @@
 .lxp-chat-group__label { padding: 0 var(--spac-20); font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
 
 /* ===== components/blocks/chat-message.css ===== */
-/* ---------- ChatMessage ---------- */
-.lxp-chat-msg { display: flex; align-items: flex-start; gap: 8px; width: 100%; padding: 8px; }
-.lxp-chat-msg__main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+/* ---------- ChatMessage (chating-message 80:20270) ---------- */
+.lxp-chat-msg { display: flex; align-items: flex-start; gap: 8px; width: 100%; padding: 8px; border-radius: var(--radi-xsm); }
+.lxp-chat-msg.is-pressed { background: var(--bg-hierarchy-primary-subtle); }
+.lxp-chat-msg.is-blocked > .lxp-avatar, .lxp-chat-msg.is-blocked .lxp-chat-msg__main { opacity: .6; }
+.lxp-chat-msg__main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
 .lxp-chat-msg__meta { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
 .lxp-chat-msg__meta b { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
 .lxp-chat-msg__meta span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
 .lxp-chat-msg__meta .lxp-chat-msg__read { display: inline-flex; align-items: center; gap: 4px; color: var(--tx-hierarchy-quaternary); }
-.lxp-chat-msg__text { font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-chat-msg__text { font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); white-space: pre-wrap; word-break: break-all; }
+.lxp-chat-msg.is-system .lxp-chat-msg__text { color: var(--tx-hierarchy-quaternary); }
+.lxp-chat-msg__link { display: block; color: var(--tx-semantic-info-secondary); text-decoration: underline; }
 .lxp-chat-msg__reactions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.lxp-chat-msg__quote { display: flex; align-items: stretch; gap: 8px; }
+.lxp-chat-msg__quote > i { flex: 0 0 3px; background: var(--fg-hierarchy-senary-subtle); }
+.lxp-chat-msg__quote > div { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.lxp-chat-msg__quote-to { display: flex; align-items: center; gap: 4px; font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-chat-msg__quote-to b { font-weight: inherit; color: var(--tx-semantic-info-secondary); }
+.lxp-chat-msg__quote-text { font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 
-/* ---------- ChatDate ---------- */
-.lxp-chat-date { display: flex; justify-content: center; padding: 8px 0; }
+/* ---------- ChatDate (chat-date 79:18832) ---------- */
+.lxp-chat-date { display: flex; align-items: center; justify-content: center; width: 100%; padding: 4px 0; }
+.lxp-chat-date i { flex: 1 1 0; height: 1px; background: var(--bo-hierarchy-secondary); }
 .lxp-chat-date span {
-  padding: 4px 12px; border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary);
-  font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
+  flex-shrink: 0; padding: 4px 20px; border-radius: var(--radi-full); border: 1px solid var(--bo-hierarchy-secondary);
+  font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
 }
 
 /* ===== components/blocks/chat-notice.css ===== */
@@ -752,10 +782,16 @@
 .lxp-emoji-bar__item img { display: block; }
 
 /* ===== components/blocks/empty-state.css ===== */
-/* ---------- EmptyState (block_chatting_icon 70:22686) ---------- */
+/* ---------- EmptyState (block_chatting_icon 70:22686 · 에러_네트워크미연결 5:12102) ---------- */
 .lxp-empty { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.lxp-empty.has-title { gap: 20px; }
 .lxp-empty__icon { display: block; }
 .lxp-empty p { font: var(--font-label-16r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); text-align: center; white-space: nowrap; }
+.lxp-empty__text { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.lxp-empty.has-title .lxp-empty__text p { font: var(--font-label-14r); }
+.lxp-empty.has-title .lxp-empty__text .lxp-empty__title { font: var(--font-head-20sb); letter-spacing: var(--ls-head); color: var(--tx-hierarchy-secondary); }
+/* Figma 오류 화면 버튼: 높이 48 · 15M · 폭 120 (btn-base-state) */
+.lxp-empty__action .lxp-btn { width: 120px; font: var(--font-label-15m); letter-spacing: var(--ls-label); }
 
 /* ===== components/blocks/info-bar.css ===== */
 /* ---------- InfoBar (SubRow 7062:38223) ---------- */
@@ -775,6 +811,14 @@
 .lxp-list-group__card { display: flex; flex-direction: column; padding: var(--spac-4) var(--spac-6); background: var(--bg-neutral-white); border-radius: var(--radi-xsm); }
 .lxp-list-group__card.is-sm > .lxp-list-item { margin: 4px; width: calc(100% - 8px); }
 .lxp-list-group__line { display: block; height: 1px; background: var(--bo-hierarchy-primary); }
+
+/* ===== components/blocks/media-viewer.css ===== */
+/* ---------- MediaViewer (80:24028) ---------- */
+.lxp-media-viewer { display: flex; flex-direction: column; width: 100%; height: 100%; }
+.lxp-media-viewer__stage { flex: 1 1 auto; min-height: 0; display: flex; justify-content: center; padding-top: 286px; background: var(--bo-hierarchy-quaternary-subtle) center / contain no-repeat; }
+.lxp-media-viewer__play { align-self: flex-start; display: inline-flex; border-radius: var(--radi-full); }
+.lxp-media-viewer__play img { display: block; }
+.lxp-media-viewer__bar { display: flex; justify-content: flex-end; padding: 16px 16px 32px; background: var(--bg-hierarchy-primary); border-top: 1px solid var(--bo-hierarchy-secondary); }
 
 /* ===== components/blocks/member-row.css ===== */
 /* ---------- MemberRow (LearnerRows › Row 7062:38271) ----------
@@ -876,7 +920,7 @@
 }
 .lxp-popup__content { display: flex; flex-direction: column; gap: 8px; padding: 20px 20px 16px; text-align: center; }
 .lxp-popup__title { font: var(--font-label-16sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-popup__body { font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary); }
+.lxp-popup__body { white-space: pre-line;  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary); }
 .lxp-popup__actions { display: flex; }
 .lxp-popup__btn {   /* Button(ghost) 을 팝업 하단 칸으로: 꽉 채우고 위 구분선 */
   flex: 1 1 0; height: 48px; padding: 0 20px; border-radius: 0;
@@ -884,12 +928,8 @@
   font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
 }
 .lxp-popup__btn + .lxp-popup__btn { border-left: 1px solid var(--bo-hierarchy-quaternary); }
-
-/* ===== components/blocks/select-all-row.css ===== */
-/* ---------- SelectAllRow (87:22551) ---------- */
-.lxp-select-all { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--spac-20); }
-.lxp-select-all p { display: flex; align-items: center; gap: 4px; white-space: nowrap; font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
-.lxp-select-all b { font: var(--font-label-14sb); color: var(--tx-coursmos-secondary); }
+/* 내용에 입력칸을 넣을 때 (popup edit 80:21357 — 대화방 이름 변경): 반경 8 */
+.lxp-popup__body .lxp-input { border-radius: var(--radi-xsm); text-align: left; }
 
 /* ===== components/blocks/setting-card.css ===== */
 /* ---------- SettingCard (chat_setting 83:17411) ---------- */
@@ -1004,6 +1044,7 @@
 .lxp-tag--md { height: 40px; }
 .lxp-tag--lg { height: 44px; }
 .lxp-tag.has-avatar { padding: 0 9px 0 2px; }
+.lxp-tag.has-text { padding: 0 9px 0 14px; }   /* 글자만 ('물리학실험실 전체') */
 .lxp-tag.has-icon { padding: 0 9px 0 14px; }
 .lxp-tag .lxp-avatar { border: 0; }
 
@@ -1076,6 +1117,7 @@
   background: var(--bg-hierarchy-secondary); border-top: 1px solid var(--bo-hierarchy-secondary);
 }
 .lxp-footer__caption { text-align: center; font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-footer--chat.is-safe { padding-bottom: 38px; }   /* 60 + 홈 표시줄 26 = 86 (Figma 채팅방 Footer) */
 
 /* ===== components/sections/header.css ===== */
 /* ---------- Header (메인 탭 헤더) ---------- */
@@ -1136,6 +1178,8 @@
   display: inline-flex; align-items: center; justify-content: center;
 }
 .lxp-section-title__aside { margin-left: auto; display: inline-flex; }
+.lxp-section-title.is-sm { padding: 0 var(--spac-4); }
+.lxp-section-title.is-sm .lxp-section-title__text { font: var(--font-cap-12sb); letter-spacing: var(--ls-cap); color: var(--tx-hierarchy-quaternary); }
 
 /* ===== components/sections/tab-bar.css ===== */
 /* ---------- TabBar (82px) ---------- */

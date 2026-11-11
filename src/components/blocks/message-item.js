@@ -17,7 +17,7 @@ import { SwipeAction } from '../primitives/swipe-action.js';
 export function MessageItem({
   option = 'dm', state = 'enabled', swipe = null,
   name = option === 'group' ? '김연아, 이상화, 봉준호, 손흥민, 박지성' : '긴 대화방명은 말줄임표를 사용하여 한줄로 표기',
-  preview = option === 'group' ? '안녕하세요~' : '과거 몇차례 잔디를 통해서 일하는 사...',
+  preview = state === 'block' ? '대화방을 나갔습니다.' : option === 'group' ? '안녕하세요~' : '과거 몇차례 잔디를 통해서 일하는 사...',
   avatar = 'avatar-04', more = 5, unread = option === 'group' ? 10 : 1,
   muted = true, pinned = true,
 } = {}) {
@@ -32,7 +32,7 @@ export function MessageItem({
     ${av}
     <div class="lxp-msg-item__text">
       <div class="lxp-msg-item__name"><p class="lxp-ellipsis">${esc(name)}</p>${icons}</div>
-      <p class="lxp-msg-item__preview">${esc(block ? '대화방을 나갔습니다.' : preview)}</p>
+      <p class="lxp-msg-item__preview">${esc(preview)}</p>
     </div>
     ${trailing}
   </div>`;

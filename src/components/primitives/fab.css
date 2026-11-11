@@ -1,0 +1,3 @@
+/* ---------- Fab ---------- */
+.lxp-fab { display: inline-flex; border-radius: var(--radi-full); box-shadow: var(--shadow-md); }
+.lxp-fab img { display: block; }

@@ -23,10 +23,11 @@ function frame({ tag = 'div', base, mods = [], vars = {}, children, className = 
  * @param {'start'|'center'|'end'|'stretch'} [p.align] 교차축 정렬
  * @param {'start'|'center'|'end'|'between'} [p.justify] 주축 정렬
  * @param {'div'|'section'|'ul'} [p.tag]
+ * @param {boolean} [p.fill] 스크롤 영역 높이를 꽉 채움 (justify: 'end' 와 함께 = 채팅처럼 아래부터 쌓기)
  */
-export function Stack({ children = '', gap, pad, direction = 'column', align, justify, tag, className = '' } = {}) {
+export function Stack({ children = '', gap, pad, direction = 'column', align, justify, tag, fill = false, className = '' } = {}) {
   return frame({
-    tag, base: 'lxp-stack', mods: [direction === 'row' && 'lxp-stack--row'], className, children,
+    tag, base: 'lxp-stack', mods: [direction === 'row' && 'lxp-stack--row', fill && 'lxp-surface--fill'], className, children,
     vars: { gap: box(gap), pad: box(pad), align: ALIGN[align], justify: ALIGN[justify] },
   });
 }

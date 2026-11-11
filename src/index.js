@@ -4,6 +4,8 @@
 export { esc, cx, slot, htmlAttrs } from './core/html.js';
 export { asset, Icon, iconNames, setAssetBase } from './core/assets.js';
 // 2층 요소
+export { Fab } from './components/primitives/fab.js';
+export { Divider } from './components/primitives/divider.js';
 export { Flag } from './components/primitives/flag.js';
 export { ImageTile } from './components/primitives/image-tile.js';
 export { SelectCheck } from './components/primitives/select-check.js';
@@ -17,6 +19,7 @@ export { Pill } from './components/primitives/pill.js';
 export { Reaction } from './components/primitives/reaction.js';
 export { Toast } from './components/primitives/toast.js';
 // 3층 블록
+export { MediaViewer } from './components/blocks/media-viewer.js';
 export { SelectAllRow } from './components/blocks/select-all-row.js';
 export { EmojiBar } from './components/blocks/emoji-bar.js';
 export { ListGroup } from './components/blocks/list-group.js';

@@ -26,6 +26,7 @@
 
 .lxp-btn--secondary { background: var(--bg-hierarchy-secondary); color: var(--tx-hierarchy-secondary); }
 
+.lxp-btn--outline.is-danger { color: var(--tx-semantic-nega-secondary); border-color: var(--bo-semantic-nega-primary); }   /* 대화방 나가기 */
 .lxp-btn--outline { background: var(--bg-neutral-white); color: var(--tx-hierarchy-secondary); border: 1px solid var(--bo-hierarchy-quaternary); }
 
 .lxp-btn--outline-primary { background: var(--bg-neutral-white); color: var(--tx-coursmos-secondary); border: 1px solid var(--bo-coursmos-quaternary); }
@@ -50,4 +51,5 @@
 .lxp-icon-btn--36 { width: 36px; height: 36px; }
 .lxp-icon-btn--40 { width: 40px; height: 40px; }
 .lxp-icon-btn.is-active { background: var(--bg-hierarchy-secondary); }
+.lxp-icon-btn.is-primary { background: var(--bg-coursmos-primary); }   /* 채운 파란 아이콘 버튼 (사진 뷰어 내려받기) */
 .lxp-icon-btn--round { border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary); }

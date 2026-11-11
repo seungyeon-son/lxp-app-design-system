@@ -17,16 +17,18 @@ export function StatusBar({ className = '' } = {}) {
  * @param {string|string[]} [p.body] 스크롤 영역 내용
  * @param {string} [p.bottom]  TabBar()/Footer() 결과 (하단 고정)
  * @param {string} [p.overlay] Dim+Popup 등 최상단 레이어 (화면 전체를 덮어 아래 터치를 막음)
+ * @param {string} [p.fab]     Fab() 결과. 하단(탭바) 위 오른쪽에 떠 있음 (메시지 '새 대화')
  * @param {string} [p.toast]   Toast() 결과. 하단(bottom) 바로 위 가운데에 떠 있고 스크롤·터치에 영향 없음
  * @param {'default'|'white'|'sky'} [p.bg] sky=홈 블루 그라디언트
  * @param {boolean} [p.statusBar]
  */
-export function Screen({ header = '', body = '', bottom = '', overlay = '', toast = '', bg = 'default', statusBar = true, className = '' } = {}) {
+export function Screen({ header = '', body = '', bottom = '', overlay = '', toast = '', fab = '', bg = 'default', statusBar = true, className = '' } = {}) {
   return `<div class="${cx('lxp', 'lxp-screen', bg !== 'default' && `lxp-screen--${bg}`, className)}">
     ${statusBar ? StatusBar() : ''}
     ${slot(header)}
     <main class="lxp-screen__body">${slot(body)}</main>
     ${toast ? `<div class="lxp-screen__toast">${slot(toast)}</div>` : ''}
+    ${fab ? `<div class="lxp-screen__fab">${slot(fab)}</div>` : ''}
     ${slot(bottom)}
     ${overlay ? `<div class="lxp-screen__overlay">${slot(overlay)}</div>` : ''}
   </div>`;

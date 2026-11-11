@@ -14,8 +14,9 @@ import { Button } from '../primitives/button.js';
  * @param {string} [p.prefix] count-button 숫자 앞 문구 (기본 '총', 빈 문자열이면 생략) 예: '미체크'
  * @param {string} [p.unit] count-button 숫자 뒤 단위 (기본 '명') 예: '건', '개'
  * @param {string} [p.caption] message-block 안내 문구
+ * @param {boolean} [p.safe] message-input 아래에 홈 표시줄 여백(26) — 채팅방 기본 화면은 86, 시트·답장 바가 있을 때는 60
  */
-export function Footer({ type = 'button', label, count = 2, prefix = '총', unit = '명', caption = '차단 친구와는 대화할 수 없습니다.', placeholder, secondary, attrs, disabled = false } = {}) {
+export function Footer({ type = 'button', label, count = 2, prefix = '총', unit = '명', caption = '차단 친구와는 대화할 수 없습니다.', placeholder, secondary, attrs, disabled = false, safe = false } = {}) {
   if (type === 'empty') return '<footer class="lxp-footer lxp-footer--empty"></footer>';
   if (type === 'button-pair') {
     // 출석부 BottomCTA (7062:38459): 왼쪽 보조 버튼 128px + 오른쪽 주 버튼, 높이 48
@@ -31,7 +32,7 @@ export function Footer({ type = 'button', label, count = 2, prefix = '총', unit
       <p class="lxp-footer__count">${prefix ? `<span>${esc(prefix)}</span>` : ''}<span><em>${esc(count)}</em>${esc(unit)}</span></p>${Button({ label: label || '대화시작하기', disabled, attrs })}
     </div></footer>`;
   }
-  if (type === 'message-input') return `<footer class="lxp-footer lxp-footer--chat">${MessageInput({ placeholder })}</footer>`;
+  if (type === 'message-input') return `<footer class="lxp-footer lxp-footer--chat${safe ? ' is-safe' : ''}">${MessageInput({ placeholder })}</footer>`;
   if (type === 'message-block') {
     return `<footer class="lxp-footer lxp-footer--chat lxp-footer--block">
       ${Button({ label: label || '차단 해제', variant: 'gray', size: 'md', icon: 'block', block: true })}

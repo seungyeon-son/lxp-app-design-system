@@ -8,3 +8,5 @@
   display: inline-flex; align-items: center; justify-content: center;
 }
 .lxp-section-title__aside { margin-left: auto; display: inline-flex; }
+.lxp-section-title.is-sm { padding: 0 var(--spac-4); }
+.lxp-section-title.is-sm .lxp-section-title__text { font: var(--font-cap-12sb); letter-spacing: var(--ls-cap); color: var(--tx-hierarchy-quaternary); }

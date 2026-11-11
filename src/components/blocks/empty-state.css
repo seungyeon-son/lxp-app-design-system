@@ -1,4 +1,10 @@
-/* ---------- EmptyState (block_chatting_icon 70:22686) ---------- */
+/* ---------- EmptyState (block_chatting_icon 70:22686 · 에러_네트워크미연결 5:12102) ---------- */
 .lxp-empty { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.lxp-empty.has-title { gap: 20px; }
 .lxp-empty__icon { display: block; }
 .lxp-empty p { font: var(--font-label-16r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); text-align: center; white-space: nowrap; }
+.lxp-empty__text { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.lxp-empty.has-title .lxp-empty__text p { font: var(--font-label-14r); }
+.lxp-empty.has-title .lxp-empty__text .lxp-empty__title { font: var(--font-head-20sb); letter-spacing: var(--ls-head); color: var(--tx-hierarchy-secondary); }
+/* Figma 오류 화면 버튼: 높이 48 · 15M · 폭 120 (btn-base-state) */
+.lxp-empty__action .lxp-btn { width: 120px; font: var(--font-label-15m); letter-spacing: var(--ls-label); }

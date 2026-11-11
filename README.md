@@ -94,7 +94,7 @@ dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.j
 | `AppHeader` | 24:13004 | `type('default'\|'popup_pull'\|'page'\|'page_chat'\|'photo-viewer'), title, subtitle, right, titleIcon` |
 | `TabBar` | 5:12712 | `active, badges, newDots` |
 | `Footer` | 37:14876 · 7062:38459 | `type('empty'\|'button'\|'count-button'\|'button-pair'\|'message-input'\|'message-block'), label, count, prefix, unit, secondary, attrs, disabled` |
-| `Section` | 홈 '이번 주 학습' | `title, count, aside, children, gap, pad` |
+| `Section` | 홈 '이번 주 학습' | `title, count, aside, children, gap, pad, size('lg'\|'sm')` |
 | `DeadlineCarousel` | 20:10530 | `cards[]` (DeadlineCard 3장) |
 
 ### 3층 블록
@@ -128,7 +128,8 @@ dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.j
 | `ChatNotice` | 93:23602 | `title, date, author, body, open` — 채팅방 공지 (닫힘 / 열림) |
 | `PopoverAlert` | 82:25752 | `name, time, text, open` — 채팅방 고정 메시지 팝오버 |
 | `ShareLinkCard` / `ShareFileCard` | 89:23365 · 87:23224 | `title, site, url, image` / `name, size, icon` — 채팅방 기록 링크 · 문서 |
-| `EmptyState` | 70:22686 | `text, icon, iconSize` — 빈 화면 안내 ('차단된 대화방이 없습니다.') |
+| `EmptyState` | 70:22686 · 5:12102 | `text, title, icon, iconSize, action` — 빈 화면 · 오류 안내 ('차단된 대화방이 없습니다.', '연결이 불안정해요') |
+| `MediaViewer` | 80:24028 | `type('video'\|'image'), src` — 사진/동영상 보기 (재생 버튼 + 하단 다운로드) |
 | `ClassEditRow` | 51:9191 · 46:9178 | `title, professor, visible, attrs` — 내 강의실 편집 행 (공개 토글 = `IconButton` 눈 / 감긴 눈) |
 
 ### 2층 요소
@@ -144,6 +145,8 @@ dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.j
 | `Reaction` | 80:20270 | `emoji, icon, count, selected, add` |
 | `Checkbox` | 7062:38718 † | `label, checked, count, id` |
 | `Ratio` | 7062:38718 † | `label, value, total` (처리 현황 3/40) |
+| `Fab` | 5:11732 | `icon, label, attrs` — 떠 있는 '새 대화' 버튼. 화면에 띄울 때는 `Screen({ fab })` |
+| `Divider` | — | `inset` — 1px 구분선 (--bo-hierarchy-primary) |
 | `Flag` | icon/flag/*_02 | `code('kr'\|'us'\|'jp'\|'cn'), size` — 원형 국기 (번역 언어) |
 | `SelectCheck` | icon-check-state | `checked, label, attrs` — 원형 선택 표시 (빈 원 / 파란 체크) |
 | `ImageTile` | 83:17338 | `src` — 정사각 사진 칸 (없으면 회색) |

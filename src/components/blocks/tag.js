@@ -11,8 +11,8 @@ import { IconButton } from '../primitives/button.js';
  * @param {boolean} [p.closable]
  */
 export function Tag({ label = 'label', size = 'md', avatar = 'avatar-03', icon = 'plus', closable = true } = {}) {
-  const av = avatar ? Avatar({ src: avatar, size: size === 'lg' ? 40 : 36 }) : Icon(icon, { size: 18 });
-  return `<span class="${cx('lxp-tag', `lxp-tag--${size}`, avatar ? 'has-avatar' : 'has-icon')}">
+  const av = avatar ? Avatar({ src: avatar, size: size === 'lg' ? 40 : 36 }) : icon ? Icon(icon, { size: 18 }) : '';
+  return `<span class="${cx('lxp-tag', `lxp-tag--${size}`, avatar ? 'has-avatar' : icon ? 'has-icon' : 'has-text')}">
     ${av}<span>${esc(label)}</span>${closable ? IconButton({ icon: 'x-close-14', size: 24, label: '삭제' }) : ''}
   </span>`;
 }

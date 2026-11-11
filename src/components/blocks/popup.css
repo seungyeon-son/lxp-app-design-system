@@ -6,7 +6,7 @@
 }
 .lxp-popup__content { display: flex; flex-direction: column; gap: 8px; padding: 20px 20px 16px; text-align: center; }
 .lxp-popup__title { font: var(--font-label-16sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-popup__body { font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary); }
+.lxp-popup__body { white-space: pre-line;  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary); }
 .lxp-popup__actions { display: flex; }
 .lxp-popup__btn {   /* Button(ghost) 을 팝업 하단 칸으로: 꽉 채우고 위 구분선 */
   flex: 1 1 0; height: 48px; padding: 0 20px; border-radius: 0;
@@ -14,3 +14,5 @@
   font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
 }
 .lxp-popup__btn + .lxp-popup__btn { border-left: 1px solid var(--bo-hierarchy-quaternary); }
+/* 내용에 입력칸을 넣을 때 (popup edit 80:21357 — 대화방 이름 변경): 반경 8 */
+.lxp-popup__body .lxp-input { border-radius: var(--radi-xsm); text-align: left; }

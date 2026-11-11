@@ -11,8 +11,10 @@ import { Stack } from '../layout/stack.js';
  * @param {string|string[]} [p.children] 내용
  * @param {number|number[]} [p.gap] 제목과 내용 사이 간격 (기본 12)
  * @param {number|number[]} [p.pad] 섹션 안쪽 여백
+ * @param {'lg'|'sm'} [p.size] lg = 20B 제목(홈), sm = 12SB 작은 제목(내 강의실 편집 '숨김 강의', 간격 4)
  */
-export function Section({ title = '', count, aside = '', children = '', gap = 12, pad, className = '' } = {}) {
-  const head = `<div class="lxp-section-title"><span class="lxp-section-title__text">${esc(title)}</span>${count != null ? `<span class="lxp-section-title__count">${esc(count)}</span>` : ''}${aside ? `<span class="lxp-section-title__aside">${aside}</span>` : ''}</div>`;
+export function Section({ title = '', count, aside = '', children = '', gap, pad, size = 'lg', className = '' } = {}) {
+  gap = gap ?? (size === 'sm' ? 4 : 12);
+  const head = `<div class="lxp-section-title${size === 'sm' ? ' is-sm' : ''}"><span class="lxp-section-title__text">${esc(title)}</span>${count != null ? `<span class="lxp-section-title__count">${esc(count)}</span>` : ''}${aside ? `<span class="lxp-section-title__aside">${aside}</span>` : ''}</div>`;
   return Stack({ tag: 'section', gap, pad, className, children: [head, children] });
 }
