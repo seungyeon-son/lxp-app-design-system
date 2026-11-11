@@ -212,7 +212,7 @@ function Badge({ count = 1, size = 'md', className = '' } = {}) {
  * @param {string} [p.iconRight] 오른쪽 아이콘 이름
  * @param {boolean} [p.block] 가로 100%
  * @param {boolean} [p.disabled]
- * @param {'danger'|'primary'} [p.tone] 글자색만 바꿈 — ghost 버튼용 (팝업 '삭제'·'확인')
+ * @param {'danger'|'primary'} [p.tone] 글자색만 바꿈 — ghost 버튼용. danger=nega-secondary(팝업 '삭제'), primary=info-secondary(팝업 '확인')
  * @param {Record<string,string|number|boolean>} [p.attrs] 추가 속성 (id, type, data-* 등)
  */
 function Button({ label = '', variant = 'primary', size = 'lg', tone, icon, iconRight, block = false, disabled = false, attrs, className = '' } = {}) {

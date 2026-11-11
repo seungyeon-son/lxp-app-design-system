@@ -422,7 +422,7 @@
 
 .lxp-btn--ghost { background: transparent; color: var(--tx-hierarchy-secondary); }
 .lxp-btn--ghost.is-danger { color: var(--tx-semantic-nega-secondary); }
-.lxp-btn--ghost.is-primary { color: var(--tx-coursmos-secondary); }
+.lxp-btn--ghost.is-primary { color: var(--tx-semantic-info-secondary); }   /* Figma popup 확인 버튼 (80:21357) */
 
 /* ---------- IconButton ---------- */
 .lxp-icon-btn {
