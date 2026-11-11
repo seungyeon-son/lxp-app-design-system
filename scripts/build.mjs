@@ -35,7 +35,6 @@ for (const [k, ref] of Object.entries(T.semantic)) push(varName(k), resolveRef(r
 lines.push('  /* typography — font shorthand + letter-spacing */');
 push('--font-family', T.typography.fontFamily);
 push('--ls-head', '0');
-push('--ls-paragraph', '-0.001em');
 push('--ls-label', '-0.005em');
 push('--ls-cap', '-0.005em');
 for (const [k, [size, weight, lh]] of Object.entries(T.typography.styles)) {
@@ -49,7 +48,7 @@ lines.push('  /* shadow */');
 for (const [k, v] of Object.entries(T.shadow)) push(`--shadow-${k}`, v);
 
 const typoClasses = Object.entries(T.typography.styles).map(([k]) => {
-  const ls = k.startsWith('head') ? 'head' : k.startsWith('paragraph') ? 'paragraph' : k.startsWith('cap') ? 'cap' : 'label';
+  const ls = k.startsWith('head') ? 'head' : k.startsWith('cap') ? 'cap' : 'label';
   return `.t-${k.replace('/', '-').toLowerCase()} { font: var(${varName(`font-${k}`)}); letter-spacing: var(--ls-${ls}); }`;
 });
 

@@ -191,14 +191,12 @@
   /* typography — font shorthand + letter-spacing */
   --font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
   --ls-head: 0;
-  --ls-paragraph: -0.001em;
   --ls-label: -0.005em;
   --ls-cap: -0.005em;
   --font-head-28b: 700 28px/1.4 var(--font-family);
   --font-head-24b: 700 24px/1.4 var(--font-family);
   --font-head-20b: 700 20px/1.4 var(--font-family);
   --font-head-20sb: 600 20px/1.4 var(--font-family);
-  --font-paragraph-16r: 400 16px/1.5 var(--font-family);
   --font-label-18b: 700 18px/1.5 var(--font-family);
   --font-label-18sb: 600 18px/1.5 var(--font-family);
   --font-label-18m: 500 18px/1.5 var(--font-family);
@@ -259,7 +257,6 @@
 .t-head-24b { font: var(--font-head-24b); letter-spacing: var(--ls-head); }
 .t-head-20b { font: var(--font-head-20b); letter-spacing: var(--ls-head); }
 .t-head-20sb { font: var(--font-head-20sb); letter-spacing: var(--ls-head); }
-.t-paragraph-16r { font: var(--font-paragraph-16r); letter-spacing: var(--ls-paragraph); }
 .t-label-18b { font: var(--font-label-18b); letter-spacing: var(--ls-label); }
 .t-label-18sb { font: var(--font-label-18sb); letter-spacing: var(--ls-label); }
 .t-label-18m { font: var(--font-label-18m); letter-spacing: var(--ls-label); }

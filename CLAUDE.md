@@ -56,7 +56,7 @@
 - **쓰기 전에 토큰이 있는지 확인합니다**: `grep -- '--font-head' src/styles/tokens.css`.
   없는 변수는 에러 없이 무시되어 눈치채기 어렵습니다.
   (근거: 출석부의 출석률 숫자는 `--font-head-32b` 를 썼는데, 이 토큰은 모바일 정리 때 삭제되어 16px 일반 글꼴로 나옵니다.)
-- 글꼴 단계: 제목 `--font-head-28b / 24b / 20b / 20sb` 가 최대입니다(32 이상 없음). 라벨은 `--font-label-{12~18}{r|m|sb|b}`, 본문 `--font-paragraph-16r`, 캡션 `--font-cap-11sb / 12sb`.
+- 글꼴 단계: 제목 `--font-head-28b / 24b / 20b / 20sb` 가 최대입니다(32 이상 없음). 라벨은 `--font-label-{12~18}{r|m|sb|b}`(본문 글도 라벨 단계를 씀, 예: `--font-label-16r`), 캡션 `--font-cap-11sb / 12sb`. Figma 텍스트 스타일과 1:1입니다.
 - 반경은 토큰 값 중에서: `3xsm 4` · `2xsm 6` · `xsm 8` · `sm 10` · `md 12` · `lg 16` · `xlg 32` · `full`.
 - **카드는 `--radi-lg`(16px)**, 그림자는 `--shadow-card` 또는 `--shadow-xsm`. 기존 카드(`CourseCard`, `DeadlineCard`, `ModuleItem`)와 맞춥니다.
   (근거: 출석부 카드는 12px로 기존 카드와 달랐습니다.)
