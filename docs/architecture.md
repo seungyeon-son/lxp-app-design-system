@@ -4,7 +4,7 @@
 화면은 인라인 스타일 `<div>` 로 이어 붙였습니다. 이 문서는 **작은 것을 조합해 큰 것을 만드는** 계층과 그 규칙,
 그리고 그 구조로 옮긴 기록과 남은 작업을 정합니다.
 
-> **진행 상황 (2026-11-11)** — A·B·C 완료, D 남음. 아래 §2 표의 "상태" 열 참고.
+> **진행 상황 (2026-11-11)** — A·B·C·D 모두 완료. 아래 §2 표의 "상태" 열 참고.
 
 ---
 
@@ -58,10 +58,10 @@
 |---|---|---|---|---|
 | `Popup` | 하단 버튼 `lxp-popup__btn` | `Button({ variant: 'text', tone })` 변형 추가 후 호출 | 없어야 함 | **완료** — `Button({ variant: 'ghost', tone })` |
 | `MessageItem` swipe | 액션 버튼 5개, 색을 `style=` 로 | 2층 `SwipeAction({ tone, icon, label })` | 없어야 함 | **완료** — `SwipeAction({ tone })` |
-| `TabBar` | 숫자 배지 `lxp-tabbar__badge` | `Badge({ size: 'sm', tone })` | 확인 필요(빨강 배지 vs 민트 `Badge`) | D (남음) |
-| `InfoBar` | box 칩, pill 칩, 오른쪽 '변경 ›' 버튼 | `Chip` 변형(`subtle`), `Tag` 계열 pill, `Button({ variant: 'ghost', iconRight })` | 확인 필요(칩 배경 단계가 `Chip` 과 다름) | D (남음) |
+| `TabBar` | 숫자 배지 `lxp-tabbar__badge` | `Badge({ size: 'sm' })` | 없어야 함 (확인해 보니 `Badge` sm 과 같은 모양이었음) | **완료** — `Badge({ size: 'sm' })` |
+| `InfoBar` | box 칩, pill 칩, 오른쪽 '변경 ›' 버튼 | Figma 확인: box = `chip/times` 의 다른 색 변형, pill = 별도 컴포넌트 `chip/tag2-base`, 버튼 = `btn-ghost-base-state`(높이 32) | 없어야 함 | **완료** — `Chip({ tone: 'label' })` · 새 요소 `Pill` · `Button({ variant: 'ghost', size: 'sm' })` |
 | `Input` | 지우기 버튼 | `IconButton({ size: 24 })` | 없어야 함 | **완료** — `IconButton({ size: 16 })` |
-| `DateStrip` · `WeekPicker` | 날짜 칸을 각자 그림 | 2층 `DayCell({ size: 'sm'\|'lg' })` 하나로 | 확인 필요(크기·선택색이 다름) |
+| `DateStrip` · `WeekPicker` | 날짜 칸을 각자 그림 | 합치지 않음 | — | **결정: 따로 둠** — Figma 에서도 서로 다른 컴포넌트(홈 Date picker 24:12363, 출석부 DateStrip 7062:38201). 크기(44 vs 62×60)·선택 표현(반투명 흰 배경 vs 파란 채움)이 달라 한 함수로 묶으면 옵션만 늘어남 |
 | 홈 섹션 제목 | 함수 없이 `.lxp-section-title` CSS만 | 4층 `Section({ title, count, aside, children })` | 없어야 함 | **완료** — `Section` |
 
 ### 2-3. 화면을 인라인 스타일로 이어 붙인 것 (고칠 대상)
@@ -113,6 +113,6 @@ src/components/
 | A | 폴더 분리만 (코드 이동, 내용 그대로) | 같아야 함 | 같아야 함 | 완료 · 스냅샷 같음 · 화면 같음 |
 | B | 틀 추가(`Stack`·`Surface`·`Section`) → `screens.js` 인라인 스타일 15곳 제거 | 바뀜(구조) | 같아야 함 | 완료 · 화면 같음 |
 | C | 2-2 중 "모양 변화 없어야 함" 항목 (`Popup`·swipe·`Input`·섹션 제목) | 바뀜 | 같아야 함 | 완료 · 화면 같음 |
-| D | 2-2 중 "확인 필요" 항목 (`TabBar` 배지·`InfoBar` 칩·날짜 칸) | 바뀜 | **Figma 와 비교해 정함** | 남음 |
+| D | 2-2 중 "확인 필요" 항목 (`TabBar` 배지·`InfoBar` 칩·날짜 칸) | 바뀜 | **Figma 와 비교해 정함** | 완료 · 화면 같음 (1,285개 비교) · 날짜 칸은 합치지 않기로 함 |
 
 D는 지금 서로 다르게 생긴 것을 하나로 합칠지 정하는 일이라, 디자인 판단이 필요합니다.

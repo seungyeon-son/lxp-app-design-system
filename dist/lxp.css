@@ -400,6 +400,8 @@
 .lxp-btn--xl { height: 48px; padding: 0 20px; font: var(--font-label-16sb); letter-spacing: var(--ls-label); }
 .lxp-btn--lg { height: 44px; padding: 0 18px; font: var(--font-label-15m); letter-spacing: var(--ls-label); }
 .lxp-btn--md { height: 40px; padding: 0 16px 0 14px; font: var(--font-label-14m); letter-spacing: var(--ls-label); }
+.lxp-btn--sm { height: 32px; padding: 0 8px; font: var(--font-label-15m); letter-spacing: var(--ls-label); }
+.lxp-btn--sm.has-icon-right { padding-right: 6px; }
 .lxp-btn--xs { height: 28px; padding: 0 12px 0 10px; border-radius: var(--radi-2xsm); font: var(--font-label-12m); letter-spacing: var(--ls-label); }
 .lxp-btn--lg.has-icon { padding: 0 18px 0 16px; }
 .lxp-btn--lg.has-icon-right { padding: 0 16px 0 18px; }
@@ -465,6 +467,7 @@
 .lxp-chip--info { background: var(--bg-semantic-info-senary); color: var(--tx-coursmos-secondary); }
 .lxp-chip--neutral { background: var(--bg-hierarchy-secondary-subtle); color: var(--tx-hierarchy-secondary); }
 .lxp-chip--posi { background: var(--bg-semantic-posi-senary); color: var(--tx-semantic-posi-secondary); }
+.lxp-chip--label { background: var(--bg-semantic-info-quinary); color: var(--tx-hierarchy-secondary); }
 .lxp-chip--nega { background: var(--bg-semantic-nega-senary); color: var(--tx-semantic-nega-secondary); }
 /* warn 은 Figma chip/times 에 없는 코드 확장 톤. 글자 토큰 --tx-semantic-noti-primary(warn50)는 이 배경에서 대비 1.55:1 이라
    못 씀 → warn30(4.0:1, posi·nega 칩과 비슷)을 쓰는데, 그 단계의 글자 토큰이 없어 배경 토큰을 빌림. Figma에 글자 변수가 생기면 교체 */
@@ -494,6 +497,15 @@
 .lxp-input.is-disabled { background: var(--bg-hierarchy-primary-subtle); cursor: not-allowed; }
 .lxp-input.is-disabled input::placeholder { color: var(--tx-hierarchy-senary); }
 .lxp-input.is-disabled.is-invalid { border-color: var(--bo-semantic-nega-30); }
+
+/* ===== components/primitives/pill.css ===== */
+/* ---------- Pill (chip/tag2-base) ----------
+   Figma 배경은 bg/neutral/b6%-hovered(#0000000f) — 모바일 토큰에서 빠져 같은 회색인 --bg-hierarchy-secondary 사용 */
+.lxp-pill {
+  display: inline-flex; align-items: center; flex-shrink: 0; white-space: nowrap;
+  padding: 4px 12px; border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary);
+  font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary);
+}
 
 /* ===== components/primitives/ratio.css ===== */
 /* ---------- Ratio ---------- */
@@ -647,10 +659,7 @@
 }
 .lxp-info-bar__main { display: flex; align-items: center; gap: 4px; min-width: 0; }
 .lxp-info-bar__main p { white-space: nowrap; font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary); }
-.lxp-info-bar__chip { flex-shrink: 0; white-space: nowrap; }
-.lxp-info-bar__chip.is-box { height: 24px; display: inline-flex; align-items: center; padding: 0 8px; border-radius: var(--radi-3xsm); background: var(--bg-semantic-info-quinary); font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-info-bar__chip.is-pill { padding: 4px 12px; border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary); font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary); }
-.lxp-info-bar__action { flex-shrink: 0; height: 32px; display: inline-flex; align-items: center; gap: 4px; padding: 0 6px 0 8px; border-radius: var(--radi-xsm); font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); cursor: pointer; }
+/* 칩은 Chip({ tone: 'label' }) · Pill, 오른쪽은 Button({ variant: 'ghost', size: 'sm' }) */
 
 /* ===== components/blocks/member-row.css ===== */
 /* ---------- MemberRow (LearnerRows › Row 7062:38271) ----------
@@ -954,12 +963,7 @@
   color: var(--tx-hierarchy-quaternary); text-decoration: none;
 }
 .lxp-tabbar__item.is-active { color: var(--tx-hierarchy-secondary); }
-.lxp-tabbar__badge {
-  position: absolute; top: -6px; right: -3.67px; height: 18px; padding: 4px 6px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--bg-semantic-posi-quinary); border-radius: var(--radi-full);
-  font: var(--font-cap-11sb); font-style: normal; letter-spacing: var(--ls-cap); color: var(--tx-hierarchy-primary);
-}
+.lxp-tabbar__badge { position: absolute; top: -6px; right: -3.67px; }   /* 모양은 Badge({ size: 'sm' }) */
 .lxp-tabbar__dot { position: absolute; top: 2px; right: 2px; width: 6px; height: 6px; }
 
 /* ===== components/layout/screen.css ===== */

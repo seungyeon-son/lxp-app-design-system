@@ -1,6 +1,7 @@
 // TabBar · TAB_ITEMS — 4층 영역
 import { esc, cx } from '../../core/html.js';
 import { Icon, asset } from '../../core/assets.js';
+import { Badge } from '../primitives/badge.js';
 
 const TABS = [
   { key: 'home', label: '홈', icon: 'tab-home', activeIcon: 'tab-home-active' },
@@ -23,7 +24,7 @@ export function TabBar({ active = 'home', badges = { message: 11 }, newDots = []
       return `<a class="${cx('lxp-tabbar__item', on && 'is-active')}" ${on ? 'aria-current="page"' : ''}>
         ${Icon(on ? t.activeIcon : t.icon, { size: 24 })}
         <span>${esc(t.label)}</span>
-        ${badges[t.key] != null ? `<i class="lxp-tabbar__badge">${esc(badges[t.key])}</i>` : ''}
+        ${badges[t.key] != null ? Badge({ count: badges[t.key], size: 'sm', className: 'lxp-tabbar__badge' }) : ''}
         ${newDots.includes(t.key) ? `<img class="lxp-tabbar__dot" src="${asset('dot-new')}" alt="새 소식">` : ''}
       </a>`;
     }).join('')}

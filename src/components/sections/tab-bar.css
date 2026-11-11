@@ -13,10 +13,5 @@
   color: var(--tx-hierarchy-quaternary); text-decoration: none;
 }
 .lxp-tabbar__item.is-active { color: var(--tx-hierarchy-secondary); }
-.lxp-tabbar__badge {
-  position: absolute; top: -6px; right: -3.67px; height: 18px; padding: 4px 6px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--bg-semantic-posi-quinary); border-radius: var(--radi-full);
-  font: var(--font-cap-11sb); font-style: normal; letter-spacing: var(--ls-cap); color: var(--tx-hierarchy-primary);
-}
+.lxp-tabbar__badge { position: absolute; top: -6px; right: -3.67px; }   /* 모양은 Badge({ size: 'sm' }) */
 .lxp-tabbar__dot { position: absolute; top: 2px; right: 2px; width: 6px; height: 6px; }

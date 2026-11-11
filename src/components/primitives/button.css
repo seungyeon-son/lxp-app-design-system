@@ -12,6 +12,8 @@
 .lxp-btn--xl { height: 48px; padding: 0 20px; font: var(--font-label-16sb); letter-spacing: var(--ls-label); }
 .lxp-btn--lg { height: 44px; padding: 0 18px; font: var(--font-label-15m); letter-spacing: var(--ls-label); }
 .lxp-btn--md { height: 40px; padding: 0 16px 0 14px; font: var(--font-label-14m); letter-spacing: var(--ls-label); }
+.lxp-btn--sm { height: 32px; padding: 0 8px; font: var(--font-label-15m); letter-spacing: var(--ls-label); }
+.lxp-btn--sm.has-icon-right { padding-right: 6px; }
 .lxp-btn--xs { height: 28px; padding: 0 12px 0 10px; border-radius: var(--radi-2xsm); font: var(--font-label-12m); letter-spacing: var(--ls-label); }
 .lxp-btn--lg.has-icon { padding: 0 18px 0 16px; }
 .lxp-btn--lg.has-icon-right { padding: 0 16px 0 18px; }

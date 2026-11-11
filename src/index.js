@@ -10,6 +10,7 @@ export { Button, IconButton } from './components/primitives/button.js';
 export { Checkbox } from './components/primitives/checkbox.js';
 export { Chip } from './components/primitives/chip.js';
 export { Input } from './components/primitives/input.js';
+export { Pill } from './components/primitives/pill.js';
 export { Reaction } from './components/primitives/reaction.js';
 export { Toast } from './components/primitives/toast.js';
 // 3층 블록

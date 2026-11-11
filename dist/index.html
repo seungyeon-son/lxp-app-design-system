@@ -403,6 +403,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
       S(`Button({ label: '저장하기', block: true })`, 'primary lg block'),
       S(`[Button({ label: '내 강의실 편집', variant: 'secondary', size: 'xs', icon: 'settings' }), Button({ label: '차단 해제', variant: 'outline', size: 'xs', icon: 'block-12' })].join(' ')`, 'xs', { bare: true }),
       S(`Button({ label: '차단 해제', variant: 'gray', size: 'md', icon: 'block' })`, 'gray md', { bare: true }),
+      S(`Button({ label: '변경', variant: 'ghost', size: 'sm', iconRight: 'chevron-right' })`, 'ghost sm (32)', { bare: true }),
       S(`[IconButton({ icon: 'bell-18' }), IconButton({ icon: 'grid-active', active: true }), IconButton({ icon: 'plus', round: true })].join('')`, 'IconButton 36 · active · round', { bare: true }),
       S(`[Button({ label: '자동출결', variant: 'outline-primary', size: 'xl', iconRight: 'check-circle' }), Button({ label: '출결 일괄 처리', size: 'xl', attrs: { 'data-act': 'bulk' } })].join(' ')`, 'xl 48 · outline-primary · iconRight · attrs', { bare: true }),
     ]],
@@ -458,6 +459,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
       S(`AvatarGroup({ more: 5 })`, 'AvatarGroup', { bare: true }),
       S(`[Tag({ label: '김연아' }), Tag({ label: '1조', avatar: false, icon: 'plus' })].join(' ')`, 'Tag', { bare: true }),
       S(`[Badge({ count: 1 }), Badge({ count: 11, size: 'sm' }), Chip({ label: '3시간 남았어요' }), Chip({ label: 'D-4', tone: 'neutral' })].join(' ')`, 'Badge · Chip', { bare: true }),
+      S(`[Chip({ label: '1교시', tone: 'label' }), Pill({ label: '보강' })].join(' ')`, 'Chip label · Pill (출석부 InfoBar)', { bare: true }),
     ]],
     ['DateStrip', 'DateStrip · InfoBar', '7062:38201 · 7062:38223', '스마트 출석부 상단. 날짜 칸(62×60)은 가운데 정렬되고 양 끝은 잘립니다. 달이 바뀌는 날에만 월 표기.', [
       S(`DateStrip({ selected: 3 })`, 'DateStrip'),

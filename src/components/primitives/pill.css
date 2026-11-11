@@ -1,0 +1,7 @@
+/* ---------- Pill (chip/tag2-base) ----------
+   Figma 배경은 bg/neutral/b6%-hovered(#0000000f) — 모바일 토큰에서 빠져 같은 회색인 --bg-hierarchy-secondary 사용 */
+.lxp-pill {
+  display: inline-flex; align-items: center; flex-shrink: 0; white-space: nowrap;
+  padding: 4px 12px; border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary);
+  font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary);
+}

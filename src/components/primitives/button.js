@@ -11,7 +11,7 @@ import { Icon } from '../../core/assets.js';
  *   outline  : 흰 배경 + 보더 (차단 해제 · 리스트 내)
  *   outline-primary: 흰 배경 + 연파랑 보더 + 파랑 글자 (출석부 '자동출결', Figma 7062:38460)
  *   gray     : 진회색 배경 (차단 해제 · 푸터)
- * @param {'xl'|'lg'|'md'|'xs'} [p.size] xl=48(출석부 BottomCTA), lg=44, md=40, xs=28
+ * @param {'xl'|'lg'|'md'|'sm'|'xs'} [p.size] xl=48(출석부 BottomCTA), lg=44, md=40, sm=32(btn-ghost-base-state, 출석부 '변경 ›'), xs=28
  * @param {string} [p.icon] 왼쪽 아이콘 이름
  * @param {string} [p.iconRight] 오른쪽 아이콘 이름
  * @param {boolean} [p.block] 가로 100%

@@ -120,10 +120,11 @@ dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.j
 
 | 함수 | Figma 노드 | 주요 props |
 |---|---|---|
-| `Button` / `IconButton` | btn-base-state | `variant(+'outline-primary'), size('xl'\|'lg'\|'md'\|'xs'), tone('danger'\|'primary'), icon, iconRight, block, attrs` / `icon, size(16\|24\|36\|40), active, round, attrs` |
+| `Button` / `IconButton` | btn-base-state | `variant(+'outline-primary'), size('xl'\|'lg'\|'md'\|'sm'\|'xs'), tone('danger'\|'primary'), icon, iconRight, block, attrs` / `icon, size(16\|24\|36\|40), active, round, attrs` |
 | `Input` | 86:18467 | `state('enabled'\|'focused'\|'disabled'), validation('normal'\|'filled'\|'invalid'), value` |
 | `Avatar` / `AvatarGroup` | 72:11136 | `src('avatar-02'…), size(24–48), dimmed` |
-| `Chip` / `Badge` | chip/times · new | `tone` / `count, size` |
+| `Chip` / `Badge` | chip/times · new | `tone('info'\|'neutral'\|'posi'\|'nega'\|'warn'\|'label')` / `count, size` |
+| `Pill` | chip/tag2-base · 7062:38227 † | `label` (회색 둥근 태그 '보강') |
 | `Toast` | 37:14852 | `label, icon` — 화면에 띄울 때는 `Screen({ toast })` |
 | `Reaction` | 80:20270 | `emoji, icon, count, selected, add` |
 | `Checkbox` | 7062:38718 † | `label, checked, count, id` |
