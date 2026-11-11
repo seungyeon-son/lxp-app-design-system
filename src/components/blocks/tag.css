@@ -1,0 +1,12 @@
+/* ---------- Tag (con-base) ---------- */
+.lxp-tag {
+  display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+  background: var(--bg-hierarchy-primary); border: 1px solid var(--bo-hierarchy-primary);
+  border-radius: var(--radi-full); overflow: hidden;
+  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); white-space: nowrap;
+}
+.lxp-tag--md { height: 40px; }
+.lxp-tag--lg { height: 44px; }
+.lxp-tag.has-avatar { padding: 0 9px 0 2px; }
+.lxp-tag.has-icon { padding: 0 9px 0 14px; }
+.lxp-tag .lxp-avatar { border: 0; }

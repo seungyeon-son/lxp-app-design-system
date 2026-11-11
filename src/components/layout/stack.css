@@ -1,0 +1,18 @@
+/* ---------- Stack · Grid · Surface (틀) ----------
+   값은 함수가 style="--lxp-gap:…" 로 넘깁니다. 사용자 정의 속성은 상속되므로
+   틀마다 기본값을 다시 정해, 안쪽 틀이 바깥 틀의 간격을 물려받지 않게 합니다(인라인 값이 있으면 그쪽이 이김). */
+.lxp-stack, .lxp-grid { --lxp-gap: 0; --lxp-pad: 0; --lxp-align: stretch; --lxp-justify: flex-start; }
+.lxp-stack {
+  display: flex; flex-direction: column;
+  gap: var(--lxp-gap); padding: var(--lxp-pad);
+  align-items: var(--lxp-align); justify-content: var(--lxp-justify);
+}
+.lxp-stack--row { --lxp-align: center; flex-direction: row; }
+.lxp-grid {
+  --lxp-justify: stretch;
+  display: grid; grid-template-columns: var(--lxp-cols);
+  gap: var(--lxp-gap); padding: var(--lxp-pad); justify-content: var(--lxp-justify);
+}
+.lxp-surface--white { background: var(--bg-neutral-white); }
+.lxp-surface--subtle { background: var(--bg-hierarchy-primary-subtle); }
+.lxp-surface--fill { min-height: 100%; }

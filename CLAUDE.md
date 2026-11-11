@@ -3,7 +3,8 @@
 이 저장소는 Figma **UBION 4.5 LXP App 디자인 시스템**을 코드로 옮긴 것입니다.
 목적은 하나입니다. **팀원이 "○○ 화면 그려줘"라고 하면, 처음부터 만들지 말고 이 시스템의 함수로 360×780 모바일 시안을 조립**합니다.
 
-- 컴포넌트 목록·props: `README.md` 의 컴포넌트 표 → 정확한 인자는 `src/components/*.js` 의 JSDoc
+- 컴포넌트 목록·props: `README.md` 의 컴포넌트 표(계층별) → 정확한 인자는 `src/components/<계층>/*.js` 의 JSDoc
+- 컴포넌트 계층(요소 → 블록 → 영역 → 화면, 배치는 틀)과 조합 규칙: `docs/architecture.md`
 - 시안 보관 규칙: `templates/README.md`
 - 새 UI를 정식 컴포넌트로 올리는 규칙과 후보 장부: `docs/promotion-rules.md`
 
@@ -33,6 +34,10 @@
 ### 조립
 
 - **시스템 함수가 있는 UI는 직접 만들지 않습니다.** 버튼·칩·아바타·헤더·탭·푸터·토스트·팝업은 반드시 함수로.
+- **배치는 틀 함수로 합니다.** `style="display:flex;gap…;padding…"` 이나 시안 CSS 로 쌓기·여백·바탕을 만들지 않고
+  `Stack({ gap, pad })` · `Grid({ cols })` · `Surface({ tone, pad })` · `Section({ title, count })` 를 씁니다.
+  (근거: 화면 템플릿이 인라인 스타일 15곳으로 이어 붙여져 있었고, 같은 패턴이 반복되어 고치기 어려웠습니다.)
+  시안 `<style>` 에는 시스템에 없는 **모양**만 둡니다.
 - **`lxp-*` 클래스를 직접 마크업하지 않습니다.** 함수가 못 해 주는 게 있어서 어쩔 수 없이 쓰면 `@gaps` 에 이유를 적습니다.
   (근거: 첫 테스트 시안은 `lxp-btn`·`lxp-footer` 를 직접 썼고, 그 뒤 `Button`·`Footer` 에 `attrs`·`prefix`·`disabled` 가 생기면서 그 코드는 필요 없어졌습니다. 직접 쓴 마크업은 이런 변화를 따라가지 못합니다.)
   `id`·`type`·`data-*` 가 필요하면 `Button({ attrs: { id: 'save', 'data-x': 1 } })` 처럼 `attrs` 를 씁니다.

@@ -155,68 +155,9 @@ function Icon(name, { size = 24, color, className = '', label = '' } = {}) {
   return `<img class="${cx('lxp-icon', className)}" src="${src}" width="${size}" height="${size}" alt="${esc(label)}"${label ? '' : ' aria-hidden="true"'}>`;
 }
 
-// ----- components/button.js
-// 버튼: Button(btn-base-state) · IconButton(btn-icon-base-state)
+// ----- components/primitives/avatar.js
+// Avatar · AvatarGroup — 2층 요소
 
-
-/**
- * 텍스트 버튼
- * @param {string} p.label
- * @param {'primary'|'secondary'|'outline'|'outline-primary'|'gray'|'ghost'} [p.variant]
- *   primary  : 코스모스 블루 (저장하기/대화시작하기)
- *   secondary: 연회색 배경 (내 강의실 편집)
- *   outline  : 흰 배경 + 보더 (차단 해제 · 리스트 내)
- *   outline-primary: 흰 배경 + 연파랑 보더 + 파랑 글자 (출석부 '자동출결', Figma 7062:38460)
- *   gray     : 진회색 배경 (차단 해제 · 푸터)
- * @param {'xl'|'lg'|'md'|'xs'} [p.size] xl=48(출석부 BottomCTA), lg=44, md=40, xs=28
- * @param {string} [p.icon] 왼쪽 아이콘 이름
- * @param {string} [p.iconRight] 오른쪽 아이콘 이름
- * @param {boolean} [p.block] 가로 100%
- * @param {boolean} [p.disabled]
- * @param {Record<string,string|number|boolean>} [p.attrs] 추가 속성 (id, type, data-* 등)
- */
-function Button({ label = '', variant = 'primary', size = 'lg', icon, iconRight, block = false, disabled = false, attrs, className = '' } = {}) {
-  const iconSize = size === 'xs' ? 12 : size === 'xl' ? 18 : 16;
-  return `<button class="${cx('lxp-btn', `lxp-btn--${variant}`, `lxp-btn--${size}`, block && 'lxp-btn--block', icon && 'has-icon', iconRight && 'has-icon-right', className)}"${disabled ? ' disabled' : ''}${htmlAttrs(attrs)}>
-    ${icon ? Icon(icon, { size: iconSize }) : ''}<span>${esc(label)}</span>${iconRight ? Icon(iconRight, { size: iconSize }) : ''}
-  </button>`;
-}
-
-/**
- * 아이콘 버튼
- * @param {string} p.icon
- * @param {24|36|40} [p.size] 버튼 크기 (아이콘: 14/18/20)
- * @param {boolean} [p.active] 선택 상태 (연회색 배경)
- * @param {boolean} [p.round] 원형 + 연회색 배경 (메시지 입력 +/↑)
- * @param {Record<string,string|number|boolean>} [p.attrs] 추가 속성 (id, data-* 등)
- */
-function IconButton({ icon, size = 36, active = false, round = false, label = '', attrs, className = '' } = {}) {
-  const iconSize = { 24: 14, 36: 18, 40: 20 }[size] || 18;
-  return `<button class="${cx('lxp-icon-btn', `lxp-icon-btn--${size}`, active && 'is-active', round && 'lxp-icon-btn--round', className)}" aria-label="${esc(label || icon)}"${htmlAttrs(attrs)}>
-    ${Icon(icon, { size: iconSize })}
-  </button>`;
-}
-
-// ----- components/display.js
-// 데이터 표시: Chip · Badge · Avatar · AvatarGroup · Tag · Toast · StatGrid · InfoBar · MemberRow
-
-
-
-/**
- * 칩 (chip/times — "3시간 남았어요", "D-3")
- * @param {'info'|'neutral'|'posi'|'nega'|'warn'} [p.tone]
- */
-function Chip({ label = '', tone = 'info', className = '' } = {}) {
-  return `<span class="${cx('lxp-chip', `lxp-chip--${tone}`, className)}">${esc(label)}</span>`;
-}
-
-/**
- * 카운트 배지 (새 메시지 수 — 민트 배경)
- * @param {'md'|'sm'|'square'} [p.size] md=22px/12SB, sm=18px/11SB, square=radius4/13M
- */
-function Badge({ count = 1, size = 'md', className = '' } = {}) {
-  return `<span class="${cx('lxp-badge', `lxp-badge--${size}`, className)}">${esc(count)}</span>`;
-}
 
 /**
  * 아바타 (Avata-base: 24/28/32/36/40/48)
@@ -242,26 +183,454 @@ function AvatarGroup({ src = 'avatar-03', more = 5, size = 48 } = {}) {
   </span>`;
 }
 
+// ----- components/primitives/badge.js
+// Badge — 2층 요소
+
 /**
- * 선택 태그 (con-base — 받는 사람 선택 칩)
- * @param {'md'|'lg'} [p.size] md=40, lg=44
- * @param {string|false} [p.avatar] 아바타 에셋/URL. false 면 아이콘형
- * @param {boolean} [p.closable]
+ * 카운트 배지 (새 메시지 수 — 민트 배경)
+ * @param {'md'|'sm'|'square'} [p.size] md=22px/12SB, sm=18px/11SB, square=radius4/13M
  */
-function Tag({ label = 'label', size = 'md', avatar = 'avatar-03', icon = 'plus', closable = true } = {}) {
-  const av = avatar ? Avatar({ src: avatar, size: size === 'lg' ? 40 : 36 }) : Icon(icon, { size: 18 });
-  return `<span class="${cx('lxp-tag', `lxp-tag--${size}`, avatar ? 'has-avatar' : 'has-icon')}">
-    ${av}<span>${esc(label)}</span>${closable ? IconButton({ icon: 'x-close-14', size: 24, label: '삭제' }) : ''}
-  </span>`;
+function Badge({ count = 1, size = 'md', className = '' } = {}) {
+  return `<span class="${cx('lxp-badge', `lxp-badge--${size}`, className)}">${esc(count)}</span>`;
 }
+
+// ----- components/primitives/button.js
+// Button · IconButton — 2층 요소
+
+
+/**
+ * 텍스트 버튼
+ * @param {string} p.label
+ * @param {'primary'|'secondary'|'outline'|'outline-primary'|'gray'|'ghost'} [p.variant]
+ *   primary  : 코스모스 블루 (저장하기/대화시작하기)
+ *   secondary: 연회색 배경 (내 강의실 편집)
+ *   outline  : 흰 배경 + 보더 (차단 해제 · 리스트 내)
+ *   outline-primary: 흰 배경 + 연파랑 보더 + 파랑 글자 (출석부 '자동출결', Figma 7062:38460)
+ *   gray     : 진회색 배경 (차단 해제 · 푸터)
+ * @param {'xl'|'lg'|'md'|'xs'} [p.size] xl=48(출석부 BottomCTA), lg=44, md=40, xs=28
+ * @param {string} [p.icon] 왼쪽 아이콘 이름
+ * @param {string} [p.iconRight] 오른쪽 아이콘 이름
+ * @param {boolean} [p.block] 가로 100%
+ * @param {boolean} [p.disabled]
+ * @param {'danger'|'primary'} [p.tone] 글자색만 바꿈 — ghost 버튼용 (팝업 '삭제'·'확인')
+ * @param {Record<string,string|number|boolean>} [p.attrs] 추가 속성 (id, type, data-* 등)
+ */
+function Button({ label = '', variant = 'primary', size = 'lg', tone, icon, iconRight, block = false, disabled = false, attrs, className = '' } = {}) {
+  const iconSize = size === 'xs' ? 12 : size === 'xl' ? 18 : 16;
+  return `<button class="${cx('lxp-btn', `lxp-btn--${variant}`, `lxp-btn--${size}`, block && 'lxp-btn--block', tone && `is-${tone}`, icon && 'has-icon', iconRight && 'has-icon-right', className)}"${disabled ? ' disabled' : ''}${htmlAttrs(attrs)}>
+    ${icon ? Icon(icon, { size: iconSize }) : ''}<span>${esc(label)}</span>${iconRight ? Icon(iconRight, { size: iconSize }) : ''}
+  </button>`;
+}
+
+/**
+ * 아이콘 버튼
+ * @param {string} p.icon
+ * @param {16|24|36|40} [p.size] 버튼 크기 (아이콘: 16/14/18/20). 16 = 여백 없는 아이콘만(입력칸 지우기)
+ * @param {boolean} [p.active] 선택 상태 (연회색 배경)
+ * @param {boolean} [p.round] 원형 + 연회색 배경 (메시지 입력 +/↑)
+ * @param {Record<string,string|number|boolean>} [p.attrs] 추가 속성 (id, data-* 등)
+ */
+function IconButton({ icon, size = 36, active = false, round = false, label = '', attrs, className = '' } = {}) {
+  const iconSize = { 16: 16, 24: 14, 36: 18, 40: 20 }[size] || 18;
+  return `<button class="${cx('lxp-icon-btn', `lxp-icon-btn--${size}`, active && 'is-active', round && 'lxp-icon-btn--round', className)}" aria-label="${esc(label || icon)}"${htmlAttrs(attrs)}>
+    ${Icon(icon, { size: iconSize })}
+  </button>`;
+}
+
+// ----- components/primitives/checkbox.js
+// Checkbox — 2층 요소
+// 출처: Figma 4.5 LXP App 작업장(ZRoFjuXczoq30fVbJMNsVP) › 확정안 7054:14428 (스마트 출석부)
+
+/**
+ * 체크박스 + 라벨 (출석부 '미처리만 보기' 7062:38718) — 토큰 기반 구성
+ * @param {string} p.label
+ * @param {boolean} [p.checked]
+ * @param {string|number} [p.count] 라벨 뒤 빨간 개수 "(3)"
+ * @param {string} [p.id] input id (상태 보존용)
+ */
+function Checkbox({ label = '미처리만 보기', checked = false, count, id, disabled = false, className = '' } = {}) {
+  return `<label class="${cx('lxp-checkbox', className)}">
+    <input type="checkbox"${id ? ` id="${esc(id)}"` : ''}${checked ? ' checked' : ''}${disabled ? ' disabled' : ''}>
+    <span>${esc(label)}${count != null ? `<em>(${esc(count)})</em>` : ''}</span>
+  </label>`;
+}
+
+// ----- components/primitives/chip.js
+// Chip — 2층 요소
+
+/**
+ * 칩 (chip/times — "3시간 남았어요", "D-3")
+ * @param {'info'|'neutral'|'posi'|'nega'|'warn'} [p.tone]
+ */
+function Chip({ label = '', tone = 'info', className = '' } = {}) {
+  return `<span class="${cx('lxp-chip', `lxp-chip--${tone}`, className)}">${esc(label)}</span>`;
+}
+
+// ----- components/primitives/input.js
+// Input — 2층 요소
+
+
+
+/**
+ * 검색/텍스트 입력 (h44, radius 12)
+ * @param {'enabled'|'focused'|'disabled'} [p.state] focused 는 정적 시안용(실제 포커스 시 자동 적용)
+ * @param {'normal'|'filled'|'invalid'} [p.validation]
+ * @param {string} [p.value] @param {string} [p.placeholder]
+ * @param {string} [p.icon] 리딩 아이콘 (기본 search)
+ */
+function Input({ state = 'enabled', validation, value = '', placeholder = '검색어를 입력하세요.', icon = 'search', className = '' } = {}) {
+  const v = validation || (value ? 'filled' : 'normal');
+  const disabled = state === 'disabled';
+  const lead = disabled && v !== 'invalid' ? 'help-circle' : disabled ? 'search-disabled' : icon;
+  return `<label class="${cx('lxp-input', `is-${state}`, `is-${v}`, className)}">
+    ${Icon(lead, { size: 16, className: cx('lxp-input__lead', disabled && v === 'invalid' && 'is-faded') })}
+    <input type="text" value="${esc(value)}" placeholder="${esc(placeholder)}"${disabled ? ' disabled' : ''}>
+    ${v === 'filled' ? IconButton({ icon: 'x-circle-filled', size: 16, label: '지우기', className: 'lxp-input__clear' }) : ''}
+  </label>`;
+}
+
+// ----- components/primitives/ratio.js
+// Ratio — 2층 요소 (진행 비율 "처리 현황: 3/40")
+
+/**
+ * 비율 표시 — 라벨 + 진한 값 + 연한 "/전체".
+ * @param {string} [p.label] 앞 문구 (콜론까지 포함하지 않음)
+ * @param {number|string} p.value @param {number|string} p.total
+ */
+function Ratio({ label = '', value = 0, total = 0, className = '' } = {}) {
+  return `<span class="${className ? `lxp-ratio ${className}` : 'lxp-ratio'}">${label ? `${esc(label)}: ` : ''}<span class="lxp-num lxp-ratio__value">${esc(value)}</span><span class="lxp-num lxp-ratio__total">/${esc(total)}</span></span>`;
+}
+
+// ----- components/primitives/reaction.js
+// Reaction — 2층 요소
+
+
+/**
+ * 이모지 리액션 버튼
+ * @param {string} [p.emoji] 문자 이모지 (기본 👍)
+ * @param {string} [p.icon] 이모지 대신 쓸 아이콘 에셋명
+ */
+function Reaction({ emoji = '👍', icon, count, selected = false, add = false } = {}) {
+  if (add) return `<button class="lxp-reaction" aria-label="리액션 추가">${Icon('face-smile-plus', { size: 16 })}</button>`;
+  const glyph = icon ? Icon(icon, { size: 16 }) : `<span class="lxp-reaction__emoji">${esc(emoji)}</span>`;
+  return `<button class="${cx('lxp-reaction', selected && 'is-selected')}">${glyph}${count != null ? `<span>${esc(count)}</span>` : ''}</button>`;
+}
+
+// ----- components/primitives/swipe-action.js
+// SwipeAction — 2층 요소 (목록 행을 밀면 드러나는 64×64 액션 칸)
+
+
+/**
+ * 스와이프 액션 (Message list swipe 19:8837)
+ * @param {string} [p.label] 글자 (아이콘이 있으면 aria-label 로만 씀)
+ * @param {string} [p.icon] 흰 아이콘 에셋명 (예: pin-20-white)
+ * @param {'neutral'|'strong'|'danger'|'info'} [p.tone]
+ *   neutral=회색(읽음·알림) · strong=연회색(차단) · danger=빨강(나가기) · info=파랑(고정)
+ */
+function SwipeAction({ label = '', icon, tone = 'neutral', className = '' } = {}) {
+  return `<button class="${cx('lxp-swipe-action', `is-${tone}`, className)}"${icon ? ` aria-label="${esc(label)}"` : ''}>${icon ? Icon(icon, { size: 20 }) : esc(label)}</button>`;
+}
+
+// ----- components/primitives/toast.js
+// Toast — 2층 요소
+
 
 /** 토스트 (Notice_guide_secondary — "저장되었습니다") */
 function Toast({ label = '저장되었습니다', icon = 'check' } = {}) {
   return `<div class="lxp-toast" role="status">${icon ? Icon(icon, { size: 16 }) : ''}<span>${esc(label)}</span></div>`;
 }
 
-// ---------------------------------------------------------------------------
-// 아래 3종 출처: Figma 4.5 LXP App 작업장(ZRoFjuXczoq30fVbJMNsVP) › 확정안 7054:14428 (스마트 출석부)
+// ----- components/blocks/bottom-sheet.js
+// BottomSheet — 3층 블록
+
+/**
+ * 바텀시트 (bottom_sheet/* — 롱프레스 메뉴, 채팅 설정)
+ * @param {{icon?:string,label:string,tone?:'danger'}[]} [p.items]
+ */
+function BottomSheet({ title = '', items = [], content } = {}) {
+  return `<div class="lxp-sheet" role="dialog">
+    <i class="lxp-sheet__handle"></i>
+    ${title ? `<p class="lxp-sheet__title">${esc(title)}</p>` : ''}
+    ${content ? slot(content) : `<ul class="lxp-sheet__list">${items.map((it) => `<li class="${cx('lxp-sheet__item', it.tone && `is-${it.tone}`)}">${esc(it.label)}</li>`).join('')}</ul>`}
+  </div>`;
+}
+
+// ----- components/blocks/chat-message.js
+// ChatMessage · ChatDate — 3층 블록
+
+
+
+
+/**
+ * 채팅 메시지
+ * @param {{emoji?:string,icon?:string,count:number,selected?:boolean}[]} [p.reactions]
+ * @param {number|null} [p.read] 읽음 수
+ */
+function ChatMessage({
+  name = '김연아', time = '오후 05:00', read = 4, text = '안녕하세요.', avatar = 'avatar-03',
+  reactions = [{ emoji: '😀', count: 1 }, { count: 1, selected: true }], addReaction = true,
+} = {}) {
+  return `<div class="lxp-chat-msg">
+    ${Avatar({ src: avatar, size: 36 })}
+    <div class="lxp-chat-msg__main">
+      <div class="lxp-chat-msg__meta">
+        <b>${esc(name)}</b><span>${esc(time)}</span>
+        ${read != null ? `<span class="lxp-chat-msg__read">${Icon('dot-separator', { size: 8 })}읽음 ${esc(read)}</span>` : ''}
+      </div>
+      <p class="lxp-chat-msg__text">${esc(text)}</p>
+      ${reactions.length || addReaction ? `<div class="lxp-chat-msg__reactions">${reactions.map(Reaction).join('')}${addReaction ? Reaction({ add: true }) : ''}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+/** 채팅 날짜 구분선 (chat-date) — 토큰 기반 구성 */
+function ChatDate({ label = '2026년 1월 21일 수요일' } = {}) {
+  return `<div class="lxp-chat-date"><span>${esc(label)}</span></div>`;
+}
+
+// ----- components/blocks/course-card.js
+// CourseCard — 3층 블록
+
+
+/**
+ * 강의 카드 (Card-class-base 5:12819)
+ * @param {'grid'|'list'} [p.layout] grid=156×176, list=320×68
+ * @param {'blue'|'yellow'|'orange'|'green'|'purple'} [p.color] 썸네일 패턴 색
+ */
+function CourseCard({ title = '물리학수업', professor = '홍길동 교수', color = 'blue', layout = 'grid', className = '' } = {}) {
+  const thumb = `<div class="lxp-course-card__thumb" style="background-image:url('${asset('thumb-' + color)}')"></div>`;
+  return `<article class="${cx('lxp-course-card', `lxp-course-card--${layout}`, className)}">
+    ${thumb}
+    <div class="lxp-course-card__body">
+      <p class="lxp-course-card__title">${esc(title)}</p>
+      <p class="lxp-course-card__meta">${esc(professor)}</p>
+    </div>
+  </article>`;
+}
+
+// ----- components/blocks/date-strip.js
+// DateStrip — 3층 블록
+// 출처: Figma 4.5 LXP App 작업장(ZRoFjuXczoq30fVbJMNsVP) › 확정안 7054:14428 (스마트 출석부)
+
+const DEFAULT_DAYS = [
+  { label: '화', date: '27' }, { label: '수', date: '28' }, { label: '목', date: '29' },
+  { label: '오늘', date: '30' }, { label: '월', date: '11/2' }, { label: '화', date: '3' }, { label: '수', date: '4' },
+];
+
+/**
+ * 날짜 줄 (DateStrip 7062:38201) — 62×60 날짜 칸을 가로로 나열, 가운데 정렬(양 끝은 잘림).
+ * 달이 바뀌는 날짜에만 월을 함께 표기("11/2"), 오늘은 가운데에 두는 것이 Figma 규칙입니다.
+ * @param {{label:string,date:string}[]} [p.items] 위 줄(요일·'오늘') / 아래 줄(날짜)
+ * @param {number} [p.selected] 선택 칸 인덱스 (파란 칸)
+ * 각 칸은 data-index 속성을 가집니다.
+ */
+function DateStrip({ items = DEFAULT_DAYS, selected = 3, className = '' } = {}) {
+  return `<div class="${cx('lxp-date-strip', className)}"><div class="lxp-date-strip__track">
+    ${items.map((d, i) => `<button type="button" class="${cx('lxp-date-strip__item', i === selected && 'is-active')}" aria-pressed="${i === selected}" data-index="${i}">
+      <span>${esc(d.label)}</span><strong>${esc(d.date)}</strong>
+    </button>`).join('')}
+  </div></div>`;
+}
+
+// ----- components/blocks/deadline-card.js
+// DeadlineCard — 3층 블록
+
+
+
+/**
+ * 마감 학습 카드 (Card 20:10467 — 오늘 마감 학습)
+ * @param {string} [p.module] 모듈 아이콘 (module-vod | module-url ...)
+ * @param {boolean} [p.faded] 캐러셀 양옆 카드 (흰 80%)
+ */
+function DeadlineCard({ label = '오늘 마감 학습', remain = '3시간 남았어요', title = '학습이론 2: 경험주의', course = '물리학수업', module = 'module-vod', faded = false } = {}) {
+  return `<article class="${cx('lxp-deadline-card', faded && 'is-faded')}">
+    <div class="lxp-deadline-card__head"><span>${esc(label)}</span>${Chip({ label: remain, tone: 'info' })}</div>
+    <div class="lxp-deadline-card__body">
+      <div class="lxp-deadline-card__text"><p>${esc(title)}</p><span>${esc(course)}</span></div>
+      ${Icon(module, { size: 40 })}
+    </div>
+  </article>`;
+}
+
+// ----- components/blocks/dropdown.js
+// Dropdown — 3층 블록
+
+
+/**
+ * 드롭다운 메뉴 (Header message-open 의 more-dropdown, 79:18854)
+ * @param {{icon?:string,label:string,value?:string,checked?:boolean}[]} [p.items]
+ *   value 를 주면 data-value 로, checked 를 주면 선택형 메뉴(menuitemradio, aria-checked)로 그립니다.
+ */
+function Dropdown({ items = [], className = '', style = '' } = {}) {
+  return `<div class="${cx('lxp-dropdown', className)}" role="menu" style="${style}">
+    ${items.map((it) => {
+      const radio = it.checked != null;
+      return `<button type="button" class="${cx('lxp-dropdown__item', it.checked && 'is-checked')}" role="${radio ? 'menuitemradio' : 'menuitem'}"${radio ? ` aria-checked="${!!it.checked}"` : ''}${it.value != null ? ` data-value="${esc(it.value)}"` : ''}>
+      ${it.icon ? Icon(it.icon, { size: 18 }) : ''}<span>${esc(it.label)}</span></button>`;
+    }).join('')}
+  </div>`;
+}
+
+// ----- components/blocks/info-bar.js
+// InfoBar — 3층 블록
+// 출처: Figma 4.5 LXP App 작업장(ZRoFjuXczoq30fVbJMNsVP) › 확정안 7054:14428 (스마트 출석부)
+
+
+/**
+ * 정보 줄 (SubRow 7062:38223 — "10-30 (금) 09:00 [1교시] (보강)  변경 ›")
+ * @param {string} p.label 왼쪽 주 텍스트
+ * @param {{label:string,variant?:'box'|'pill'}[]} [p.chips] box=연파랑 사각 칩(chip/times), pill=회색 둥근 태그(chip/tag2-base)
+ * @param {{label:string,icon?:string,attrs?:object}|false} [p.action] 오른쪽 고스트 버튼
+ */
+function InfoBar({
+  label = '10-30 (금) 09:00',
+  chips = [{ label: '1교시', variant: 'box' }, { label: '보강', variant: 'pill' }],
+  action = { label: '변경', icon: 'chevron-right' },
+  className = '',
+} = {}) {
+  return `<div class="${cx('lxp-info-bar', className)}">
+    <div class="lxp-info-bar__main">
+      <p class="lxp-num">${esc(label)}</p>
+      ${chips.map((c) => `<span class="${cx('lxp-info-bar__chip', `is-${c.variant || 'box'}`)}">${esc(c.label)}</span>`).join('')}
+    </div>
+    ${action ? `<button type="button" class="lxp-info-bar__action"${htmlAttrs(action.attrs)}>${esc(action.label)}${action.icon ? Icon(action.icon, { size: 16 }) : ''}</button>` : ''}
+  </div>`;
+}
+
+// ----- components/blocks/member-row.js
+// MemberRow — 3층 블록
+// 출처: Figma 4.5 LXP App 작업장(ZRoFjuXczoq30fVbJMNsVP) › 확정안 7054:14428 (스마트 출석부)
+
+
+
+/**
+ * 사람 행 (LearnerRows › Row 7062:38271) — 이름(15B, 5글자 넘으면 말줄임) + › / 보조 텍스트(학번) / 오른쪽 슬롯
+ * @param {string} p.name @param {string} [p.sub] 이름 아래 보조 텍스트
+ * @param {boolean} [p.chevron] 이름 옆 › (상세 보기)
+ * @param {string} [p.right] 오른쪽 슬롯 (예: ToggleGroup)
+ * @param {string} [p.avatar] 아바타 에셋/URL (Figma 출석부에는 없음, 다른 목록용 선택 옵션)
+ * @param {Record<string,string|number|boolean>} [p.attrs] 행 요소 추가 속성
+ */
+function MemberRow({ name = '홍길동', sub = '202080187', chevron = true, right = '', avatar, attrs, className = '' } = {}) {
+  return `<div class="${cx('lxp-member-row', className)}"${htmlAttrs(attrs)}>
+    ${avatar ? Avatar({ src: avatar, name, size: 36 }) : ''}
+    <div class="lxp-member-row__who">
+      <div class="lxp-member-row__name"><p>${esc(name)}</p>${chevron ? `<span class="lxp-member-row__chev" aria-hidden="true">${Icon('chevron-right-14', { size: 14 })}</span>` : ''}</div>
+      ${sub ? `<span class="lxp-member-row__sub lxp-num">${esc(sub)}</span>` : ''}
+    </div>
+    ${right ? `<div class="lxp-member-row__right">${slot(right)}</div>` : ''}
+  </div>`;
+}
+
+// ----- components/blocks/message-input.js
+// MessageInput — 3층 블록
+
+
+/** 메시지 입력 필드 (pill) — Footer 'message input' 내부 */
+function MessageInput({ placeholder = '메세지를 입력하세요.', value = '' } = {}) {
+  return `<div class="lxp-msg-input">
+    ${IconButton({ icon: 'plus', size: 36, round: true, label: '첨부' })}
+    <input type="text" value="${esc(value)}" placeholder="${esc(placeholder)}">
+    ${IconButton({ icon: 'arrow-up', size: 36, round: true, label: '보내기' })}
+  </div>`;
+}
+
+// ----- components/blocks/message-item.js
+// MessageItem — 3층 블록
+
+
+
+
+
+
+/**
+ * 메시지 목록 아이템
+ * @param {'dm'|'group'} [p.option]
+ * @param {'enabled'|'focused'|'update'|'block'} [p.state]
+ *   update=새 메시지 하이라이트, focused=눌림, block=차단/나간 대화
+ * @param {'left'|'right'|null} [p.swipe] 스와이프 액션 노출
+ * @param {boolean} [p.muted] 알림 끔 아이콘  @param {boolean} [p.pinned] 고정 아이콘
+ */
+function MessageItem({
+  option = 'dm', state = 'enabled', swipe = null,
+  name = option === 'group' ? '김연아, 이상화, 봉준호, 손흥민, 박지성' : '긴 대화방명은 말줄임표를 사용하여 한줄로 표기',
+  preview = option === 'group' ? '안녕하세요~' : '과거 몇차례 잔디를 통해서 일하는 사...',
+  avatar = 'avatar-04', more = 5, unread = option === 'group' ? 10 : 1,
+  muted = true, pinned = true,
+} = {}) {
+  const block = state === 'block';
+  const av = option === 'group' ? AvatarGroup({ src: avatar, more }) : Avatar({ src: avatar, size: 48, dimmed: block });
+  const icons = !block && (muted || pinned)
+    ? `<span class="lxp-msg-item__icons">${muted ? Icon('bell-off', { size: 12 }) : ''}${pinned ? Icon('pin', { size: 12 }) : ''}</span>` : '';
+  const trailing = block
+    ? Button({ label: '차단 해제', variant: 'outline', size: 'xs', icon: 'block-12' })
+    : unread ? Badge({ count: unread, size: swipe === 'left' ? 'square' : swipe === 'right' ? 'sm' : 'md' }) : '';
+  const row = `<div class="${cx('lxp-msg-item', `is-${state}`, swipe && 'is-swiped')}">
+    ${av}
+    <div class="lxp-msg-item__text">
+      <div class="lxp-msg-item__name"><p class="lxp-ellipsis">${esc(name)}</p>${icons}</div>
+      <p class="lxp-msg-item__preview">${esc(block ? '대화방을 나갔습니다.' : preview)}</p>
+    </div>
+    ${trailing}
+  </div>`;
+  if (swipe === 'right') {
+    return `<div class="lxp-swipe lxp-swipe--right">${row}
+      ${SwipeAction({ label: '읽음', tone: 'neutral' })}${SwipeAction({ label: '차단', tone: 'strong' })}${SwipeAction({ label: '나가기', tone: 'danger' })}
+    </div>`;
+  }
+  if (swipe === 'left') {
+    return `<div class="lxp-swipe lxp-swipe--left">
+      ${SwipeAction({ label: '고정', icon: 'pin-20-white', tone: 'info' })}${SwipeAction({ label: '알림', icon: 'bell-20-white', tone: 'neutral' })}
+      ${row}
+    </div>`;
+  }
+  return row;
+}
+
+// ----- components/blocks/module-item.js
+// ModuleItem — 3층 블록
+
+
+
+/**
+ * 학습 모듈 아이템 (Learning module-base 21:10764)
+ * @param {number} p.dday 남은 일수 — 3 이하면 강조(파란 칩)
+ * @param {string} [p.module] 28px 모듈 아이콘
+ */
+function ModuleItem({ title = '1-2. [과제] IoT 기술이 적용된 산업 사례 조사 보고서', course = '사물인터넷과 4차산업사회', dday = 4, module = 'module-vod-28' } = {}) {
+  const urgent = dday <= 3;
+  return `<article class="lxp-module-item">
+    ${Icon(module, { size: 28 })}
+    <div class="lxp-module-item__text"><p class="lxp-ellipsis">${esc(title)}</p><span>${esc(course)}</span></div>
+    ${Chip({ label: `D-${dday}`, tone: urgent ? 'info' : 'neutral' })}
+  </article>`;
+}
+
+// ----- components/blocks/popup.js
+// Popup — 3층 블록
+
+
+/**
+ * 팝업 다이얼로그 (popup 80:22498)
+ * @param {{label:string,tone?:'default'|'danger'|'primary'}[]} [p.actions]
+ * @param {string} [p.body] 본문 텍스트 (HTML 원하면 content 사용)
+ */
+function Popup({ title = '메시지 삭제', body = '메시지를 모두에게서 삭제할까요?', content, actions = [{ label: '취소' }, { label: '삭제', tone: 'danger' }] } = {}) {
+  return `<div class="lxp-popup" role="dialog" aria-label="${esc(title)}">
+    <div class="lxp-popup__content">
+      ${title ? `<p class="lxp-popup__title">${esc(title)}</p>` : ''}
+      ${content ? `<div class="lxp-popup__body">${slot(content)}</div>` : body ? `<p class="lxp-popup__body">${esc(body)}</p>` : ''}
+    </div>
+    <div class="lxp-popup__actions">
+      ${actions.map((a) => Button({ label: a.label, variant: 'ghost', tone: a.tone === 'default' ? undefined : a.tone, className: 'lxp-popup__btn' })).join('')}
+    </div>
+  </div>`;
+}
+
+// ----- components/blocks/stat-grid.js
+// StatGrid — 3층 블록
+// 출처: Figma 4.5 LXP App 작업장(ZRoFjuXczoq30fVbJMNsVP) › 확정안 7054:14428 (스마트 출석부)
+
 
 /**
  * 상태별 개수 줄 (SessionStrip 7062:38229 — 출석 현황 & 미처리)
@@ -295,74 +664,181 @@ function StatGrid({
   </section>`;
 }
 
+// ----- components/blocks/tabs.js
+// ChipTabs · SegmentedControl · LineTabs — 3층 블록
+
+/** 필 형태 칩 탭 (정규강좌/자율강좌/교육프로그램) */
+function ChipTabs({ items = ['정규강좌', '자율강좌', '교육프로그램'], active = 0, className = '' } = {}) {
+  return `<div class="${cx('lxp-chip-tabs', className)}" role="tablist">
+    ${items.map((t, i) => `<button role="tab" aria-selected="${i === active}" class="${cx('lxp-chip-tabs__item', i === active && 'is-active')}">${esc(t)}</button>`).join('')}
+  </div>`;
+}
+
+/** 세그먼트 컨트롤 (회색 트랙 + 흰 선택 칸) */
+function SegmentedControl({ items = ['정규강좌', '자율강좌', '교육프로그램'], active = 0, className = '' } = {}) {
+  const parts = [];
+  items.forEach((t, i) => {
+    if (i > 0) {
+      const hide = i === active || i - 1 === active;
+      parts.push(`<i class="${cx('lxp-segment__divider', hide && 'is-hidden')}"></i>`);
+    }
+    parts.push(`<button role="tab" aria-selected="${i === active}" class="${cx('lxp-segment__item', i === active && 'is-active')}">${esc(t)}</button>`);
+  });
+  return `<div class="${cx('lxp-segment', className)}"><div class="lxp-segment__track" role="tablist">${parts.join('')}</div></div>`;
+}
+
+/** 라인 탭 (하단 인디케이터, 채팅방 설정 등) — 스타일은 토큰 기반 추정 */
+function LineTabs({ items = ['사진', '파일', '링크'], active = 0, className = '' } = {}) {
+  return `<div class="${cx('lxp-line-tabs', className)}" role="tablist">
+    ${items.map((t, i) => `<button role="tab" aria-selected="${i === active}" class="${cx('lxp-line-tabs__item', i === active && 'is-active')}">${esc(t)}</button>`).join('')}
+  </div>`;
+}
+
+// ----- components/blocks/tag.js
+// Tag — 3층 블록
+
+
+
+
 /**
- * 정보 줄 (SubRow 7062:38223 — "10-30 (금) 09:00 [1교시] (보강)  변경 ›")
- * @param {string} p.label 왼쪽 주 텍스트
- * @param {{label:string,variant?:'box'|'pill'}[]} [p.chips] box=연파랑 사각 칩(chip/times), pill=회색 둥근 태그(chip/tag2-base)
- * @param {{label:string,icon?:string,attrs?:object}|false} [p.action] 오른쪽 고스트 버튼
+ * 선택 태그 (con-base — 받는 사람 선택 칩)
+ * @param {'md'|'lg'} [p.size] md=40, lg=44
+ * @param {string|false} [p.avatar] 아바타 에셋/URL. false 면 아이콘형
+ * @param {boolean} [p.closable]
  */
-function InfoBar({
-  label = '10-30 (금) 09:00',
-  chips = [{ label: '1교시', variant: 'box' }, { label: '보강', variant: 'pill' }],
-  action = { label: '변경', icon: 'chevron-right' },
-  className = '',
+function Tag({ label = 'label', size = 'md', avatar = 'avatar-03', icon = 'plus', closable = true } = {}) {
+  const av = avatar ? Avatar({ src: avatar, size: size === 'lg' ? 40 : 36 }) : Icon(icon, { size: 18 });
+  return `<span class="${cx('lxp-tag', `lxp-tag--${size}`, avatar ? 'has-avatar' : 'has-icon')}">
+    ${av}<span>${esc(label)}</span>${closable ? IconButton({ icon: 'x-close-14', size: 24, label: '삭제' }) : ''}
+  </span>`;
+}
+
+// ----- components/blocks/toggle-group.js
+// ToggleGroup — 3층 블록
+// 출처: Figma 4.5 LXP App 작업장(ZRoFjuXczoq30fVbJMNsVP) › 확정안 7054:14428 (스마트 출석부)
+
+
+
+/**
+ * 토글 그룹 (리스트 SessionStrip 7062:38277 · 상태 스펙 default/selected/unselected/active)
+ * 버튼 여러 개 중 하나를 고르는 단일 선택. 고르면 선택 버튼만 tone 색 테두리, 나머지는 흐려집니다.
+ * @param {{value:string,label:string,icon?:string,iconOff?:string,tone?:'info'|'nega'|'posi'|'warn'|'neutral'}[]} p.items
+ *   icon: 기본/선택 아이콘, iconOff: 다른 버튼이 선택됐을 때(흐린 상태) 아이콘
+ * @param {string|null} [p.value] 선택 값. null 이면 아무것도 고르지 않은 기본 상태
+ * @param {{icon?:string,label?:string,open?:boolean,items:{value:string,label:string,icon?:string,tone?:string}[]}} [p.overflow]
+ *   ⋯ 버튼과 메뉴. value 가 overflow 항목이면 ⋯ 자리에 그 아이콘을 tone 테두리로 보여 줍니다(출석부 조퇴·지각조퇴).
+ * @param {string} [p.label] 그룹 aria-label (예: '홍길동 출결')
+ * @param {Record<string,string|number|boolean>} [p.attrs] 그룹 요소 추가 속성 (예: { 'data-row': 3 })
+ * 버튼: data-value="값" aria-pressed, ⋯ 버튼: data-overflow aria-expanded, 메뉴 항목: data-value aria-checked
+ */
+function ToggleGroup({
+  items = [
+    { value: 'present', label: '출석', icon: 'status-present', iconOff: 'status-present-off', tone: 'info' },
+    { value: 'absent', label: '결석', icon: 'status-absent', iconOff: 'status-absent-off', tone: 'nega' },
+    { value: 'late', label: '지각', icon: 'status-late', iconOff: 'status-late-off', tone: 'posi' },
+  ],
+  value = null, overflow, label = '', attrs, className = '',
 } = {}) {
-  return `<div class="${cx('lxp-info-bar', className)}">
-    <div class="lxp-info-bar__main">
-      <p class="lxp-num">${esc(label)}</p>
-      ${chips.map((c) => `<span class="${cx('lxp-info-bar__chip', `is-${c.variant || 'box'}`)}">${esc(c.label)}</span>`).join('')}
-    </div>
-    ${action ? `<button type="button" class="lxp-info-bar__action"${htmlAttrs(action.attrs)}>${esc(action.label)}${action.icon ? Icon(action.icon, { size: 16 }) : ''}</button>` : ''}
-  </div>`;
-}
-
-/**
- * 사람 행 (LearnerRows › Row 7062:38271) — 이름(15B, 5글자 넘으면 말줄임) + › / 보조 텍스트(학번) / 오른쪽 슬롯
- * @param {string} p.name @param {string} [p.sub] 이름 아래 보조 텍스트
- * @param {boolean} [p.chevron] 이름 옆 › (상세 보기)
- * @param {string} [p.right] 오른쪽 슬롯 (예: ToggleGroup)
- * @param {string} [p.avatar] 아바타 에셋/URL (Figma 출석부에는 없음, 다른 목록용 선택 옵션)
- * @param {Record<string,string|number|boolean>} [p.attrs] 행 요소 추가 속성
- */
-function MemberRow({ name = '홍길동', sub = '202080187', chevron = true, right = '', avatar, attrs, className = '' } = {}) {
-  return `<div class="${cx('lxp-member-row', className)}"${htmlAttrs(attrs)}>
-    ${avatar ? Avatar({ src: avatar, name, size: 36 }) : ''}
-    <div class="lxp-member-row__who">
-      <div class="lxp-member-row__name"><p>${esc(name)}</p>${chevron ? `<span class="lxp-member-row__chev" aria-hidden="true">${Icon('chevron-right-14', { size: 14 })}</span>` : ''}</div>
-      ${sub ? `<span class="lxp-member-row__sub lxp-num">${esc(sub)}</span>` : ''}
-    </div>
-    ${right ? `<div class="lxp-member-row__right">${slot(right)}</div>` : ''}
-  </div>`;
-}
-
-// ----- components/navigation.js
-// 상단/하단 내비게이션: StatusBar · Header · AppHeader · TabBar · Dropdown
-// Figma: 공통(24:12502) — iPhone header / Header / App_header / Tab bar
-
-
-
-/** iOS 상태바 (Figma 24:13152) */
-function StatusBar({ className = '' } = {}) {
-  return `<div class="${cx('lxp-statusbar', className)}" aria-hidden="true">
-    <img class="lxp-statusbar__left" src="${asset('statusbar-left')}" alt="">
-    <img class="lxp-statusbar__right" src="${asset('statusbar-right')}" alt="">
-  </div>`;
-}
-
-/**
- * 드롭다운 메뉴 (Header message-open 의 more-dropdown, 79:18854)
- * @param {{icon?:string,label:string,value?:string,checked?:boolean}[]} [p.items]
- *   value 를 주면 data-value 로, checked 를 주면 선택형 메뉴(menuitemradio, aria-checked)로 그립니다.
- */
-function Dropdown({ items = [], className = '', style = '' } = {}) {
-  return `<div class="${cx('lxp-dropdown', className)}" role="menu" style="${style}">
+  const picked = value != null;
+  const extra = overflow && overflow.items.find((o) => o.value === value);
+  return `<div class="${cx('lxp-toggle-group', picked && 'is-picked', className)}" role="group"${label ? ` aria-label="${esc(label)}"` : ''}${htmlAttrs(attrs)}>
     ${items.map((it) => {
-      const radio = it.checked != null;
-      return `<button type="button" class="${cx('lxp-dropdown__item', it.checked && 'is-checked')}" role="${radio ? 'menuitemradio' : 'menuitem'}"${radio ? ` aria-checked="${!!it.checked}"` : ''}${it.value != null ? ` data-value="${esc(it.value)}"` : ''}>
-      ${it.icon ? Icon(it.icon, { size: 18 }) : ''}<span>${esc(it.label)}</span></button>`;
+      const on = it.value === value;
+      const icon = picked && !on && it.iconOff ? it.iconOff : it.icon;
+      return `<button type="button" class="${cx('lxp-toggle-group__item', on && `is-active is-${it.tone || 'info'}`)}" aria-pressed="${on}" data-value="${esc(it.value)}">
+        ${icon ? Icon(icon, { size: 18 }) : ''}<span>${esc(it.label)}</span>
+      </button>`;
     }).join('')}
+    ${overflow ? `<button type="button" class="${cx('lxp-toggle-group__more', extra && `is-active is-${extra.tone || 'neutral'}`)}" data-overflow aria-haspopup="menu" aria-expanded="${!!overflow.open}" aria-label="${esc(extra ? extra.label : overflow.label || '더보기')}">
+      ${Icon(extra ? extra.icon : overflow.icon || 'dots-horizontal', { size: 18 })}
+    </button>` : ''}
+    ${overflow && overflow.open ? Dropdown({
+      className: 'lxp-toggle-group__menu',
+      items: overflow.items.map((o) => ({ icon: o.icon, label: o.label, value: o.value, checked: o.value === value })),
+    }) : ''}
   </div>`;
 }
+
+// ----- components/blocks/week-picker.js
+// WeekPicker — 3층 블록
+
+
+/**
+ * 주간 날짜 선택 (Date picker 24:12363)
+ * @param {{w:string,d:number|string,dot?:boolean}[]} [p.days]
+ * @param {number} [p.selected] 선택 인덱스
+ */
+function WeekPicker({ days, selected = 0 } = {}) {
+  const list = days || ['월', '화', '수', '목', '금', '토', '일'].map((w, i) => ({ w, d: i + 1, dot: [0, 2, 4, 5].includes(i) }));
+  return `<div class="lxp-week">
+    ${list.map((x, i) => `<button class="${cx('lxp-week__day', i === selected && 'is-selected')}">
+      <span>${esc(x.w)}</span><b>${esc(x.d)}</b>
+      ${x.dot ? `<img class="lxp-week__dot" src="${asset('dot-red')}" alt="">` : ''}
+    </button>`).join('')}
+  </div>`;
+}
+
+// ----- components/sections/deadline-carousel.js
+// DeadlineCarousel — 4층 영역
+
+/** 마감 카드 슬라이드 (가운데 카드 + 양옆 미리보기) */
+function DeadlineCarousel({ cards = [{}] } = {}) {
+  const c = cards[0] || {};
+  return `<div class="lxp-deadline-carousel">
+    ${DeadlineCard({ ...(cards[cards.length - 1] || c), faded: true })}
+    ${DeadlineCard(c)}
+    ${DeadlineCard({ ...(cards[1] || c), faded: true })}
+  </div>`;
+}
+
+// ----- components/sections/footer.js
+// Footer — 4층 영역
+
+
+
+/**
+ * 하단 고정 영역
+ * @param {'empty'|'button'|'count-button'|'button-pair'|'message-input'|'message-block'} [p.type]
+ * @param {{label?:string,icon?:string,iconRight?:string,attrs?:object}} [p.secondary] button-pair 왼쪽 보조 버튼
+ * @param {object} [p.attrs] 주 버튼 추가 속성(id·type·data-*) — button · count-button · button-pair
+ * @param {boolean} [p.disabled] 주 버튼 비활성 — button · count-button · button-pair
+ * @param {string} [p.label] 버튼 라벨
+ * @param {number|string} [p.count] count-button 의 숫자
+ * @param {string} [p.prefix] count-button 숫자 앞 문구 (기본 '총', 빈 문자열이면 생략) 예: '미체크'
+ * @param {string} [p.unit] count-button 숫자 뒤 단위 (기본 '명') 예: '건', '개'
+ * @param {string} [p.caption] message-block 안내 문구
+ */
+function Footer({ type = 'button', label, count = 2, prefix = '총', unit = '명', caption = '차단 친구와는 대화할 수 없습니다.', placeholder, secondary, attrs, disabled = false } = {}) {
+  if (type === 'empty') return '<footer class="lxp-footer lxp-footer--empty"></footer>';
+  if (type === 'button-pair') {
+    // 출석부 BottomCTA (7062:38459): 왼쪽 보조 버튼 128px + 오른쪽 주 버튼, 높이 48
+    const sec = { label: '자동출결', iconRight: 'check-circle', ...secondary };
+    return `<footer class="lxp-footer lxp-footer--pair">
+      ${Button({ label: sec.label, variant: 'outline-primary', size: 'xl', icon: sec.icon, iconRight: sec.iconRight, attrs: sec.attrs, className: 'lxp-footer__secondary' })}
+      ${Button({ label: label || '출결 일괄 처리', size: 'xl', disabled, attrs, className: 'lxp-footer__primary' })}
+    </footer>`;
+  }
+  if (type === 'button') return `<footer class="lxp-footer lxp-footer--action">${Button({ label: label || '저장하기', block: true, disabled, attrs })}</footer>`;
+  if (type === 'count-button') {
+    return `<footer class="lxp-footer lxp-footer--action"><div class="lxp-footer__row">
+      <p class="lxp-footer__count">${prefix ? `<span>${esc(prefix)}</span>` : ''}<span><em>${esc(count)}</em>${esc(unit)}</span></p>${Button({ label: label || '대화시작하기', disabled, attrs })}
+    </div></footer>`;
+  }
+  if (type === 'message-input') return `<footer class="lxp-footer lxp-footer--chat">${MessageInput({ placeholder })}</footer>`;
+  if (type === 'message-block') {
+    return `<footer class="lxp-footer lxp-footer--chat lxp-footer--block">
+      ${Button({ label: label || '차단 해제', variant: 'gray', size: 'md', icon: 'block', block: true })}
+      <p class="lxp-footer__caption">${esc(caption)}</p>
+    </footer>`;
+  }
+  return '';
+}
+
+// ----- components/sections/header.js
+// Header · AppHeader — 4층 영역
+
+
+
 
 const HEADER_PRESETS = {
   home: { title: '홈', actions: [{ icon: 'bell-18', size: 36 }] },
@@ -422,6 +898,90 @@ function AppHeader({ type = 'page', title = '', subtitle = '', right, titleIcon 
   </header>`;
 }
 
+// ----- components/layout/stack.js
+// Stack · Grid · Surface — 틀 (배치만 담당, 모양 없음)
+// 화면·블록에서 style="display:flex;gap…;padding…" 를 쓰는 대신 이 함수로 배치합니다.
+// 간격 값이 토큰 단계(2·4·6·8·12·16·20·24·28·32)에 있으면 var(--spac-N) 으로, 아니면 px 로 씁니다.
+
+const SCALE = [2, 4, 6, 8, 12, 16, 20, 24, 28, 32];
+const len = (n) => (n === 0 ? '0' : SCALE.includes(n) ? `var(--spac-${n})` : `${n}px`);
+/** 숫자 하나 | [세로, 가로] | [위, 오른쪽, 아래, 왼쪽] → CSS 값 */
+const box = (v) => (v == null ? null : (Array.isArray(v) ? v : [v]).map(len).join(' '));
+const ALIGN = { start: 'flex-start', center: 'center', end: 'flex-end', stretch: 'stretch', between: 'space-between' };
+
+function frame({ tag = 'div', base, mods = [], vars = {}, children, className = '' }) {
+  const style = Object.entries(vars).filter(([, v]) => v != null).map(([k, v]) => `--lxp-${k}:${v}`).join(';');
+  return `<${tag} class="${cx(base, ...mods, className)}"${style ? ` style="${style}"` : ''}>${slot(children)}</${tag}>`;
+}
+
+/**
+ * 쌓기 — 세로(기본) 또는 가로로 나열하고 간격·여백을 줍니다.
+ * @param {string|string[]} p.children
+ * @param {number|number[]} [p.gap] 아이 사이 간격(px). [세로, 가로] 도 가능
+ * @param {number|number[]} [p.pad] 안쪽 여백(px). 숫자 | [세로, 가로] | [위, 오른쪽, 아래, 왼쪽]
+ * @param {'column'|'row'} [p.direction]
+ * @param {'start'|'center'|'end'|'stretch'} [p.align] 교차축 정렬
+ * @param {'start'|'center'|'end'|'between'} [p.justify] 주축 정렬
+ * @param {'div'|'section'|'ul'} [p.tag]
+ */
+function Stack({ children = '', gap, pad, direction = 'column', align, justify, tag, className = '' } = {}) {
+  return frame({
+    tag, base: 'lxp-stack', mods: [direction === 'row' && 'lxp-stack--row'], className, children,
+    vars: { gap: box(gap), pad: box(pad), align: ALIGN[align], justify: ALIGN[justify] },
+  });
+}
+
+/**
+ * 격자 — 같은 폭의 칸을 열 단위로 나열합니다 (예: 강의 카드 2열).
+ * @param {number} p.cols 열 수
+ * @param {number} [p.colWidth] 칸 폭(px). 없으면 남는 폭을 똑같이 나눔
+ * @param {number|number[]} [p.gap] [세로, 가로]
+ * @param {'start'|'center'|'end'} [p.justify] 격자 전체의 가로 정렬
+ */
+function Grid({ children = '', cols = 2, colWidth, gap, pad, justify, className = '' } = {}) {
+  return frame({
+    base: 'lxp-grid', className, children,
+    vars: { cols: `repeat(${cols}, ${colWidth ? `${colWidth}px` : 'minmax(0, 1fr)'})`, gap: box(gap), pad: box(pad), justify: ALIGN[justify] },
+  });
+}
+
+/**
+ * 바탕 구역 — 흰색/연회색 바탕을 깔고 Stack 처럼 쌓습니다.
+ * @param {'white'|'subtle'} [p.tone] white=흰 바탕, subtle=연회색 바탕(--bg-hierarchy-primary-subtle)
+ * @param {boolean} [p.fill] 스크롤 영역 높이를 꽉 채움 (화면 전체 바탕용)
+ * 나머지 인자(gap, pad, direction, align, justify)는 Stack 과 같습니다.
+ */
+function Surface({ children = '', tone = 'white', fill = false, gap, pad, direction = 'column', align, justify, tag, className = '' } = {}) {
+  return frame({
+    tag, base: 'lxp-stack', className, children,
+    mods: [direction === 'row' && 'lxp-stack--row', `lxp-surface--${tone}`, fill && 'lxp-surface--fill'],
+    vars: { gap: box(gap), pad: box(pad), align: ALIGN[align], justify: ALIGN[justify] },
+  });
+}
+
+// ----- components/sections/section.js
+// Section — 4층 영역 (제목 + 내용 묶음, 예: 홈 '이번 주 학습 6')
+
+
+/**
+ * 섹션 — 제목 줄(제목 + 개수 + 오른쪽 보조)과 그 아래 내용을 세로로 묶습니다.
+ * 바깥 간격은 갖지 않습니다. 위아래 여백은 pad 로 이 섹션이 정합니다.
+ * @param {string} p.title
+ * @param {number|string} [p.count] 제목 옆 개수 상자 (홈 "이번 주 학습 6")
+ * @param {string} [p.aside] 제목 줄 오른쪽 슬롯 (예: Button xs)
+ * @param {string|string[]} [p.children] 내용
+ * @param {number|number[]} [p.gap] 제목과 내용 사이 간격 (기본 12)
+ * @param {number|number[]} [p.pad] 섹션 안쪽 여백
+ */
+function Section({ title = '', count, aside = '', children = '', gap = 12, pad, className = '' } = {}) {
+  const head = `<div class="lxp-section-title"><span class="lxp-section-title__text">${esc(title)}</span>${count != null ? `<span class="lxp-section-title__count">${esc(count)}</span>` : ''}${aside ? `<span class="lxp-section-title__aside">${aside}</span>` : ''}</div>`;
+  return Stack({ tag: 'section', gap, pad, className, children: [head, children] });
+}
+
+// ----- components/sections/tab-bar.js
+// TabBar · TAB_ITEMS — 4층 영역
+
+
 const TABS = [
   { key: 'home', label: '홈', icon: 'tab-home', activeIcon: 'tab-home-active' },
   { key: 'class', label: '내강의실', icon: 'tab-class', activeIcon: 'tab-class-active' },
@@ -452,385 +1012,15 @@ function TabBar({ active = 'home', badges = { message: 11 }, newDots = [], items
 
 const TAB_ITEMS = TABS;
 
-// ----- components/input.js
-// 입력: Input(input-base-state 86:18467) · MessageInput · Footer(37:14876)
+// ----- components/layout/screen.js
+// StatusBar · Screen · Dim — 틀
 
 
-
-/**
- * 검색/텍스트 입력 (h44, radius 12)
- * @param {'enabled'|'focused'|'disabled'} [p.state] focused 는 정적 시안용(실제 포커스 시 자동 적용)
- * @param {'normal'|'filled'|'invalid'} [p.validation]
- * @param {string} [p.value] @param {string} [p.placeholder]
- * @param {string} [p.icon] 리딩 아이콘 (기본 search)
- */
-function Input({ state = 'enabled', validation, value = '', placeholder = '검색어를 입력하세요.', icon = 'search', className = '' } = {}) {
-  const v = validation || (value ? 'filled' : 'normal');
-  const disabled = state === 'disabled';
-  const lead = disabled && v !== 'invalid' ? 'help-circle' : disabled ? 'search-disabled' : icon;
-  return `<label class="${cx('lxp-input', `is-${state}`, `is-${v}`, className)}">
-    ${Icon(lead, { size: 16, className: cx('lxp-input__lead', disabled && v === 'invalid' && 'is-faded') })}
-    <input type="text" value="${esc(value)}" placeholder="${esc(placeholder)}"${disabled ? ' disabled' : ''}>
-    ${v === 'filled' ? `<button class="lxp-input__clear" aria-label="지우기">${Icon('x-circle-filled', { size: 16 })}</button>` : ''}
-  </label>`;
-}
-
-/** 메시지 입력 필드 (pill) — Footer 'message input' 내부 */
-function MessageInput({ placeholder = '메세지를 입력하세요.', value = '' } = {}) {
-  return `<div class="lxp-msg-input">
-    ${IconButton({ icon: 'plus', size: 36, round: true, label: '첨부' })}
-    <input type="text" value="${esc(value)}" placeholder="${esc(placeholder)}">
-    ${IconButton({ icon: 'arrow-up', size: 36, round: true, label: '보내기' })}
-  </div>`;
-}
-
-/**
- * 하단 고정 영역
- * @param {'empty'|'button'|'count-button'|'button-pair'|'message-input'|'message-block'} [p.type]
- * @param {{label?:string,icon?:string,iconRight?:string,attrs?:object}} [p.secondary] button-pair 왼쪽 보조 버튼
- * @param {object} [p.attrs] 주 버튼 추가 속성(id·type·data-*) — button · count-button · button-pair
- * @param {boolean} [p.disabled] 주 버튼 비활성 — button · count-button · button-pair
- * @param {string} [p.label] 버튼 라벨
- * @param {number|string} [p.count] count-button 의 숫자
- * @param {string} [p.prefix] count-button 숫자 앞 문구 (기본 '총', 빈 문자열이면 생략) 예: '미체크'
- * @param {string} [p.unit] count-button 숫자 뒤 단위 (기본 '명') 예: '건', '개'
- * @param {string} [p.caption] message-block 안내 문구
- */
-function Footer({ type = 'button', label, count = 2, prefix = '총', unit = '명', caption = '차단 친구와는 대화할 수 없습니다.', placeholder, secondary, attrs, disabled = false } = {}) {
-  if (type === 'empty') return '<footer class="lxp-footer lxp-footer--empty"></footer>';
-  if (type === 'button-pair') {
-    // 출석부 BottomCTA (7062:38459): 왼쪽 보조 버튼 128px + 오른쪽 주 버튼, 높이 48
-    const sec = { label: '자동출결', iconRight: 'check-circle', ...secondary };
-    return `<footer class="lxp-footer lxp-footer--pair">
-      ${Button({ label: sec.label, variant: 'outline-primary', size: 'xl', icon: sec.icon, iconRight: sec.iconRight, attrs: sec.attrs, className: 'lxp-footer__secondary' })}
-      ${Button({ label: label || '출결 일괄 처리', size: 'xl', disabled, attrs, className: 'lxp-footer__primary' })}
-    </footer>`;
-  }
-  if (type === 'button') return `<footer class="lxp-footer lxp-footer--action">${Button({ label: label || '저장하기', block: true, disabled, attrs })}</footer>`;
-  if (type === 'count-button') {
-    return `<footer class="lxp-footer lxp-footer--action"><div class="lxp-footer__row">
-      <p class="lxp-footer__count">${prefix ? `<span>${esc(prefix)}</span>` : ''}<span><em>${esc(count)}</em>${esc(unit)}</span></p>${Button({ label: label || '대화시작하기', disabled, attrs })}
-    </div></footer>`;
-  }
-  if (type === 'message-input') return `<footer class="lxp-footer lxp-footer--chat">${MessageInput({ placeholder })}</footer>`;
-  if (type === 'message-block') {
-    return `<footer class="lxp-footer lxp-footer--chat lxp-footer--block">
-      ${Button({ label: label || '차단 해제', variant: 'gray', size: 'md', icon: 'block', block: true })}
-      <p class="lxp-footer__caption">${esc(caption)}</p>
-    </footer>`;
-  }
-  return '';
-}
-
-// ----- components/tabs.js
-// 탭: ChipTabs(Tab 5:12886) · SegmentedControl(Tab 37:15014) · LineTabs(tab-line-base-state 85:21691)
-
-/** 필 형태 칩 탭 (정규강좌/자율강좌/교육프로그램) */
-function ChipTabs({ items = ['정규강좌', '자율강좌', '교육프로그램'], active = 0, className = '' } = {}) {
-  return `<div class="${cx('lxp-chip-tabs', className)}" role="tablist">
-    ${items.map((t, i) => `<button role="tab" aria-selected="${i === active}" class="${cx('lxp-chip-tabs__item', i === active && 'is-active')}">${esc(t)}</button>`).join('')}
-  </div>`;
-}
-
-/** 세그먼트 컨트롤 (회색 트랙 + 흰 선택 칸) */
-function SegmentedControl({ items = ['정규강좌', '자율강좌', '교육프로그램'], active = 0, className = '' } = {}) {
-  const parts = [];
-  items.forEach((t, i) => {
-    if (i > 0) {
-      const hide = i === active || i - 1 === active;
-      parts.push(`<i class="${cx('lxp-segment__divider', hide && 'is-hidden')}"></i>`);
-    }
-    parts.push(`<button role="tab" aria-selected="${i === active}" class="${cx('lxp-segment__item', i === active && 'is-active')}">${esc(t)}</button>`);
-  });
-  return `<div class="${cx('lxp-segment', className)}"><div class="lxp-segment__track" role="tablist">${parts.join('')}</div></div>`;
-}
-
-/** 라인 탭 (하단 인디케이터, 채팅방 설정 등) — 스타일은 토큰 기반 추정 */
-function LineTabs({ items = ['사진', '파일', '링크'], active = 0, className = '' } = {}) {
-  return `<div class="${cx('lxp-line-tabs', className)}" role="tablist">
-    ${items.map((t, i) => `<button role="tab" aria-selected="${i === active}" class="${cx('lxp-line-tabs__item', i === active && 'is-active')}">${esc(t)}</button>`).join('')}
-  </div>`;
-}
-
-// ----- components/control.js
-// 선택 컨트롤: DateStrip · ToggleGroup · Checkbox
-// 출처: Figma 4.5 LXP App 작업장(ZRoFjuXczoq30fVbJMNsVP) › 확정안 7054:14428 (스마트 출석부)
-// 이벤트 처리는 넣지 않습니다(순수 함수). 선택 상태는 aria-pressed / aria-checked 로 마크업에 남깁니다.
-
-
-
-const DEFAULT_DAYS = [
-  { label: '화', date: '27' }, { label: '수', date: '28' }, { label: '목', date: '29' },
-  { label: '오늘', date: '30' }, { label: '월', date: '11/2' }, { label: '화', date: '3' }, { label: '수', date: '4' },
-];
-
-/**
- * 날짜 줄 (DateStrip 7062:38201) — 62×60 날짜 칸을 가로로 나열, 가운데 정렬(양 끝은 잘림).
- * 달이 바뀌는 날짜에만 월을 함께 표기("11/2"), 오늘은 가운데에 두는 것이 Figma 규칙입니다.
- * @param {{label:string,date:string}[]} [p.items] 위 줄(요일·'오늘') / 아래 줄(날짜)
- * @param {number} [p.selected] 선택 칸 인덱스 (파란 칸)
- * 각 칸은 data-index 속성을 가집니다.
- */
-function DateStrip({ items = DEFAULT_DAYS, selected = 3, className = '' } = {}) {
-  return `<div class="${cx('lxp-date-strip', className)}"><div class="lxp-date-strip__track">
-    ${items.map((d, i) => `<button type="button" class="${cx('lxp-date-strip__item', i === selected && 'is-active')}" aria-pressed="${i === selected}" data-index="${i}">
-      <span>${esc(d.label)}</span><strong>${esc(d.date)}</strong>
-    </button>`).join('')}
-  </div></div>`;
-}
-
-/**
- * 토글 그룹 (리스트 SessionStrip 7062:38277 · 상태 스펙 default/selected/unselected/active)
- * 버튼 여러 개 중 하나를 고르는 단일 선택. 고르면 선택 버튼만 tone 색 테두리, 나머지는 흐려집니다.
- * @param {{value:string,label:string,icon?:string,iconOff?:string,tone?:'info'|'nega'|'posi'|'warn'|'neutral'}[]} p.items
- *   icon: 기본/선택 아이콘, iconOff: 다른 버튼이 선택됐을 때(흐린 상태) 아이콘
- * @param {string|null} [p.value] 선택 값. null 이면 아무것도 고르지 않은 기본 상태
- * @param {{icon?:string,label?:string,open?:boolean,items:{value:string,label:string,icon?:string,tone?:string}[]}} [p.overflow]
- *   ⋯ 버튼과 메뉴. value 가 overflow 항목이면 ⋯ 자리에 그 아이콘을 tone 테두리로 보여 줍니다(출석부 조퇴·지각조퇴).
- * @param {string} [p.label] 그룹 aria-label (예: '홍길동 출결')
- * @param {Record<string,string|number|boolean>} [p.attrs] 그룹 요소 추가 속성 (예: { 'data-row': 3 })
- * 버튼: data-value="값" aria-pressed, ⋯ 버튼: data-overflow aria-expanded, 메뉴 항목: data-value aria-checked
- */
-function ToggleGroup({
-  items = [
-    { value: 'present', label: '출석', icon: 'status-present', iconOff: 'status-present-off', tone: 'info' },
-    { value: 'absent', label: '결석', icon: 'status-absent', iconOff: 'status-absent-off', tone: 'nega' },
-    { value: 'late', label: '지각', icon: 'status-late', iconOff: 'status-late-off', tone: 'posi' },
-  ],
-  value = null, overflow, label = '', attrs, className = '',
-} = {}) {
-  const picked = value != null;
-  const extra = overflow && overflow.items.find((o) => o.value === value);
-  return `<div class="${cx('lxp-toggle-group', picked && 'is-picked', className)}" role="group"${label ? ` aria-label="${esc(label)}"` : ''}${htmlAttrs(attrs)}>
-    ${items.map((it) => {
-      const on = it.value === value;
-      const icon = picked && !on && it.iconOff ? it.iconOff : it.icon;
-      return `<button type="button" class="${cx('lxp-toggle-group__item', on && `is-active is-${it.tone || 'info'}`)}" aria-pressed="${on}" data-value="${esc(it.value)}">
-        ${icon ? Icon(icon, { size: 18 }) : ''}<span>${esc(it.label)}</span>
-      </button>`;
-    }).join('')}
-    ${overflow ? `<button type="button" class="${cx('lxp-toggle-group__more', extra && `is-active is-${extra.tone || 'neutral'}`)}" data-overflow aria-haspopup="menu" aria-expanded="${!!overflow.open}" aria-label="${esc(extra ? extra.label : overflow.label || '더보기')}">
-      ${Icon(extra ? extra.icon : overflow.icon || 'dots-horizontal', { size: 18 })}
-    </button>` : ''}
-    ${overflow && overflow.open ? Dropdown({
-      className: 'lxp-toggle-group__menu',
-      items: overflow.items.map((o) => ({ icon: o.icon, label: o.label, value: o.value, checked: o.value === value })),
-    }) : ''}
-  </div>`;
-}
-
-/**
- * 체크박스 + 라벨 (출석부 '미처리만 보기' 7062:38718) — 토큰 기반 구성
- * @param {string} p.label
- * @param {boolean} [p.checked]
- * @param {string|number} [p.count] 라벨 뒤 빨간 개수 "(3)"
- * @param {string} [p.id] input id (상태 보존용)
- */
-function Checkbox({ label = '미처리만 보기', checked = false, count, id, disabled = false, className = '' } = {}) {
-  return `<label class="${cx('lxp-checkbox', className)}">
-    <input type="checkbox"${id ? ` id="${esc(id)}"` : ''}${checked ? ' checked' : ''}${disabled ? ' disabled' : ''}>
-    <span>${esc(label)}${count != null ? `<em>(${esc(count)})</em>` : ''}</span>
-  </label>`;
-}
-
-// ----- components/learning.js
-// 학습 도메인: CourseCard · DeadlineCard · DeadlineCarousel · ModuleItem · WeekPicker
-// Figma: 메뉴탭 > 홈(69:22326), 메뉴탭 > 내강의실(69:22327)
-
-
-
-/**
- * 강의 카드 (Card-class-base 5:12819)
- * @param {'grid'|'list'} [p.layout] grid=156×176, list=320×68
- * @param {'blue'|'yellow'|'orange'|'green'|'purple'} [p.color] 썸네일 패턴 색
- */
-function CourseCard({ title = '물리학수업', professor = '홍길동 교수', color = 'blue', layout = 'grid', className = '' } = {}) {
-  const thumb = `<div class="lxp-course-card__thumb" style="background-image:url('${asset('thumb-' + color)}')"></div>`;
-  return `<article class="${cx('lxp-course-card', `lxp-course-card--${layout}`, className)}">
-    ${thumb}
-    <div class="lxp-course-card__body">
-      <p class="lxp-course-card__title">${esc(title)}</p>
-      <p class="lxp-course-card__meta">${esc(professor)}</p>
-    </div>
-  </article>`;
-}
-
-/**
- * 마감 학습 카드 (Card 20:10467 — 오늘 마감 학습)
- * @param {string} [p.module] 모듈 아이콘 (module-vod | module-url ...)
- * @param {boolean} [p.faded] 캐러셀 양옆 카드 (흰 80%)
- */
-function DeadlineCard({ label = '오늘 마감 학습', remain = '3시간 남았어요', title = '학습이론 2: 경험주의', course = '물리학수업', module = 'module-vod', faded = false } = {}) {
-  return `<article class="${cx('lxp-deadline-card', faded && 'is-faded')}">
-    <div class="lxp-deadline-card__head"><span>${esc(label)}</span>${Chip({ label: remain, tone: 'info' })}</div>
-    <div class="lxp-deadline-card__body">
-      <div class="lxp-deadline-card__text"><p>${esc(title)}</p><span>${esc(course)}</span></div>
-      ${Icon(module, { size: 40 })}
-    </div>
-  </article>`;
-}
-
-/** 마감 카드 슬라이드 (가운데 카드 + 양옆 미리보기) */
-function DeadlineCarousel({ cards = [{}] } = {}) {
-  const c = cards[0] || {};
-  return `<div class="lxp-deadline-carousel">
-    ${DeadlineCard({ ...(cards[cards.length - 1] || c), faded: true })}
-    ${DeadlineCard(c)}
-    ${DeadlineCard({ ...(cards[1] || c), faded: true })}
-  </div>`;
-}
-
-/**
- * 학습 모듈 아이템 (Learning module-base 21:10764)
- * @param {number} p.dday 남은 일수 — 3 이하면 강조(파란 칩)
- * @param {string} [p.module] 28px 모듈 아이콘
- */
-function ModuleItem({ title = '1-2. [과제] IoT 기술이 적용된 산업 사례 조사 보고서', course = '사물인터넷과 4차산업사회', dday = 4, module = 'module-vod-28' } = {}) {
-  const urgent = dday <= 3;
-  return `<article class="lxp-module-item">
-    ${Icon(module, { size: 28 })}
-    <div class="lxp-module-item__text"><p class="lxp-ellipsis">${esc(title)}</p><span>${esc(course)}</span></div>
-    ${Chip({ label: `D-${dday}`, tone: urgent ? 'info' : 'neutral' })}
-  </article>`;
-}
-
-/**
- * 주간 날짜 선택 (Date picker 24:12363)
- * @param {{w:string,d:number|string,dot?:boolean}[]} [p.days]
- * @param {number} [p.selected] 선택 인덱스
- */
-function WeekPicker({ days, selected = 0 } = {}) {
-  const list = days || ['월', '화', '수', '목', '금', '토', '일'].map((w, i) => ({ w, d: i + 1, dot: [0, 2, 4, 5].includes(i) }));
-  return `<div class="lxp-week">
-    ${list.map((x, i) => `<button class="${cx('lxp-week__day', i === selected && 'is-selected')}">
-      <span>${esc(x.w)}</span><b>${esc(x.d)}</b>
-      ${x.dot ? `<img class="lxp-week__dot" src="${asset('dot-red')}" alt="">` : ''}
-    </button>`).join('')}
-  </div>`;
-}
-
-// ----- components/message.js
-// 메시지 도메인: MessageItem · ChatMessage · Reaction
-// Figma: 메뉴탭 > 메시지(69:22329) — Message list(19:8837), chating-message(80:20270)
-
-
-
-
-/**
- * 메시지 목록 아이템
- * @param {'dm'|'group'} [p.option]
- * @param {'enabled'|'focused'|'update'|'block'} [p.state]
- *   update=새 메시지 하이라이트, focused=눌림, block=차단/나간 대화
- * @param {'left'|'right'|null} [p.swipe] 스와이프 액션 노출
- * @param {boolean} [p.muted] 알림 끔 아이콘  @param {boolean} [p.pinned] 고정 아이콘
- */
-function MessageItem({
-  option = 'dm', state = 'enabled', swipe = null,
-  name = option === 'group' ? '김연아, 이상화, 봉준호, 손흥민, 박지성' : '긴 대화방명은 말줄임표를 사용하여 한줄로 표기',
-  preview = option === 'group' ? '안녕하세요~' : '과거 몇차례 잔디를 통해서 일하는 사...',
-  avatar = 'avatar-04', more = 5, unread = option === 'group' ? 10 : 1,
-  muted = true, pinned = true,
-} = {}) {
-  const block = state === 'block';
-  const av = option === 'group' ? AvatarGroup({ src: avatar, more }) : Avatar({ src: avatar, size: 48, dimmed: block });
-  const icons = !block && (muted || pinned)
-    ? `<span class="lxp-msg-item__icons">${muted ? Icon('bell-off', { size: 12 }) : ''}${pinned ? Icon('pin', { size: 12 }) : ''}</span>` : '';
-  const trailing = block
-    ? Button({ label: '차단 해제', variant: 'outline', size: 'xs', icon: 'block-12' })
-    : unread ? Badge({ count: unread, size: swipe === 'left' ? 'square' : swipe === 'right' ? 'sm' : 'md' }) : '';
-  const row = `<div class="${cx('lxp-msg-item', `is-${state}`, swipe && 'is-swiped')}">
-    ${av}
-    <div class="lxp-msg-item__text">
-      <div class="lxp-msg-item__name"><p class="lxp-ellipsis">${esc(name)}</p>${icons}</div>
-      <p class="lxp-msg-item__preview">${esc(block ? '대화방을 나갔습니다.' : preview)}</p>
-    </div>
-    ${trailing}
-  </div>`;
-  if (swipe === 'right') {
-    return `<div class="lxp-swipe lxp-swipe--right">${row}
-      <button class="lxp-swipe__act" style="background:var(--bg-hierarchy-quinary)">읽음</button>
-      <button class="lxp-swipe__act" style="background:var(--bg-hierarchy-senary)">차단</button>
-      <button class="lxp-swipe__act" style="background:var(--bg-semantic-nega-primary)">나가기</button>
-    </div>`;
-  }
-  if (swipe === 'left') {
-    return `<div class="lxp-swipe lxp-swipe--left">
-      <button class="lxp-swipe__act" style="background:var(--fg-semantic-info)" aria-label="고정">${Icon('pin-20-white', { size: 20 })}</button>
-      <button class="lxp-swipe__act" style="background:var(--bg-hierarchy-quinary)" aria-label="알림">${Icon('bell-20-white', { size: 20 })}</button>
-      ${row}
-    </div>`;
-  }
-  return row;
-}
-
-/**
- * 이모지 리액션 버튼
- * @param {string} [p.emoji] 문자 이모지 (기본 👍)
- * @param {string} [p.icon] 이모지 대신 쓸 아이콘 에셋명
- */
-function Reaction({ emoji = '👍', icon, count, selected = false, add = false } = {}) {
-  if (add) return `<button class="lxp-reaction" aria-label="리액션 추가">${Icon('face-smile-plus', { size: 16 })}</button>`;
-  const glyph = icon ? Icon(icon, { size: 16 }) : `<span class="lxp-reaction__emoji">${esc(emoji)}</span>`;
-  return `<button class="${cx('lxp-reaction', selected && 'is-selected')}">${glyph}${count != null ? `<span>${esc(count)}</span>` : ''}</button>`;
-}
-
-/**
- * 채팅 메시지
- * @param {{emoji?:string,icon?:string,count:number,selected?:boolean}[]} [p.reactions]
- * @param {number|null} [p.read] 읽음 수
- */
-function ChatMessage({
-  name = '김연아', time = '오후 05:00', read = 4, text = '안녕하세요.', avatar = 'avatar-03',
-  reactions = [{ emoji: '😀', count: 1 }, { count: 1, selected: true }], addReaction = true,
-} = {}) {
-  return `<div class="lxp-chat-msg">
-    ${Avatar({ src: avatar, size: 36 })}
-    <div class="lxp-chat-msg__main">
-      <div class="lxp-chat-msg__meta">
-        <b>${esc(name)}</b><span>${esc(time)}</span>
-        ${read != null ? `<span class="lxp-chat-msg__read">${Icon('dot-separator', { size: 8 })}읽음 ${esc(read)}</span>` : ''}
-      </div>
-      <p class="lxp-chat-msg__text">${esc(text)}</p>
-      ${reactions.length || addReaction ? `<div class="lxp-chat-msg__reactions">${reactions.map(Reaction).join('')}${addReaction ? Reaction({ add: true }) : ''}</div>` : ''}
-    </div>
-  </div>`;
-}
-
-/** 채팅 날짜 구분선 (chat-date) — 토큰 기반 구성 */
-function ChatDate({ label = '2026년 1월 21일 수요일' } = {}) {
-  return `<div class="lxp-chat-date"><span>${esc(label)}</span></div>`;
-}
-
-// ----- components/overlay.js
-// 오버레이 & 화면 조립: Popup · BottomSheet · Screen
-
-
-/**
- * 팝업 다이얼로그 (popup 80:22498)
- * @param {{label:string,tone?:'default'|'danger'|'primary'}[]} [p.actions]
- * @param {string} [p.body] 본문 텍스트 (HTML 원하면 content 사용)
- */
-function Popup({ title = '메시지 삭제', body = '메시지를 모두에게서 삭제할까요?', content, actions = [{ label: '취소' }, { label: '삭제', tone: 'danger' }] } = {}) {
-  return `<div class="lxp-popup" role="dialog" aria-label="${esc(title)}">
-    <div class="lxp-popup__content">
-      ${title ? `<p class="lxp-popup__title">${esc(title)}</p>` : ''}
-      ${content ? `<div class="lxp-popup__body">${slot(content)}</div>` : body ? `<p class="lxp-popup__body">${esc(body)}</p>` : ''}
-    </div>
-    <div class="lxp-popup__actions">
-      ${actions.map((a) => `<button class="${cx('lxp-popup__btn', a.tone && `is-${a.tone}`)}">${esc(a.label)}</button>`).join('')}
-    </div>
-  </div>`;
-}
-
-/**
- * 바텀시트 (bottom_sheet/* — 롱프레스 메뉴, 채팅 설정)
- * @param {{icon?:string,label:string,tone?:'danger'}[]} [p.items]
- */
-function BottomSheet({ title = '', items = [], content } = {}) {
-  return `<div class="lxp-sheet" role="dialog">
-    <i class="lxp-sheet__handle"></i>
-    ${title ? `<p class="lxp-sheet__title">${esc(title)}</p>` : ''}
-    ${content ? slot(content) : `<ul class="lxp-sheet__list">${items.map((it) => `<li class="${cx('lxp-sheet__item', it.tone && `is-${it.tone}`)}">${esc(it.label)}</li>`).join('')}</ul>`}
+/** iOS 상태바 (Figma 24:13152) */
+function StatusBar({ className = '' } = {}) {
+  return `<div class="${cx('lxp-statusbar', className)}" aria-hidden="true">
+    <img class="lxp-statusbar__left" src="${asset('statusbar-left')}" alt="">
+    <img class="lxp-statusbar__right" src="${asset('statusbar-right')}" alt="">
   </div>`;
 }
 
@@ -861,5 +1051,5 @@ function Dim({ content = '', align = 'center' } = {}) {
   return `<div class="lxp-dim"></div><div class="${cx('lxp-dim__content', `is-${align}`)}">${slot(content)}</div>`;
 }
 
-global.LXP = { esc, cx, htmlAttrs, slot, ASSETS, setAssetBase, asset, iconNames, Icon, Button, IconButton, Chip, Badge, Avatar, AvatarGroup, Tag, Toast, StatGrid, InfoBar, MemberRow, StatusBar, Dropdown, Header, AppHeader, TabBar, TAB_ITEMS, Input, MessageInput, Footer, ChipTabs, SegmentedControl, LineTabs, DateStrip, ToggleGroup, Checkbox, CourseCard, DeadlineCard, DeadlineCarousel, ModuleItem, WeekPicker, MessageItem, Reaction, ChatMessage, ChatDate, Popup, BottomSheet, Screen, Dim, tokens: {"primitive":{"neutral":{"white":"#ffffff","black":"#000000","gray05":"#0b0c0d","gray10":"#161819","gray14":"#1f2124","gray15":"#212326","gray16":"#232629","gray20":"#2c2f32","gray25":"#373b3f","gray30":"#41474b","gray40":"#575e64","gray50":"#6d767e","gray60":"#899199","gray70":"#a7adb2","gray80":"#c4c8cc","gray85":"#d3d6d9","gray90":"#e0e3e5","gray94":"#eeeff0","gray95":"#f0f1f2","gray96":"#f5f5f5","gray99":"#fcfcfc"},"alpha":{"w5":"#ffffff0d","w6":"#ffffff0f","w10":"#ffffff1a","w15":"#ffffff26","w20":"#ffffff33","w30":"#ffffff4d","w50":"#ffffff80","w60":"#ffffff99","w80":"#ffffffcc","w90":"#ffffffe5","b10":"#0000001a","b15":"#00000026","b20":"#00000033","b30":"#0000004d","b60":"#00000099"},"brand":{"cos10":"#001732","cos15":"#00234b","cos20":"#002f64","cos25":"#003a7d","cos30":"#004696","cos35":"#0052af","cos40":"#005dc8","cos45":"#0069e1","cos50":"#0075f8","cos55":"#1582ff","cos60":"#2f90ff","cos65":"#499eff","cos75":"#97c8ff","cos80":"#b1d5ff","cos90":"#cbe3ff","cos93":"#d9eaff","cos95":"#e5f1ff","cos30a":"#0075f84d","cos40a":"#0075f866","cos50a":"#0075f880"},"semantic":{"nega15":"#530b06","nega20":"#6e0f08","nega25":"#8a130a","nega30":"#a5170c","nega35":"#c11a0e","nega40":"#dc1e11","nega45":"#ee2a1c","nega50":"#f04438","nega60":"#e35f6d","nega65":"#e6737f","nega70":"#ea8791","nega80":"#f1afb6","nega90":"#f8d7da","nega95":"#fbebed","nega30a":"#dc1e114d","nega40a":"#dc1e1166","info05":"#010e1d","info10":"#011d3a","info15":"#022b57","info20":"#033973","info25":"#044890","info30":"#0456ad","info35":"#0564ca","info40":"#0673e7","info45":"#1181f9","info55":"#439cfa","info60":"#58a7fb","info65":"#6db2fb","info70":"#82bdfc","info85":"#c0defd","info88":"#cae3fd","info90":"#d5e9fe","info93":"#eaf4fe","info95":"#e0eefe","info30a":"#1181f94d","info40a":"#1181f966","posi15":"#09311e","posi20":"#0c4229","posi25":"#0f5233","posi30":"#12623d","posi35":"#157347","posi40":"#188351","posi50":"#1ea465","posi60":"#29d886","posi65":"#44dd95","posi70":"#5fe2a5","posi90":"#caf5e1","posi95":"#e4faf0","posi30a":"#1ea4654d","posi40a":"#1ea46566","warn15":"#4e3b00","warn20":"#684e00","warn25":"#826200","warn30":"#9c7500","warn40":"#d09c00","warn50":"#ffc107","warn55":"#ffc71e","warn60":"#ffcd37","warn65":"#ffd350","warn70":"#ffda69","warn75":"#ffe082","warn85":"#ffecb4","warn90":"#fff3cd","warn95":"#fff9e6","prog15":"#501d01","prog20":"#6a2602","prog30":"#a03902","prog35":"#ba4303","prog40":"#d54d03","prog50":"#fd7e14","prog60":"#fc8342","prog65":"#fc935a","prog70":"#fda271","prog90":"#fee0d0","prog95":"#fff0e7","etc15":"#21133b","etc20":"#2c194f","etc30":"#422676","etc35":"#4d2d89","etc40":"#58339d","etc50":"#6f42c1","etc55":"#7d55c8","etc60":"#8c68ce","etc65":"#9a7bd4","etc70":"#a98eda","etc90":"#e2d9f3","etc95":"#f1ecf9"},"utility":{"url":"#2d7ae9","file":"#4dcece","vod":"#fd6d6d","elearning":"#a7845e","board":"#ff9543","survey":"#6c6aee","zoom":"#3564e1","report":"#62c446","test":"#cd60b8","discussion":"#ebcd00","class":"#90d028","online":"#a172ec","workshop":"#5592bb","allo":"#48bba5","vpl":"#7b7bac","notice":"#a2abc5","hyflex":"#2a4c9c","kelly-green":"#57ae00","light-green":"#cbea00","tea-green":"#d7f0ac","mint-green":"#e3f6c2"}},"semantic":{"bg/hierarchy/primary":"neutral.gray99","bg/hierarchy/primary-subtle":"neutral.gray96","bg/hierarchy/secondary":"neutral.gray95","bg/hierarchy/secondary-subtle":"neutral.gray94","bg/hierarchy/tertiary":"neutral.gray90","bg/hierarchy/quaternary":"neutral.gray85","bg/hierarchy/quinary":"neutral.gray60","bg/hierarchy/senary":"neutral.gray50","bg/hierarchy/senary-subtle":"neutral.gray40","bg/neutral/white":"neutral.white","bg/neutral/black":"neutral.black","bg/neutral/white-solid":"neutral.white","bg/neutral/black-solid":"neutral.black","bg/neutral/b10%":"alpha.b10","bg/neutral/b15%":"alpha.b15","bg/neutral/b60%":"alpha.b60","bg/neutral/w5%":"alpha.w5","bg/neutral/w20%":"alpha.w20","bg/neutral/w30%":"alpha.w30","bg/neutral/w50%":"alpha.w50","bg/neutral/w90%":"alpha.w90","bg/coursmos/primary":"brand.cos50","bg/coursmos/secondary":"brand.cos45","bg/coursmos/tertiary":"brand.cos40","bg/coursmos/quaternary":"brand.cos80","bg/coursmos/quinary":"brand.cos90","bg/coursmos/quinary-subtle":"brand.cos93","bg/coursmos/senary":"brand.cos95","bg/coursmos/primary-30%":"brand.cos30a","bg/semantic/nega-primary":"semantic.nega50","bg/semantic/nega-secondary":"semantic.nega40","bg/semantic/nega-tertiary":"semantic.nega35","bg/semantic/nega-quaternary":"semantic.nega70","bg/semantic/nega-quaternary-subtle":"semantic.nega80","bg/semantic/nega-quinary":"semantic.nega90","bg/semantic/nega-senary":"semantic.nega95","bg/semantic/nega-30%":"semantic.nega30a","bg/semantic/info-primary":"semantic.info45","bg/semantic/info-secondary":"semantic.info35","bg/semantic/info-tertiary":"semantic.info30","bg/semantic/info-quaternary":"semantic.info88","bg/semantic/info-quinary":"semantic.info90","bg/semantic/info-senary":"semantic.info95","bg/semantic/info-senary-subtle":"semantic.info93","bg/semantic/info-30%":"semantic.info30a","bg/semantic/posi-primary":"semantic.posi50","bg/semantic/posi-secondary":"semantic.posi40","bg/semantic/posi-tertiary":"semantic.posi35","bg/semantic/posi-quaternary":"semantic.posi70","bg/semantic/posi-quinary":"semantic.posi90","bg/semantic/posi-senary":"semantic.posi95","bg/semantic/posi-30%":"semantic.posi30a","bg/semantic/posi-40%":"semantic.posi40a","bg/semantic/warn-primary":"semantic.warn50","bg/semantic/warn-secondary":"semantic.warn40","bg/semantic/warn-tertiary":"semantic.warn30","bg/semantic/warn-quaternary":"semantic.warn70","bg/semantic/warn-quinary":"semantic.warn90","bg/semantic/warn-quinary-subtle":"semantic.warn85","bg/semantic/warn-senary":"semantic.warn95","bg/semantic/prog-primary":"semantic.prog50","bg/semantic/prog-secondary":"semantic.prog40","bg/semantic/prog-tertiary":"semantic.prog35","bg/semantic/prog-quaternary":"semantic.prog70","bg/semantic/prog-quinary":"semantic.prog90","bg/semantic/prog-senary":"semantic.prog95","bg/semantic/etc-primary":"semantic.etc50","bg/semantic/etc-secondary":"semantic.etc40","bg/semantic/etc-tertiary":"semantic.etc35","bg/semantic/etc-quaternary":"semantic.etc70","bg/semantic/etc-quinary":"semantic.etc90","bg/semantic/etc-senary":"semantic.etc95","tx/hierarchy/primary":"neutral.gray10","tx/hierarchy/secondary":"neutral.gray20","tx/hierarchy/tertiary":"neutral.gray40","tx/hierarchy/quaternary":"neutral.gray50","tx/hierarchy/quinary":"neutral.gray60","tx/hierarchy/senary":"neutral.gray80","tx/hierarchy/senary-subtle":"neutral.gray90","tx/neutral/white":"neutral.white","tx/neutral/black":"neutral.black","tx/neutral/white-solid":"neutral.white","tx/neutral/black-solid":"neutral.black","tx/neutral/b20%-disabled":"alpha.b20","tx/neutral/w80%-disabled":"alpha.w80","tx/coursmos/primary":"brand.cos50","tx/coursmos/secondary":"brand.cos40","tx/coursmos/tertiary":"brand.cos35","tx/coursmos/quaternary":"brand.cos80","tx/coursmos/quinary":"brand.cos90","tx/coursmos/senary":"brand.cos95","tx/coursmos/primary-30%":"brand.cos30a","tx/semantic/nega-primary":"semantic.nega50","tx/semantic/nega-secondary":"semantic.nega40","tx/semantic/nega-tertiary":"semantic.nega35","tx/semantic/nega-quaternary":"semantic.nega25","tx/semantic/nega-quinary":"semantic.nega15","tx/semantic/nega-senary":"semantic.nega80","tx/semantic/info-primary":"semantic.info45","tx/semantic/info-secondary":"semantic.info40","tx/semantic/info-tertiary":"semantic.info35","tx/semantic/info-quaternary":"semantic.info85","tx/semantic/info-quinary":"semantic.info90","tx/semantic/info-senary":"semantic.info95","tx/semantic/posi-primary":"semantic.posi50","tx/semantic/posi-secondary":"semantic.posi40","tx/semantic/posi-tertiary":"semantic.posi35","tx/semantic/posi-quaternary":"semantic.posi25","tx/semantic/posi-quinary":"semantic.posi15","tx/semantic/posi-senary":"semantic.posi95","tx/semantic/noti-primary":"semantic.warn50","tx/semantic/prog-primary":"semantic.prog50","tx/semantic/etc-primary":"semantic.etc50","fg/hierarchy/primary":"neutral.gray10","fg/hierarchy/secondary":"neutral.gray20","fg/hierarchy/tertiary":"neutral.gray40","fg/hierarchy/quaternary":"neutral.gray50","fg/hierarchy/quinary":"neutral.gray60","fg/hierarchy/senary":"neutral.gray80","fg/hierarchy/senary-subtle":"neutral.gray90","fg/neutral/white":"neutral.white","fg/neutral/black":"neutral.black","fg/neutral/white-solid":"neutral.white","fg/neutral/black-solid":"neutral.black","fg/neutral/w50%-solid":"alpha.w50","fg/neutral/w80%-solid":"alpha.w80","fg/coursmos/primary":"brand.cos50","fg/coursmos/secondary":"brand.cos40","fg/coursmos/tertiary":"brand.cos35","fg/coursmos/quaternary":"brand.cos60","fg/coursmos/quinary":"brand.cos90","fg/coursmos/senary":"brand.cos95","fg/coursmos/primary-30%":"brand.cos30a","fg/coursmos/primary-50%":"brand.cos50a","fg/semantic/nega":"semantic.nega50","fg/semantic/nega-quinary":"semantic.nega15","fg/semantic/nega-40%":"semantic.nega40a","fg/semantic/warn-primary":"semantic.warn50","fg/semantic/warn-senary":"semantic.warn70","fg/semantic/posi":"semantic.posi50","fg/semantic/posi-quinary":"semantic.posi15","fg/semantic/posi-40%":"semantic.posi40a","fg/semantic/info":"semantic.info45","fg/semantic/prog":"semantic.prog50","fg/semantic/etc":"semantic.etc50","bo/hierarchy/primary":"neutral.gray94","bo/hierarchy/primary-subtle":"neutral.gray96","bo/hierarchy/secondary":"neutral.gray90","bo/hierarchy/tertiary":"neutral.gray85","bo/hierarchy/quaternary":"neutral.gray80","bo/hierarchy/quaternary-subtle":"neutral.gray50","bo/hierarchy/quinary":"neutral.gray30","bo/hierarchy/senary":"neutral.gray10","bo/neutral/white":"neutral.white","bo/neutral/black":"neutral.black","bo/neutral/white-solid":"neutral.white","bo/neutral/black-solid":"neutral.black","bo/neutral/gray99":"neutral.gray99","bo/neutral/b20%":"alpha.b20","bo/neutral/b30%":"alpha.b30","bo/coursmos/primary":"brand.cos50","bo/coursmos/secondary":"brand.cos40","bo/coursmos/tertiary":"brand.cos35","bo/coursmos/quaternary":"brand.cos80","bo/coursmos/quinary":"brand.cos90","bo/coursmos/senary":"brand.cos95","bo/coursmos/primary-30%":"brand.cos30a","bo/semantic/nega-primary":"semantic.nega50","bo/semantic/nega-secondary":"semantic.nega40","bo/semantic/nega-tertiary":"semantic.nega35","bo/semantic/nega-30%":"semantic.nega30a","bo/semantic/nega-40%":"semantic.nega40a","bo/semantic/info-primary":"semantic.info45","bo/semantic/info-secondary":"semantic.info40","bo/semantic/info-tertiary":"semantic.info35","bo/semantic/info-quarternary":"semantic.info85","bo/semantic/info-quinary":"semantic.info90","bo/semantic/info-senary":"semantic.info95","bo/semantic/info-30%":"semantic.info30a","bo/semantic/info-40%":"semantic.info40a","bo/semantic/posi-primary":"semantic.posi50","bo/semantic/posi-secondary":"semantic.posi40","bo/semantic/posi-tertiary":"semantic.posi35","bo/semantic/posi-40%":"semantic.posi40a","bo/semantic/warn-primary":"semantic.warn50","bo/semantic/prog-primary":"semantic.prog50","bo/semantic/etc-primary":"semantic.etc50","ut/module/url":"utility.url","ut/module/file":"utility.file","ut/module/vod":"utility.vod","ut/module/elearning":"utility.elearning","ut/module/board":"utility.board","ut/module/survey":"utility.survey","ut/module/zoom":"utility.zoom","ut/module/report":"utility.report","ut/module/test":"utility.test","ut/module/discussion":"utility.discussion","ut/module/class":"utility.class","ut/module/online":"utility.online","ut/module/workshop":"utility.workshop","ut/module/allo":"utility.allo","ut/module/vpl":"utility.vpl","ut/module/notice":"utility.notice","ut/module/hyflex":"utility.hyflex","ut/school/cos-primary":"brand.cos50","ut/school/cos-secondary":"brand.cos60","ut/school/sang-primary":"#01499a","ut/school/inch-primary":"#003d91","ut/school/gachun-primary":"#004e96","ut/graph/gray-primary":"neutral.gray70","ut/graph/gray-secondary":"neutral.gray94","ut/graph/blue-primary":"semantic.info40","ut/graph/blue-secondary":"semantic.info65","ut/graph/blue-tertiary":"brand.cos75","ut/graph/blue-quaternary":"brand.cos90","ut/graph/blue-quinary":"brand.cos93","ut/graph/blue-senary":"brand.cos95","ut/graph/green-primary":"utility.kelly-green","ut/graph/green-secondary":"utility.light-green","ut/graph/green-quaternary":"utility.tea-green","ut/graph/green-senary":"utility.mint-green","ut/graph/violet-primary":"semantic.etc55","ut/graph/violet-secondary":"semantic.etc65","ut/graph/yellow-secondary":"semantic.warn75"},"typography":{"fontFamily":"'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif","styles":{"head/28B":[28,700,1.4,0],"head/24B":[24,700,1.4,0],"head/20B":[20,700,1.4,0],"head/20SB":[20,600,1.4,0],"paragraph/16R":[16,400,1.5,-0.1],"label/18B":[18,700,1.5,-0.5],"label/18SB":[18,600,1.5,-0.5],"label/18M":[18,500,1.5,-0.5],"label/18R":[18,400,1.5,-0.5],"label/16B":[16,700,1.5,-0.5],"label/16SB":[16,600,1.5,-0.5],"label/16M":[16,500,1.5,-0.5],"label/16R":[16,400,1.5,-0.5],"label/15B":[15,700,1.5,-0.5],"label/15SB":[15,600,1.5,-0.5],"label/15M":[15,500,1.5,-0.5],"label/15R":[15,400,1.5,-0.5],"label/14B":[14,700,1.5,-0.5],"label/14SB":[14,600,1.5,-0.5],"label/14M":[14,500,1.5,-0.5],"label/14R":[14,400,1.5,-0.5],"label/13B":[13,700,1.5,-0.5],"label/13SB":[13,600,1.5,-0.5],"label/13M":[13,500,1.5,-0.5],"label/13R":[13,400,1.5,-0.5],"label/12B":[12,700,1.5,-0.5],"label/12SB":[12,600,1.5,-0.5],"label/12M":[12,500,1.5,-0.5],"label/12R":[12,400,1.5,-0.5],"cap/12SB":[12,600,1.2,-0.5],"cap/11SB":[11,600,1.2,-0.5]},"$note":"[size(px), weight, lineHeight(배수), letterSpacing(%)]. Figma 'Lable/' → 'label/'. 모바일 기준 28–11px만 유지(head 56/40/32, cap 10 제거)"},"spacing":{"spac2":2,"spac4":4,"spac6":6,"spac8":8,"spac12":12,"spac16":16,"spac20":20,"spac24":24,"spac28":28,"spac32":32},"radius":{"radi3Xsm":4,"radi2Xsm":6,"radiXsm":8,"radiSm":10,"radiMd":12,"radiLg":16,"radiXlg":32,"radiFull":999},"shadow":{"xsm":"0 0 4px #0000000D","sm":"0 0 8px #00000012","card":"0 0 10px #0000000D","md":"0 0 12px #00000014","lg":"0 0 20px #0000001A","xl":"0 0 32px #0000001F"}} };
+global.LXP = { esc, cx, htmlAttrs, slot, ASSETS, setAssetBase, asset, iconNames, Icon, Avatar, AvatarGroup, Badge, Button, IconButton, Checkbox, Chip, Input, Ratio, Reaction, SwipeAction, Toast, BottomSheet, ChatMessage, ChatDate, CourseCard, DateStrip, DeadlineCard, Dropdown, InfoBar, MemberRow, MessageInput, MessageItem, ModuleItem, Popup, StatGrid, ChipTabs, SegmentedControl, LineTabs, Tag, ToggleGroup, WeekPicker, DeadlineCarousel, Footer, Header, AppHeader, Stack, Grid, Surface, Section, TabBar, TAB_ITEMS, StatusBar, Screen, Dim, tokens: {"primitive":{"neutral":{"white":"#ffffff","black":"#000000","gray05":"#0b0c0d","gray10":"#161819","gray14":"#1f2124","gray15":"#212326","gray16":"#232629","gray20":"#2c2f32","gray25":"#373b3f","gray30":"#41474b","gray40":"#575e64","gray50":"#6d767e","gray60":"#899199","gray70":"#a7adb2","gray80":"#c4c8cc","gray85":"#d3d6d9","gray90":"#e0e3e5","gray94":"#eeeff0","gray95":"#f0f1f2","gray96":"#f5f5f5","gray99":"#fcfcfc"},"alpha":{"w5":"#ffffff0d","w6":"#ffffff0f","w10":"#ffffff1a","w15":"#ffffff26","w20":"#ffffff33","w30":"#ffffff4d","w50":"#ffffff80","w60":"#ffffff99","w80":"#ffffffcc","w90":"#ffffffe5","b10":"#0000001a","b15":"#00000026","b20":"#00000033","b30":"#0000004d","b60":"#00000099"},"brand":{"cos10":"#001732","cos15":"#00234b","cos20":"#002f64","cos25":"#003a7d","cos30":"#004696","cos35":"#0052af","cos40":"#005dc8","cos45":"#0069e1","cos50":"#0075f8","cos55":"#1582ff","cos60":"#2f90ff","cos65":"#499eff","cos75":"#97c8ff","cos80":"#b1d5ff","cos90":"#cbe3ff","cos93":"#d9eaff","cos95":"#e5f1ff","cos30a":"#0075f84d","cos40a":"#0075f866","cos50a":"#0075f880"},"semantic":{"nega15":"#530b06","nega20":"#6e0f08","nega25":"#8a130a","nega30":"#a5170c","nega35":"#c11a0e","nega40":"#dc1e11","nega45":"#ee2a1c","nega50":"#f04438","nega60":"#e35f6d","nega65":"#e6737f","nega70":"#ea8791","nega80":"#f1afb6","nega90":"#f8d7da","nega95":"#fbebed","nega30a":"#dc1e114d","nega40a":"#dc1e1166","info05":"#010e1d","info10":"#011d3a","info15":"#022b57","info20":"#033973","info25":"#044890","info30":"#0456ad","info35":"#0564ca","info40":"#0673e7","info45":"#1181f9","info55":"#439cfa","info60":"#58a7fb","info65":"#6db2fb","info70":"#82bdfc","info85":"#c0defd","info88":"#cae3fd","info90":"#d5e9fe","info93":"#eaf4fe","info95":"#e0eefe","info30a":"#1181f94d","info40a":"#1181f966","posi15":"#09311e","posi20":"#0c4229","posi25":"#0f5233","posi30":"#12623d","posi35":"#157347","posi40":"#188351","posi50":"#1ea465","posi60":"#29d886","posi65":"#44dd95","posi70":"#5fe2a5","posi90":"#caf5e1","posi95":"#e4faf0","posi30a":"#1ea4654d","posi40a":"#1ea46566","warn15":"#4e3b00","warn20":"#684e00","warn25":"#826200","warn30":"#9c7500","warn40":"#d09c00","warn50":"#ffc107","warn55":"#ffc71e","warn60":"#ffcd37","warn65":"#ffd350","warn70":"#ffda69","warn75":"#ffe082","warn85":"#ffecb4","warn90":"#fff3cd","warn95":"#fff9e6","prog15":"#501d01","prog20":"#6a2602","prog30":"#a03902","prog35":"#ba4303","prog40":"#d54d03","prog50":"#fd7e14","prog60":"#fc8342","prog65":"#fc935a","prog70":"#fda271","prog90":"#fee0d0","prog95":"#fff0e7","etc15":"#21133b","etc20":"#2c194f","etc30":"#422676","etc35":"#4d2d89","etc40":"#58339d","etc50":"#6f42c1","etc55":"#7d55c8","etc60":"#8c68ce","etc65":"#9a7bd4","etc70":"#a98eda","etc90":"#e2d9f3","etc95":"#f1ecf9"},"utility":{"url":"#2d7ae9","file":"#4dcece","vod":"#fd6d6d","elearning":"#a7845e","board":"#ff9543","survey":"#6c6aee","zoom":"#3564e1","report":"#62c446","test":"#cd60b8","discussion":"#ebcd00","class":"#90d028","online":"#a172ec","workshop":"#5592bb","allo":"#48bba5","vpl":"#7b7bac","notice":"#a2abc5","hyflex":"#2a4c9c","kelly-green":"#57ae00","light-green":"#cbea00","tea-green":"#d7f0ac","mint-green":"#e3f6c2"}},"semantic":{"bg/hierarchy/primary":"neutral.gray99","bg/hierarchy/primary-subtle":"neutral.gray96","bg/hierarchy/secondary":"neutral.gray95","bg/hierarchy/secondary-subtle":"neutral.gray94","bg/hierarchy/tertiary":"neutral.gray90","bg/hierarchy/quaternary":"neutral.gray85","bg/hierarchy/quinary":"neutral.gray60","bg/hierarchy/senary":"neutral.gray50","bg/hierarchy/senary-subtle":"neutral.gray40","bg/neutral/white":"neutral.white","bg/neutral/black":"neutral.black","bg/neutral/white-solid":"neutral.white","bg/neutral/black-solid":"neutral.black","bg/neutral/b10%":"alpha.b10","bg/neutral/b15%":"alpha.b15","bg/neutral/b60%":"alpha.b60","bg/neutral/w5%":"alpha.w5","bg/neutral/w20%":"alpha.w20","bg/neutral/w30%":"alpha.w30","bg/neutral/w50%":"alpha.w50","bg/neutral/w90%":"alpha.w90","bg/coursmos/primary":"brand.cos50","bg/coursmos/secondary":"brand.cos45","bg/coursmos/tertiary":"brand.cos40","bg/coursmos/quaternary":"brand.cos80","bg/coursmos/quinary":"brand.cos90","bg/coursmos/quinary-subtle":"brand.cos93","bg/coursmos/senary":"brand.cos95","bg/coursmos/primary-30%":"brand.cos30a","bg/semantic/nega-primary":"semantic.nega50","bg/semantic/nega-secondary":"semantic.nega40","bg/semantic/nega-tertiary":"semantic.nega35","bg/semantic/nega-quaternary":"semantic.nega70","bg/semantic/nega-quaternary-subtle":"semantic.nega80","bg/semantic/nega-quinary":"semantic.nega90","bg/semantic/nega-senary":"semantic.nega95","bg/semantic/nega-30%":"semantic.nega30a","bg/semantic/info-primary":"semantic.info45","bg/semantic/info-secondary":"semantic.info35","bg/semantic/info-tertiary":"semantic.info30","bg/semantic/info-quaternary":"semantic.info88","bg/semantic/info-quinary":"semantic.info90","bg/semantic/info-senary":"semantic.info95","bg/semantic/info-senary-subtle":"semantic.info93","bg/semantic/info-30%":"semantic.info30a","bg/semantic/posi-primary":"semantic.posi50","bg/semantic/posi-secondary":"semantic.posi40","bg/semantic/posi-tertiary":"semantic.posi35","bg/semantic/posi-quaternary":"semantic.posi70","bg/semantic/posi-quinary":"semantic.posi90","bg/semantic/posi-senary":"semantic.posi95","bg/semantic/posi-30%":"semantic.posi30a","bg/semantic/posi-40%":"semantic.posi40a","bg/semantic/warn-primary":"semantic.warn50","bg/semantic/warn-secondary":"semantic.warn40","bg/semantic/warn-tertiary":"semantic.warn30","bg/semantic/warn-quaternary":"semantic.warn70","bg/semantic/warn-quinary":"semantic.warn90","bg/semantic/warn-quinary-subtle":"semantic.warn85","bg/semantic/warn-senary":"semantic.warn95","bg/semantic/prog-primary":"semantic.prog50","bg/semantic/prog-secondary":"semantic.prog40","bg/semantic/prog-tertiary":"semantic.prog35","bg/semantic/prog-quaternary":"semantic.prog70","bg/semantic/prog-quinary":"semantic.prog90","bg/semantic/prog-senary":"semantic.prog95","bg/semantic/etc-primary":"semantic.etc50","bg/semantic/etc-secondary":"semantic.etc40","bg/semantic/etc-tertiary":"semantic.etc35","bg/semantic/etc-quaternary":"semantic.etc70","bg/semantic/etc-quinary":"semantic.etc90","bg/semantic/etc-senary":"semantic.etc95","tx/hierarchy/primary":"neutral.gray10","tx/hierarchy/secondary":"neutral.gray20","tx/hierarchy/tertiary":"neutral.gray40","tx/hierarchy/quaternary":"neutral.gray50","tx/hierarchy/quinary":"neutral.gray60","tx/hierarchy/senary":"neutral.gray80","tx/hierarchy/senary-subtle":"neutral.gray90","tx/neutral/white":"neutral.white","tx/neutral/black":"neutral.black","tx/neutral/white-solid":"neutral.white","tx/neutral/black-solid":"neutral.black","tx/neutral/b20%-disabled":"alpha.b20","tx/neutral/w80%-disabled":"alpha.w80","tx/coursmos/primary":"brand.cos50","tx/coursmos/secondary":"brand.cos40","tx/coursmos/tertiary":"brand.cos35","tx/coursmos/quaternary":"brand.cos80","tx/coursmos/quinary":"brand.cos90","tx/coursmos/senary":"brand.cos95","tx/coursmos/primary-30%":"brand.cos30a","tx/semantic/nega-primary":"semantic.nega50","tx/semantic/nega-secondary":"semantic.nega40","tx/semantic/nega-tertiary":"semantic.nega35","tx/semantic/nega-quaternary":"semantic.nega25","tx/semantic/nega-quinary":"semantic.nega15","tx/semantic/nega-senary":"semantic.nega80","tx/semantic/info-primary":"semantic.info45","tx/semantic/info-secondary":"semantic.info40","tx/semantic/info-tertiary":"semantic.info35","tx/semantic/info-quaternary":"semantic.info85","tx/semantic/info-quinary":"semantic.info90","tx/semantic/info-senary":"semantic.info95","tx/semantic/posi-primary":"semantic.posi50","tx/semantic/posi-secondary":"semantic.posi40","tx/semantic/posi-tertiary":"semantic.posi35","tx/semantic/posi-quaternary":"semantic.posi25","tx/semantic/posi-quinary":"semantic.posi15","tx/semantic/posi-senary":"semantic.posi95","tx/semantic/noti-primary":"semantic.warn50","tx/semantic/prog-primary":"semantic.prog50","tx/semantic/etc-primary":"semantic.etc50","fg/hierarchy/primary":"neutral.gray10","fg/hierarchy/secondary":"neutral.gray20","fg/hierarchy/tertiary":"neutral.gray40","fg/hierarchy/quaternary":"neutral.gray50","fg/hierarchy/quinary":"neutral.gray60","fg/hierarchy/senary":"neutral.gray80","fg/hierarchy/senary-subtle":"neutral.gray90","fg/neutral/white":"neutral.white","fg/neutral/black":"neutral.black","fg/neutral/white-solid":"neutral.white","fg/neutral/black-solid":"neutral.black","fg/neutral/w50%-solid":"alpha.w50","fg/neutral/w80%-solid":"alpha.w80","fg/coursmos/primary":"brand.cos50","fg/coursmos/secondary":"brand.cos40","fg/coursmos/tertiary":"brand.cos35","fg/coursmos/quaternary":"brand.cos60","fg/coursmos/quinary":"brand.cos90","fg/coursmos/senary":"brand.cos95","fg/coursmos/primary-30%":"brand.cos30a","fg/coursmos/primary-50%":"brand.cos50a","fg/semantic/nega":"semantic.nega50","fg/semantic/nega-quinary":"semantic.nega15","fg/semantic/nega-40%":"semantic.nega40a","fg/semantic/warn-primary":"semantic.warn50","fg/semantic/warn-senary":"semantic.warn70","fg/semantic/posi":"semantic.posi50","fg/semantic/posi-quinary":"semantic.posi15","fg/semantic/posi-40%":"semantic.posi40a","fg/semantic/info":"semantic.info45","fg/semantic/prog":"semantic.prog50","fg/semantic/etc":"semantic.etc50","bo/hierarchy/primary":"neutral.gray94","bo/hierarchy/primary-subtle":"neutral.gray96","bo/hierarchy/secondary":"neutral.gray90","bo/hierarchy/tertiary":"neutral.gray85","bo/hierarchy/quaternary":"neutral.gray80","bo/hierarchy/quaternary-subtle":"neutral.gray50","bo/hierarchy/quinary":"neutral.gray30","bo/hierarchy/senary":"neutral.gray10","bo/neutral/white":"neutral.white","bo/neutral/black":"neutral.black","bo/neutral/white-solid":"neutral.white","bo/neutral/black-solid":"neutral.black","bo/neutral/gray99":"neutral.gray99","bo/neutral/b20%":"alpha.b20","bo/neutral/b30%":"alpha.b30","bo/coursmos/primary":"brand.cos50","bo/coursmos/secondary":"brand.cos40","bo/coursmos/tertiary":"brand.cos35","bo/coursmos/quaternary":"brand.cos80","bo/coursmos/quinary":"brand.cos90","bo/coursmos/senary":"brand.cos95","bo/coursmos/primary-30%":"brand.cos30a","bo/semantic/nega-primary":"semantic.nega50","bo/semantic/nega-secondary":"semantic.nega40","bo/semantic/nega-tertiary":"semantic.nega35","bo/semantic/nega-30%":"semantic.nega30a","bo/semantic/nega-40%":"semantic.nega40a","bo/semantic/info-primary":"semantic.info45","bo/semantic/info-secondary":"semantic.info40","bo/semantic/info-tertiary":"semantic.info35","bo/semantic/info-quarternary":"semantic.info85","bo/semantic/info-quinary":"semantic.info90","bo/semantic/info-senary":"semantic.info95","bo/semantic/info-30%":"semantic.info30a","bo/semantic/info-40%":"semantic.info40a","bo/semantic/posi-primary":"semantic.posi50","bo/semantic/posi-secondary":"semantic.posi40","bo/semantic/posi-tertiary":"semantic.posi35","bo/semantic/posi-40%":"semantic.posi40a","bo/semantic/warn-primary":"semantic.warn50","bo/semantic/prog-primary":"semantic.prog50","bo/semantic/etc-primary":"semantic.etc50","ut/module/url":"utility.url","ut/module/file":"utility.file","ut/module/vod":"utility.vod","ut/module/elearning":"utility.elearning","ut/module/board":"utility.board","ut/module/survey":"utility.survey","ut/module/zoom":"utility.zoom","ut/module/report":"utility.report","ut/module/test":"utility.test","ut/module/discussion":"utility.discussion","ut/module/class":"utility.class","ut/module/online":"utility.online","ut/module/workshop":"utility.workshop","ut/module/allo":"utility.allo","ut/module/vpl":"utility.vpl","ut/module/notice":"utility.notice","ut/module/hyflex":"utility.hyflex","ut/school/cos-primary":"brand.cos50","ut/school/cos-secondary":"brand.cos60","ut/school/sang-primary":"#01499a","ut/school/inch-primary":"#003d91","ut/school/gachun-primary":"#004e96","ut/graph/gray-primary":"neutral.gray70","ut/graph/gray-secondary":"neutral.gray94","ut/graph/blue-primary":"semantic.info40","ut/graph/blue-secondary":"semantic.info65","ut/graph/blue-tertiary":"brand.cos75","ut/graph/blue-quaternary":"brand.cos90","ut/graph/blue-quinary":"brand.cos93","ut/graph/blue-senary":"brand.cos95","ut/graph/green-primary":"utility.kelly-green","ut/graph/green-secondary":"utility.light-green","ut/graph/green-quaternary":"utility.tea-green","ut/graph/green-senary":"utility.mint-green","ut/graph/violet-primary":"semantic.etc55","ut/graph/violet-secondary":"semantic.etc65","ut/graph/yellow-secondary":"semantic.warn75"},"typography":{"fontFamily":"'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif","styles":{"head/28B":[28,700,1.4,0],"head/24B":[24,700,1.4,0],"head/20B":[20,700,1.4,0],"head/20SB":[20,600,1.4,0],"paragraph/16R":[16,400,1.5,-0.1],"label/18B":[18,700,1.5,-0.5],"label/18SB":[18,600,1.5,-0.5],"label/18M":[18,500,1.5,-0.5],"label/18R":[18,400,1.5,-0.5],"label/16B":[16,700,1.5,-0.5],"label/16SB":[16,600,1.5,-0.5],"label/16M":[16,500,1.5,-0.5],"label/16R":[16,400,1.5,-0.5],"label/15B":[15,700,1.5,-0.5],"label/15SB":[15,600,1.5,-0.5],"label/15M":[15,500,1.5,-0.5],"label/15R":[15,400,1.5,-0.5],"label/14B":[14,700,1.5,-0.5],"label/14SB":[14,600,1.5,-0.5],"label/14M":[14,500,1.5,-0.5],"label/14R":[14,400,1.5,-0.5],"label/13B":[13,700,1.5,-0.5],"label/13SB":[13,600,1.5,-0.5],"label/13M":[13,500,1.5,-0.5],"label/13R":[13,400,1.5,-0.5],"label/12B":[12,700,1.5,-0.5],"label/12SB":[12,600,1.5,-0.5],"label/12M":[12,500,1.5,-0.5],"label/12R":[12,400,1.5,-0.5],"cap/12SB":[12,600,1.2,-0.5],"cap/11SB":[11,600,1.2,-0.5]},"$note":"[size(px), weight, lineHeight(배수), letterSpacing(%)]. Figma 'Lable/' → 'label/'. 모바일 기준 28–11px만 유지(head 56/40/32, cap 10 제거)"},"spacing":{"spac2":2,"spac4":4,"spac6":6,"spac8":8,"spac12":12,"spac16":16,"spac20":20,"spac24":24,"spac28":28,"spac32":32},"radius":{"radi3Xsm":4,"radi2Xsm":6,"radiXsm":8,"radiSm":10,"radiMd":12,"radiLg":16,"radiXlg":32,"radiFull":999},"shadow":{"xsm":"0 0 4px #0000000D","sm":"0 0 8px #00000012","card":"0 0 10px #0000000D","md":"0 0 12px #00000014","lg":"0 0 20px #0000001A","xl":"0 0 32px #0000001F"}} };
 })(typeof window !== 'undefined' ? window : globalThis);

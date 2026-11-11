@@ -41,14 +41,21 @@ tokens/tokens.json         단일 소스 (primitive → semantic 참조)
 src/styles/tokens.css      ← 빌드 생성
 src/styles/base.css        폰트(@font-face), :where() 리셋, Screen 프레임
 src/core/                  esc/cx/slot 유틸, Icon/asset 로더
-src/components/            button · navigation · input · tabs · control · display · learning · message · overlay (.js + .css)
+src/components/            컴포넌트 하나 = 파일 하나(.js + .css), 계층별 폴더 (docs/architecture.md)
+  primitives/              2층 요소  Button · Chip · Badge · Avatar · Checkbox · Input · Toast · Ratio · SwipeAction …
+  blocks/                  3층 블록  ModuleItem · MemberRow · Popup · ToggleGroup · StatGrid · Tabs …
+  sections/                4층 영역  Header · TabBar · Footer · Section · DeadlineCarousel
+  layout/                  틀        Screen · Stack · Grid · Surface
 src/assets/                Figma 원본 SVG/PNG, Pretendard Variable
-templates/                 screens.js(홈·내강의실·메시지·채팅), blank.html
+templates/                 screens.js(홈·내강의실·메시지·채팅·출석부), blank.html
 templates/mockups/         팀 시안 보관소 (아티팩트 게시용 조각, _starter.html 이 틀)
 docs/index.html            쇼케이스 (아티팩트 게시용 조각)
+docs/architecture.md       컴포넌트 계층 구조와 규칙
 docs/promotion-rules.md    새 UI → 정식 컴포넌트 승격 규칙 + 후보 장부
 CLAUDE.md                  Claude 작업 규칙 (저장소를 열면 자동 적용)
-scripts/build.mjs          빌드
+scripts/build.mjs          빌드 (컴포넌트 파일 자동 탐색, import 관계로 순서 결정, 문서 빠짐 경고)
+scripts/test.mjs           스냅샷 테스트 (npm test)
+tests/snapshots.json       HTML 출력 기준
 dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.json
 ```
 
@@ -68,33 +75,60 @@ dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.j
 
 ## 컴포넌트 ↔ Figma
 
+계층은 아래에서 위로 쌓입니다. 위 층은 아래 층을 **호출해서** 만들고, 같은 모양을 다시 그리지 않습니다([docs/architecture.md](docs/architecture.md)).
+
+### 틀 (배치만, 모양 없음)
+
 | 함수 | Figma 노드 | 주요 props |
 |---|---|---|
 | `Screen` | — | `header, body, bottom, overlay, toast, bg('default'\|'white'\|'sky')` |
-| `StatusBar` | 24:13152 | |
+| `Stack` / `Grid` | — | `children, gap, pad, direction('column'\|'row'), align, justify` / `cols, colWidth, gap, justify` |
+| `Surface` | — | `tone('white'\|'subtle'), fill` + Stack 인자 |
+| `StatusBar` / `Dim` | 24:13152 | `Screen` 이 StatusBar 를 자동으로 넣음 · `Dim({ content, align })` |
+
+### 4층 영역
+
+| 함수 | Figma 노드 | 주요 props |
+|---|---|---|
 | `Header` | 5:12707 | `variant('home'\|'class'\|'class_list'\|'message'\|'message-open'\|'more'), title, actions, menu` |
 | `AppHeader` | 24:13004 | `type('default'\|'popup_pull'\|'page'\|'page_chat'\|'photo-viewer'), title, subtitle, right, titleIcon` |
 | `TabBar` | 5:12712 | `active, badges, newDots` |
 | `Footer` | 37:14876 · 7062:38459 | `type('empty'\|'button'\|'count-button'\|'button-pair'\|'message-input'\|'message-block'), label, count, prefix, unit, secondary, attrs, disabled` |
-| `Button` / `IconButton` | btn-base-state | `variant(+'outline-primary'), size('xl'\|'lg'\|'md'\|'xs'), icon, iconRight, block, attrs` / `icon, size(24\|36\|40), active, round, attrs` |
-| `Input` / `MessageInput` | 86:18467 | `state('enabled'\|'focused'\|'disabled'), validation('normal'\|'filled'\|'invalid'), value` |
+| `Section` | 홈 '이번 주 학습' | `title, count, aside, children, gap, pad` |
+| `DeadlineCarousel` | 20:10530 | `cards[]` (DeadlineCard 3장) |
+
+### 3층 블록
+
+| 함수 | Figma 노드 | 주요 props |
+|---|---|---|
+| `MessageInput` / `Tag` | 86:18467 · 63:11157 | `placeholder, value` / `label, size, avatar, closable` |
 | `ChipTabs` / `SegmentedControl` / `LineTabs` | 5:12886 / 37:15014 / 85:21691 | `items, active` |
 | `CourseCard` | 5:12819 | `layout('grid'\|'list'), color('blue'\|'yellow'\|'orange'\|'green'\|'purple'), title, professor` |
-| `DeadlineCard` / `DeadlineCarousel` | 20:10530 | `label, remain, title, course, module` |
+| `DeadlineCard` | 20:10530 | `label, remain, title, course, module` |
 | `ModuleItem` | 21:10764 | `title, course, dday, module` (dday ≤ 3 → 파란 칩) |
 | `WeekPicker` | 24:12363 | `days, selected` |
 | `MessageItem` | 19:8837 | `option('dm'\|'group'), state('enabled'\|'focused'\|'update'\|'block'), swipe('left'\|'right')` |
-| `ChatMessage` / `Reaction` / `ChatDate` | 80:20270 | `name, time, read, text, reactions` |
-| `Avatar` / `AvatarGroup` | 72:11136 | `src('avatar-02'…), size(24–48), dimmed` |
-| `Tag` | 63:11157 | `label, size, avatar, closable` |
-| `Chip` / `Badge` | chip/times · new | `tone` / `count, size` |
-| `Popup` / `BottomSheet` / `Dropdown` / `Toast` / `Dim` | 80:22498 · 37:14852 | Dropdown `items[{icon,label,value,checked}]` |
+| `ChatMessage` / `ChatDate` | 80:20270 | `name, time, read, text, reactions` / `label` |
+| `Popup` / `BottomSheet` / `Dropdown` | 80:22498 · 37:14852 | Popup `actions[{label,tone}]` · Dropdown `items[{icon,label,value,checked}]` |
 | `DateStrip` | 7062:38201 † | `items[{label,date}], selected` |
 | `InfoBar` | 7062:38223 † | `label, chips[{label,variant('box'\|'pill')}], action{label,icon}` |
 | `StatGrid` | 7062:38229 † | `items[{label,count,icon,value}], linked, footer` (0이면 비활성) |
 | `ToggleGroup` | 7062:38277 † | `items[{value,label,icon,iconOff,tone}], value, overflow{items,open}, label, attrs` |
 | `MemberRow` | 7062:38271 † | `name, sub, chevron, right, avatar, attrs` |
+
+### 2층 요소
+
+| 함수 | Figma 노드 | 주요 props |
+|---|---|---|
+| `Button` / `IconButton` | btn-base-state | `variant(+'outline-primary'), size('xl'\|'lg'\|'md'\|'xs'), tone('danger'\|'primary'), icon, iconRight, block, attrs` / `icon, size(16\|24\|36\|40), active, round, attrs` |
+| `Input` | 86:18467 | `state('enabled'\|'focused'\|'disabled'), validation('normal'\|'filled'\|'invalid'), value` |
+| `Avatar` / `AvatarGroup` | 72:11136 | `src('avatar-02'…), size(24–48), dimmed` |
+| `Chip` / `Badge` | chip/times · new | `tone` / `count, size` |
+| `Toast` | 37:14852 | `label, icon` — 화면에 띄울 때는 `Screen({ toast })` |
+| `Reaction` | 80:20270 | `emoji, icon, count, selected, add` |
 | `Checkbox` | 7062:38718 † | `label, checked, count, id` |
+| `Ratio` | 7062:38718 † | `label, value, total` (처리 현황 3/40) |
+| `SwipeAction` | 19:8837 | `label, icon, tone('neutral'\|'strong'\|'danger'\|'info')` |
 
 † 출처는 컴포넌트 페이지가 아니라 **4.5 LXP App 작업장** 파일(`ZRoFjuXczoq30fVbJMNsVP`)의 스마트 출석부 확정안(7054:14428)입니다. 화면 조립 예시: `LXP_SCREENS.rollBookEntry()` · `rollBookChecking()` · `rollBook({ statuses, onlyTodo, menu })`.
 

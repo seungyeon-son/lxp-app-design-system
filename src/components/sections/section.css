@@ -1,0 +1,10 @@
+/* ---------- Section (홈 '이번 주 학습 6') ---------- */
+.lxp-section-title { display: flex; align-items: center; gap: 8px; padding: 0 12px; }
+.lxp-section-title__text { font: var(--font-head-20b); letter-spacing: var(--ls-head); color: var(--tx-hierarchy-primary); }
+.lxp-section-title__count {
+  min-width: 24px; height: 24px; padding: 0 6px; border-radius: var(--radi-3xsm);
+  border: 1px solid var(--bo-coursmos-quinary); background: var(--bg-neutral-white);
+  font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-coursmos-secondary);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.lxp-section-title__aside { margin-left: auto; display: inline-flex; }

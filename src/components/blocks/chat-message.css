@@ -1,0 +1,16 @@
+/* ---------- ChatMessage ---------- */
+.lxp-chat-msg { display: flex; align-items: flex-start; gap: 8px; width: 100%; padding: 8px; }
+.lxp-chat-msg__main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.lxp-chat-msg__meta { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+.lxp-chat-msg__meta b { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-chat-msg__meta span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-chat-msg__meta .lxp-chat-msg__read { display: inline-flex; align-items: center; gap: 4px; color: var(--tx-hierarchy-quaternary); }
+.lxp-chat-msg__text { font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-chat-msg__reactions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* ---------- ChatDate ---------- */
+.lxp-chat-date { display: flex; justify-content: center; padding: 8px 0; }
+.lxp-chat-date span {
+  padding: 4px 12px; border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary);
+  font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
+}

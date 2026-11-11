@@ -74,17 +74,42 @@ writeFileSync(r('src/core/assets.generated.js'),
   `// 자동 생성 파일 — \`npm run build\` 시 덮어씁니다. 직접 수정하지 마세요.\nexport const ASSETS = ${JSON.stringify(assets, null, 0).replace(/","/g, '",\n  "')};\n`);
 
 // ---------------------------------------------------------------- 3. css
-const cssOrder = ['styles/tokens.css', 'styles/base.css', 'components/button.css', 'components/navigation.css',
-  'components/input.css', 'components/tabs.css', 'components/control.css', 'components/display.css', 'components/learning.css',
-  'components/message.css', 'components/overlay.css'];
+// 컴포넌트 파일은 src/components/ 에서 자동으로 찾고, import 관계로 순서를 정합니다.
+//  - 쓰이는 쪽(예: button)이 쓰는 쪽(예: input)보다 먼저 → JS 정의 순서, CSS 덮어쓰기 순서가 모두 맞음
+//  - 관계가 없는 파일끼리는 계층(요소 → 블록 → 영역 → 틀) 다음 이름순. 새 파일을 만들어도 이 스크립트를 고칠 필요가 없습니다.
+const compDir = r('src/components');
+// 하위 폴더(primitives · blocks · sections · layout)까지 찾습니다. 키는 'blocks/popup' 처럼 폴더/이름
+const walk = (dir, pre = '') => readdirSync(join(compDir, pre), { withFileTypes: true }).flatMap((e) =>
+  e.isDirectory() ? walk(dir, join(pre, e.name)) : e.name.endsWith('.js') ? [join(pre, basename(e.name, '.js'))] : []);
+const LAYER_RANK = { primitives: 0, blocks: 1, sections: 2, layout: 3 };   // 관계 없는 파일끼리는 아래 층부터
+const rank = (n) => LAYER_RANK[n.split('/')[0]] ?? 9;
+const compNames = walk(compDir).sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
+const deps = Object.fromEntries(compNames.map((n) => [n,
+  [...readFileSync(join(compDir, n + '.js'), 'utf8').matchAll(/^import[^;]*from\s+'(\.\.?\/[^']+)\.js'/gm)]
+    .map((m) => join(dirname(n), m[1]))
+    .filter((d) => !d.startsWith('..'))]));      // ../../core 는 항상 맨 앞이라 제외
+const compOrder = [];
+const visiting = new Set();
+const visit = (n, chain = []) => {
+  if (compOrder.includes(n)) return;
+  if (!deps[n]) throw new Error(`components/${chain.at(-1)}.js 가 없는 파일 components/${n}.js 를 import 합니다`);
+  if (visiting.has(n)) throw new Error(`컴포넌트 순환 import: ${[...chain, n].join(' → ')}`);
+  visiting.add(n);
+  deps[n].forEach((d) => visit(d, [...chain, n]));
+  visiting.delete(n);
+  compOrder.push(n);
+};
+compNames.forEach((n) => visit(n));
+for (const n of compOrder) if (!existsSync(join(compDir, n + '.css'))) console.warn(`! components/${n}.css 없음 (JS만 있는 컴포넌트)`);
+
+const cssOrder = ['styles/tokens.css', 'styles/base.css',
+  ...compOrder.filter((n) => existsSync(join(compDir, n + '.css'))).map((n) => `components/${n}.css`)];
 const css = cssOrder.map((f) => `/* ===== ${f} ===== */\n` + readFileSync(r('src', f), 'utf8')).join('\n')
   .replace(/\.\.\/assets\/fonts\//g, 'fonts/');
 writeFileSync(join(DIST, 'lxp.css'), `/*! UBION LXP App Design System */\n${css}`);
 
 // ---------------------------------------------------------------- 4. js (의존 순서대로 결합)
-const jsOrder = ['core/html.js', 'core/assets.generated.js', 'core/assets.js', 'components/button.js',
-  'components/display.js', 'components/navigation.js', 'components/input.js', 'components/tabs.js', 'components/control.js',
-  'components/learning.js', 'components/message.js', 'components/overlay.js'];
+const jsOrder = ['core/html.js', 'core/assets.generated.js', 'core/assets.js', ...compOrder.map((n) => `components/${n}.js`)];
 const exported = new Set();
 const body = jsOrder.map((f) => {
   let src = readFileSync(r('src', f), 'utf8');
@@ -125,5 +150,19 @@ if (existsSync(r('templates/mockups'))) {
 }
 
 console.log(`✓ tokens ${lines.length} vars · assets ${Object.keys(assets).length} · exports ${exported.size}`);
+// ---------------------------------------------------------------- 6. 빠짐 검사 (경고만)
+// export 한 컴포넌트 함수가 README 컴포넌트 표와 쇼케이스 예시에 모두 있는지 봅니다.
+{
+  const readme = readFileSync(r('README.md'), 'utf8');
+  const showcase = readFileSync(r('docs/index.html'), 'utf8');
+  const notComponent = new Set(['Icon', 'TAB_ITEMS', 'ASSETS']);
+  const comps = [...exported].filter((n) => /^[A-Z]/.test(n) && !notComponent.has(n));
+  const noReadme = comps.filter((n) => !readme.includes('`' + n + '`'));
+  const noDemo = comps.filter((n) => !new RegExp(`\\b${n}\\(`).test(showcase));
+  if (noReadme.length) console.warn(`! README 컴포넌트 표에 없음: ${noReadme.join(', ')}`);
+  if (noDemo.length) console.warn(`! 쇼케이스(docs/index.html) 예시에 없음: ${noDemo.join(', ')}`);
+}
+
+console.log(`✓ 컴포넌트 순서: ${compOrder.join(' → ')}`);
 console.log(`✓ dist/lxp.css ${(css.length / 1024).toFixed(1)}KB · dist/lxp.js ${(js.length / 1024).toFixed(1)}KB`);
 if (mockups.length) console.log(`✓ mockups ${mockups.length} → dist/mockups/ (${mockups.join(', ')})`);

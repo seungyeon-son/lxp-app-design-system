@@ -54,7 +54,7 @@ README의 "확장하기"는 *방법*이고, 이 문서는 *판단 기준*입니�
 후보를 정식으로 올리기 전에 모두 통과해야 합니다.
 
 1. **이미 있는가?** `src/components/`, `src/styles/base.css` 를 먼저 찾습니다.
-   - 근거: 출석부의 `att-sec`(목록 위 소제목)는 `base.css` 의 `.lxp-section-title`(홈 "이번 주 학습 6")과 역할이 같습니다.
+   - 근거: 출석부의 `att-sec`(목록 위 소제목)는 홈 "이번 주 학습 6"의 섹션 제목과 역할이 같습니다(지금은 `Section` 함수).
      크기만 다릅니다(16B vs 20B). 새로 만들지 말고 기존 것에 `size` 를 추가하는 쪽이 맞습니다.
 2. **도메인 이름을 뺐는가?** 함수 이름은 쓰임새가 아니라 모양·역할로 짓습니다.
    `seg3` → `ToggleGroup`, `att-bar` → `StackedBar`, `att-legend`/`roll-count` → `StatGrid`, `roll-week` → `PeriodNav`.
@@ -128,12 +128,13 @@ README의 "확장하기"는 *방법*이고, 이 문서는 *판단 기준*입니�
 ## 6. 승격 절차
 
 1. 후보 장부에서 해당 줄을 확인하고, 그 UI를 쓰는 **모든 시안**을 엽니다.
-2. §3 체크리스트대로 `src/components/<도메인>.js|css` 에 작성합니다.
-   - 도메인 파일: 범용 표시 → `display`, 학습 → `learning`, 메시지 → `message`, 입력 → `input`, 탭 → `tabs`, 레이어 → `overlay`
-   - 새 파일을 만들면 `src/index.js` export, `scripts/build.mjs` 의 `cssOrder`·`jsOrder` 에 추가
-3. README 컴포넌트 표, `docs/index.html` 쇼케이스에 추가합니다.
+2. §3 체크리스트대로 **계층 폴더**에 컴포넌트 하나 = 파일 하나로 작성합니다(`docs/architecture.md`).
+   - 더 쪼갤 수 없는 단위 → `primitives/`, 요소를 묶은 덩어리 → `blocks/`, 화면 구역 → `sections/`, 배치만 → `layout/`
+   - 안에 버튼·칩·배지가 있으면 **다시 그리지 말고 아래 층 함수를 호출**합니다. 모양이 다르면 아래 층에 변형을 추가합니다.
+   - `src/index.js` 에 export 를 추가합니다. 빌드 순서는 import 관계로 자동으로 정해지므로 `build.mjs` 는 고치지 않습니다.
+3. README 컴포넌트 표(해당 계층), `docs/index.html` 쇼케이스에 추가합니다. 빠지면 `npm run build` 가 경고합니다.
 4. 그 UI를 쓰던 시안의 로컬 코드를 정식 함수 호출로 바꾸고, 헤더 `@local-ui` 에서 지웁니다.
-5. `npm run build` → `npm run dev` 로 쇼케이스와 바뀐 시안을 눈으로 확인합니다.
+5. `npm test` — 새 컴포넌트는 "새로 생김"으로, 그 컴포넌트를 쓰게 된 화면은 "바뀜"으로 나옵니다. 바뀐 화면이 겉보기에 같은지 `npm run dev` 로 확인한 뒤 `npm test -- --update`.
 6. 이 문서 §5 의 줄을 "정식 · `함수이름`" 으로 바꿉니다.
 7. 커밋: `feat(component): StatGrid 추가 (출석부 att-legend·roll-count 통합)` — 어느 시안에서 왔는지 적습니다.
 8. 디자인 시스템 아티팩트를 다시 게시합니다(CLAUDE.md "게시" 참고).

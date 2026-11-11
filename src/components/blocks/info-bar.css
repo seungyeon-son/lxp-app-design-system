@@ -1,0 +1,12 @@
+/* ---------- InfoBar (SubRow 7062:38223) ---------- */
+.lxp-info-bar {
+  width: 100%; height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 6px 8px 6px 12px;
+  background: var(--bg-hierarchy-primary); border: 1px solid var(--bo-hierarchy-primary); border-radius: var(--radi-xsm);
+  box-shadow: var(--shadow-xsm);
+}
+.lxp-info-bar__main { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.lxp-info-bar__main p { white-space: nowrap; font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary); }
+.lxp-info-bar__chip { flex-shrink: 0; white-space: nowrap; }
+.lxp-info-bar__chip.is-box { height: 24px; display: inline-flex; align-items: center; padding: 0 8px; border-radius: var(--radi-3xsm); background: var(--bg-semantic-info-quinary); font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-info-bar__chip.is-pill { padding: 4px 12px; border-radius: var(--radi-full); background: var(--bg-neutral-b6-hovered); font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary); }
+.lxp-info-bar__action { flex-shrink: 0; height: 32px; display: inline-flex; align-items: center; gap: 4px; padding: 0 6px 0 8px; border-radius: var(--radi-xsm); font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); cursor: pointer; }

@@ -1,0 +1,3 @@
+/* ---------- Ratio ---------- */
+.lxp-ratio__value { color: var(--tx-hierarchy-secondary); }
+.lxp-ratio__total { color: var(--tx-hierarchy-quaternary); }

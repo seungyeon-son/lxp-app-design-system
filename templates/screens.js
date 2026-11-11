@@ -26,38 +26,35 @@
     home: () => L.Screen({
       bg: 'sky',
       header: L.Header({ variant: 'home' }),
-      body: `
-        <div style="display:flex;flex-direction:column;gap:12px;padding-top:4px">
-          ${L.WeekPicker({ selected: 0 })}
-          ${L.DeadlineCarousel({ cards: [{}, { title: '3-1. 스마트 팜 기술', course: '사물인터넷과 4차산업사회' }] })}
-        </div>
-        <section style="display:flex;flex-direction:column;gap:12px;padding:28px 0 24px">
-          <div class="lxp-section-title"><span class="lxp-section-title__text">이번 주 학습</span><span class="lxp-section-title__count">${weekModules.length}</span></div>
-          <div style="display:flex;flex-direction:column;gap:8px;padding:0 16px">${weekModules.map(L.ModuleItem).join('')}</div>
-        </section>`,
+      body: [
+        L.Stack({ gap: 12, pad: [4, 0, 0, 0], children: [
+          L.WeekPicker({ selected: 0 }),
+          L.DeadlineCarousel({ cards: [{}, { title: '3-1. 스마트 팜 기술', course: '사물인터넷과 4차산업사회' }] }),
+        ] }),
+        L.Section({ title: '이번 주 학습', count: weekModules.length, pad: [28, 0, 24, 0],
+          children: L.Stack({ gap: 8, pad: [0, 16], children: weekModules.map(L.ModuleItem) }) }),
+      ],
       bottom: L.TabBar({ active: 'home' }),
     }),
 
     /** 내 강의실 — 카드형 (Figma 5:11985) */
     classGrid: () => L.Screen({
       header: L.Header({ variant: 'class' }),
-      body: `
-        <div style="display:flex;flex-direction:column;gap:16px;padding:4px 0 24px">
-          ${L.ChipTabs({ active: 0 })}
-          <div style="display:flex;justify-content:flex-end;padding:0 20px">${L.Button({ label: '내 강의실 편집', variant: 'secondary', size: 'xs', icon: 'settings' })}</div>
-          <div style="display:grid;grid-template-columns:repeat(2,156px);gap:16px 8px;justify-content:center">${courses.map((c) => L.CourseCard(c)).join('')}</div>
-        </div>`,
+      body: L.Stack({ gap: 16, pad: [4, 0, 24, 0], children: [
+        L.ChipTabs({ active: 0 }),
+        L.Stack({ direction: 'row', justify: 'end', pad: [0, 20], children: L.Button({ label: '내 강의실 편집', variant: 'secondary', size: 'xs', icon: 'settings' }) }),
+        L.Grid({ cols: 2, colWidth: 156, gap: [16, 8], justify: 'center', children: courses.map((c) => L.CourseCard(c)) }),
+      ] }),
       bottom: L.TabBar({ active: 'class' }),
     }),
 
     /** 내 강의실 — 목록형 (Figma 25:13526) */
     classList: () => L.Screen({
       header: L.Header({ variant: 'class_list' }),
-      body: `
-        <div style="display:flex;flex-direction:column;gap:16px;padding:4px 0 24px">
-          ${L.SegmentedControl({ active: 0 })}
-          <div style="display:flex;flex-direction:column;gap:8px;padding:0 20px">${courses.map((c) => L.CourseCard({ ...c, layout: 'list' })).join('')}</div>
-        </div>`,
+      body: L.Stack({ gap: 16, pad: [4, 0, 24, 0], children: [
+        L.SegmentedControl({ active: 0 }),
+        L.Stack({ gap: 8, pad: [0, 20], children: courses.map((c) => L.CourseCard({ ...c, layout: 'list' })) }),
+      ] }),
       bottom: L.TabBar({ active: 'class' }),
     }),
 
@@ -78,12 +75,12 @@
     chat: () => L.Screen({
       bg: 'white',
       header: L.AppHeader({ type: 'page_chat', title: '김연아, 이상화, 봉준호, 손흥민, 박지성' }),
-      body: `<div style="padding:8px 12px">
-        ${L.ChatDate({ label: '2026년 1월 21일 수요일' })}
-        ${L.ChatMessage({})}
-        ${L.ChatMessage({ name: '이상화', avatar: 'avatar-04', time: '오후 05:02', read: 3, text: '다들 과제 진행 상황 공유해주세요!', reactions: [] , addReaction: false })}
-        ${L.ChatMessage({ name: '봉준호', avatar: 'avatar-02', time: '오후 05:10', read: 2, text: '저는 2장까지 정리했어요. 오늘 밤에 올릴게요.', reactions: [{ count: 2 }] })}
-      </div>`,
+      body: L.Stack({ pad: [8, 12], children: [
+        L.ChatDate({ label: '2026년 1월 21일 수요일' }),
+        L.ChatMessage({}),
+        L.ChatMessage({ name: '이상화', avatar: 'avatar-04', time: '오후 05:02', read: 3, text: '다들 과제 진행 상황 공유해주세요!', reactions: [], addReaction: false }),
+        L.ChatMessage({ name: '봉준호', avatar: 'avatar-02', time: '오후 05:10', read: 2, text: '저는 2장까지 정리했어요. 오늘 밤에 올릴게요.', reactions: [{ count: 2 }] }),
+      ] }),
       bottom: L.Footer({ type: 'message-input' }),
     }),
 
@@ -91,7 +88,7 @@
     chatDelete: () => L.Screen({
       bg: 'white',
       header: L.AppHeader({ type: 'page_chat', title: '김연아' }),
-      body: `<div style="padding:8px 12px">${L.ChatMessage({})}</div>`,
+      body: L.Stack({ pad: [8, 12], children: L.ChatMessage({}) }),
       bottom: L.Footer({ type: 'message-input' }),
       overlay: L.Dim({ content: L.Popup({}) }),
     }),
@@ -132,24 +129,21 @@
     return L.Screen({
       bg: 'white',
       header: L.AppHeader({ type: 'page', title: '스마트 출석부', titleIcon: 'refresh-16', right: 'search' }),
-      body: `<div style="min-height:100%;background:var(--bg-hierarchy-primary-subtle);padding-bottom:81px">
-        <div style="display:flex;flex-direction:column;gap:12px;padding:16px 16px 12px;background:var(--bg-neutral-white)">
-          ${L.DateStrip({ selected: day })}
-          ${L.InfoBar({})}
-        </div>
-        ${L.StatGrid({
+      body: L.Surface({ tone: 'subtle', fill: true, pad: [0, 0, 81, 0], children: [
+        L.Surface({ tone: 'white', gap: 12, pad: [16, 16, 12, 16], children: [L.DateStrip({ selected: day }), L.InfoBar({})] }),
+        L.StatGrid({
           linked: done > 0,
           items: ROLL_STATS.map(([value, label, icon]) => ({ value, label, icon, count: count(value) })),
-          footer: `<span>처리 현황: <span class="lxp-num" style="color:var(--tx-hierarchy-secondary)">${done}</span><span class="lxp-num" style="color:var(--tx-hierarchy-quaternary)">/${total ?? st.length}</span></span>
-            ${done > 0 ? L.Checkbox({ checked: onlyTodo, count: todo, id: 'roll-only-todo' }) : ''}`,
-        })}
-        <div style="background:var(--bg-neutral-white);padding-top:8px">
-          ${rows.map((x) => L.MemberRow({
-            name: x.name, sub: x.id, attrs: { 'data-row': x.i },
-            right: L.ToggleGroup({ items: ROLL_MAIN, value: x.s, label: `${x.name} 출결`, overflow: { items: ROLL_EXTRA, open: menu === x.i, label: '조퇴 · 지각조퇴' } }),
-          })).join('')}
-        </div>
-      </div>`,
+          footer: [
+            L.Ratio({ label: '처리 현황', value: done, total: total ?? st.length }),
+            done > 0 ? L.Checkbox({ checked: onlyTodo, count: todo, id: 'roll-only-todo' }) : '',
+          ],
+        }),
+        L.Surface({ tone: 'white', pad: [8, 0, 0, 0], children: rows.map((x) => L.MemberRow({
+          name: x.name, sub: x.id, attrs: { 'data-row': x.i },
+          right: L.ToggleGroup({ items: ROLL_MAIN, value: x.s, label: `${x.name} 출결`, overflow: { items: ROLL_EXTRA, open: menu === x.i, label: '조퇴 · 지각조퇴' } }),
+        })) }),
+      ] }),
       bottom: L.Footer({ type: 'button-pair', label: '출결 일괄 처리', secondary: { label: '자동출결', iconRight: 'check-circle' } }),
       overlay,
     });

@@ -37,7 +37,7 @@
   .phone { border-radius: 28px; overflow: hidden; box-shadow: 0 20px 40px -20px rgba(10,13,18,.35); max-width: 100%; }
 
   /* ── 시안 전용 UI — 접두사를 정하고(예: xx-) lxp- 는 쓰지 않습니다. 토큰만 사용 ── */
-  .xx-body { display: flex; flex-direction: column; gap: 12px; padding: 12px 16px 24px; }
+  /* 배치(쌓기·간격·여백·바탕)는 여기 쓰지 말고 L.Stack · L.Grid · L.Surface · L.Section 으로 */
 </style>
 
 <div class="board">
@@ -61,10 +61,10 @@
   a.innerHTML = L.Screen({
     bg: 'sky',
     header: L.Header({ variant: 'home' }),
-    body: `<div class="xx-body">
-      ${L.WeekPicker({ selected: 1 })}
-      ${L.ModuleItem({ title: '학습이론 2: 경험주의', course: '물리학수업', dday: 2 })}
-    </div>`,
+    body: L.Stack({ gap: 12, pad: [12, 16, 24], children: [
+      L.WeekPicker({ selected: 1 }),
+      L.ModuleItem({ title: '학습이론 2: 경험주의', course: '물리학수업', dday: 2 }),
+    ] }),
     bottom: L.TabBar({ active: 'home' }),
   });
 
@@ -76,7 +76,7 @@
     b.innerHTML = L.Screen({
       bg: 'white',
       header: L.AppHeader({ type: 'page', title: '새 기능' }),
-      body: `<div class="xx-body">${L.CourseCard({ layout: 'list', color: 'purple', title: '교육공학 개론' })}</div>`,
+      body: L.Stack({ gap: 12, pad: [12, 16, 24], children: L.CourseCard({ layout: 'list', color: 'purple', title: '교육공학 개론' }) }),
       bottom: L.Footer({ type: 'button', label: '저장하기' }),
       // 토스트는 toast 슬롯(하단 바로 위, 터치 통과). 팝업·바텀시트는 overlay 슬롯(Dim 과 함께)
       toast: state.saved ? L.Toast({ label: '저장되었습니다' }) : '',

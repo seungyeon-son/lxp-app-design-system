@@ -1,0 +1,9 @@
+/* ---------- SwipeAction ---------- */
+.lxp-swipe-action {
+  flex: 0 0 64px; height: 64px; display: flex; align-items: center; justify-content: center;
+  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-neutral-white);
+}
+.lxp-swipe-action.is-neutral { background: var(--bg-hierarchy-quinary); }
+.lxp-swipe-action.is-strong { background: var(--bg-hierarchy-senary); }
+.lxp-swipe-action.is-danger { background: var(--bg-semantic-nega-primary); }
+.lxp-swipe-action.is-info { background: var(--fg-semantic-info); }

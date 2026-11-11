@@ -554,20 +554,45 @@
 
 .lxp-dim { position: absolute; inset: 0; background: var(--alpha-b30); }
 
-/* 섹션 타이틀 (홈 '이번 주 학습 6') */
-.lxp-section-title { display: flex; align-items: center; gap: 8px; padding: 0 12px; }
-.lxp-section-title__text { font: var(--font-head-20b); letter-spacing: var(--ls-head); color: var(--tx-hierarchy-primary); }
-.lxp-section-title__count {
-  min-width: 24px; height: 24px; padding: 0 6px; border-radius: var(--radi-3xsm);
-  border: 1px solid var(--bo-coursmos-quinary); background: var(--bg-neutral-white);
-  font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-coursmos-secondary);
-  display: inline-flex; align-items: center; justify-content: center;
-}
-
 /* 고정폭 숫자 (집계·학번·시간) */
 .lxp-num { font-variant-numeric: tabular-nums; }
 
-/* ===== components/button.css ===== */
+/* ===== components/primitives/avatar.css ===== */
+/* ---------- Avatar ---------- */
+.lxp-avatar {
+  display: inline-flex; flex-shrink: 0; overflow: hidden;
+  border-radius: var(--radi-full);
+  border: 1px solid var(--bo-neutral-white);
+  background: #e0e0e0; /* Figma avatar placeholder bg */
+}
+.lxp-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lxp-avatar.is-dimmed img { opacity: .25; }
+.lxp-avatar.is-empty {
+  align-items: center; justify-content: center;
+  font-weight: 600; color: var(--tx-hierarchy-quaternary); background: var(--bg-hierarchy-tertiary);
+}
+
+.lxp-avatar-group { display: inline-flex; align-items: center; flex-shrink: 0; }
+.lxp-avatar-group > .lxp-avatar { margin-right: calc(var(--size) / -2); }
+.lxp-avatar-group__more {
+  width: var(--size); height: var(--size); border-radius: var(--radi-full);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--bg-semantic-info-senary);
+  font: var(--font-label-16b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+}
+
+/* ===== components/primitives/badge.css ===== */
+/* ---------- Badge ---------- */
+.lxp-badge {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  background: var(--bg-semantic-posi-quinary); color: var(--tx-hierarchy-primary);
+  border-radius: var(--radi-full); white-space: nowrap;
+}
+.lxp-badge--md { height: 22px; min-width: 22px; padding: 4px 6px; font: var(--font-label-12sb); letter-spacing: var(--ls-label); }
+.lxp-badge--sm { height: 18px; min-width: 18px; padding: 4px 6px; font: var(--font-cap-11sb); letter-spacing: var(--ls-cap); }
+.lxp-badge--square { height: 22px; padding: 6px 8px; border-radius: var(--radi-3xsm); font: var(--font-label-13m); letter-spacing: var(--ls-label); }
+
+/* ===== components/primitives/button.css ===== */
 /* ---------- Button ---------- */
 .lxp-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 4px;
@@ -600,6 +625,8 @@
 .lxp-btn--gray { background: var(--bg-hierarchy-quinary); color: var(--tx-neutral-white-solid); }
 
 .lxp-btn--ghost { background: transparent; color: var(--tx-hierarchy-secondary); }
+.lxp-btn--ghost.is-danger { color: var(--tx-semantic-nega-secondary); }
+.lxp-btn--ghost.is-primary { color: var(--tx-coursmos-secondary); }
 
 /* ---------- IconButton ---------- */
 .lxp-icon-btn {
@@ -607,86 +634,50 @@
   overflow: hidden; border-radius: var(--radi-xsm);
   background: transparent;
 }
+.lxp-icon-btn--16 { width: 16px; height: 16px; border-radius: 0; }
 .lxp-icon-btn--24 { width: 24px; height: 24px; border-radius: var(--radi-2xsm); }
 .lxp-icon-btn--36 { width: 36px; height: 36px; }
 .lxp-icon-btn--40 { width: 40px; height: 40px; }
 .lxp-icon-btn.is-active { background: var(--bg-hierarchy-secondary); }
 .lxp-icon-btn--round { border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary); }
 
-/* ===== components/navigation.css ===== */
-/* ---------- StatusBar (iPhone header 44px) ---------- */
-.lxp-statusbar { position: relative; height: 44px; width: 100%; overflow: hidden; }
-.lxp-statusbar__left { position: absolute; left: 33.45px; top: 17.17px; width: 28.426px; height: 11.089px; }
-.lxp-statusbar__right { position: absolute; right: 14.67px; top: 17.33px; width: 66.661px; height: 11.336px; }
+/* ===== components/primitives/checkbox.css ===== */
+/* ---------- Checkbox (20px 박스 + 라벨 14M) ---------- */
+.lxp-checkbox { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-checkbox input {
+  appearance: none; -webkit-appearance: none; margin: 0; width: 20px; height: 20px; flex-shrink: 0;
+  display: grid; place-items: center; cursor: pointer;
+  background: var(--bg-neutral-white); border: 1.5px solid var(--bo-hierarchy-quaternary); border-radius: var(--radi-3xsm);
+}
+.lxp-checkbox input:checked { background: var(--bg-coursmos-primary); border-color: var(--bo-coursmos-primary); }
+.lxp-checkbox input:checked::after {
+  content: ''; width: 9px; height: 5px; transform: translateY(-1px) rotate(-45deg);
+  border: solid var(--fg-neutral-white-solid); border-width: 0 0 2px 2px;
+}
+.lxp-checkbox input:disabled { opacity: .4; cursor: not-allowed; }
+.lxp-checkbox em { font-style: normal; color: var(--tx-semantic-nega-secondary); }
 
-/* ---------- Header (메인 탭 헤더) ---------- */
-.lxp-header {
-  position: relative; height: 68px; width: 100%;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 12px 8px 24px;
-}
-.lxp-header__title { display: flex; align-items: center; gap: 4px; min-width: 0; }
-.lxp-header__title h1 { font: var(--font-head-20b); letter-spacing: var(--ls-head); color: var(--tx-hierarchy-primary); white-space: nowrap; }
-.lxp-header__actions { display: flex; align-items: center; gap: 2px; }
-.lxp-header__menu { position: absolute; top: 54px; right: 12px; z-index: 20; }
+.lxp-date-strip__item:focus-visible,
+.lxp-toggle-group__item:focus-visible,
+.lxp-toggle-group__more:focus-visible,
+.lxp-checkbox input:focus-visible { outline: 2px solid var(--bo-coursmos-primary); outline-offset: 1px; }
 
-/* ---------- Dropdown ---------- */
-.lxp-dropdown {
-  width: 140px; padding: 8px;
-  background: var(--bg-neutral-white);
-  border: 1px solid var(--bo-hierarchy-secondary);
-  border-radius: var(--radi-xsm);
-  box-shadow: var(--shadow-md);
-  display: flex; flex-direction: column;
+/* ===== components/primitives/chip.css ===== */
+/* ---------- Chip ---------- */
+.lxp-chip {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  height: 24px; padding: 4px 8px; border-radius: var(--radi-3xsm);
+  font: var(--font-label-12m); letter-spacing: var(--ls-label); white-space: nowrap;
 }
-.lxp-dropdown__item {
-  height: 36px; display: flex; align-items: center; gap: 8px;
-  padding: 10px 8px 10px 10px; border-radius: var(--radi-2xsm);
-  font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
-  text-align: left; white-space: nowrap;
-}
-.lxp-dropdown__item.is-checked { background: var(--bg-hierarchy-secondary-subtle); }
+.lxp-chip--info { background: var(--bg-semantic-info-senary); color: var(--tx-coursmos-secondary); }
+.lxp-chip--neutral { background: var(--bg-hierarchy-secondary-subtle); color: var(--tx-hierarchy-secondary); }
+.lxp-chip--posi { background: var(--bg-semantic-posi-senary); color: var(--tx-semantic-posi-secondary); }
+.lxp-chip--nega { background: var(--bg-semantic-nega-senary); color: var(--tx-semantic-nega-secondary); }
+/* warn 은 Figma chip/times 에 없는 코드 확장 톤. 글자 토큰 --tx-semantic-noti-primary(warn50)는 이 배경에서 대비 1.55:1 이라
+   못 씀 → warn30(4.0:1, posi·nega 칩과 비슷)을 쓰는데, 그 단계의 글자 토큰이 없어 배경 토큰을 빌림. Figma에 글자 변수가 생기면 교체 */
+.lxp-chip--warn { background: var(--bg-semantic-warn-senary); color: var(--bg-semantic-warn-tertiary); }
 
-/* ---------- AppHeader (서브 페이지 헤더 56px) ---------- */
-.lxp-app-header {
-  height: 56px; width: 100%; padding: 0 12px;
-  display: flex; align-items: center; justify-content: space-between; gap: 0;
-  background: var(--bg-neutral-white);
-  border-bottom: 1px solid var(--bo-hierarchy-secondary);
-}
-.lxp-app-header__title {
-  flex: 1 1 0; min-width: 0; text-align: center;
-  display: flex; flex-direction: column; align-items: center;
-}
-.lxp-app-header__title p { width: 100%; font: var(--font-label-16b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-app-header__title.has-icon { flex-direction: row; justify-content: center; gap: 4px; }
-.lxp-app-header__title.has-icon p { width: auto; }
-.lxp-app-header__title span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
-
-/* ---------- TabBar (82px) ---------- */
-.lxp-tabbar {
-  width: 100%;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: var(--spac-12) var(--spac-20) var(--spac-28);
-  background: var(--bg-hierarchy-primary);
-  border-top: 1px solid var(--bo-hierarchy-primary);
-}
-.lxp-tabbar__item {
-  position: relative; width: 48px; cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; gap: 5px;
-  font: var(--font-cap-11sb); letter-spacing: var(--ls-cap); text-align: center; white-space: nowrap;
-  color: var(--tx-hierarchy-quaternary); text-decoration: none;
-}
-.lxp-tabbar__item.is-active { color: var(--tx-hierarchy-secondary); }
-.lxp-tabbar__badge {
-  position: absolute; top: -6px; right: -3.67px; height: 18px; padding: 4px 6px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--bg-semantic-posi-quinary); border-radius: var(--radi-full);
-  font: var(--font-cap-11sb); font-style: normal; letter-spacing: var(--ls-cap); color: var(--tx-hierarchy-primary);
-}
-.lxp-tabbar__dot { position: absolute; top: 2px; right: 2px; width: 6px; height: 6px; }
-
-/* ===== components/input.css ===== */
+/* ===== components/primitives/input.css ===== */
 /* ---------- Input ---------- */
 .lxp-input {
   display: flex; align-items: center; gap: 8px; width: 100%; height: 44px;
@@ -711,6 +702,175 @@
 .lxp-input.is-disabled input::placeholder { color: var(--tx-hierarchy-senary); }
 .lxp-input.is-disabled.is-invalid { border-color: var(--bo-semantic-nega-30); }
 
+/* ===== components/primitives/ratio.css ===== */
+/* ---------- Ratio ---------- */
+.lxp-ratio__value { color: var(--tx-hierarchy-secondary); }
+.lxp-ratio__total { color: var(--tx-hierarchy-quaternary); }
+
+/* ===== components/primitives/reaction.css ===== */
+/* ---------- Reaction ---------- */
+.lxp-reaction {
+  display: inline-flex; align-items: center; gap: 4px; height: 26px; padding: 2px 10px;
+  border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary); border: 1px solid transparent;
+  font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+}
+.lxp-reaction.is-selected { background: var(--bg-coursmos-senary); border-color: var(--bo-semantic-info-secondary); }
+.lxp-reaction__emoji { font-size: 14px; line-height: 16px; width: 16px; text-align: center; }
+
+/* ===== components/primitives/swipe-action.css ===== */
+/* ---------- SwipeAction ---------- */
+.lxp-swipe-action {
+  flex: 0 0 64px; height: 64px; display: flex; align-items: center; justify-content: center;
+  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-neutral-white);
+}
+.lxp-swipe-action.is-neutral { background: var(--bg-hierarchy-quinary); }
+.lxp-swipe-action.is-strong { background: var(--bg-hierarchy-senary); }
+.lxp-swipe-action.is-danger { background: var(--bg-semantic-nega-primary); }
+.lxp-swipe-action.is-info { background: var(--fg-semantic-info); }
+
+/* ===== components/primitives/toast.css ===== */
+/* ---------- Toast ---------- */
+.lxp-toast {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px 8px 12px; border-radius: var(--radi-full);
+  background: var(--bg-neutral-b60); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+  font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-neutral-white); white-space: nowrap;
+}
+
+/* ===== components/blocks/bottom-sheet.css ===== */
+/* ---------- BottomSheet ---------- */
+.lxp-sheet {
+  position: relative; width: 100%; padding: 32px 16px 34px;
+  background: var(--bg-neutral-white); border-radius: var(--radi-lg) var(--radi-lg) 0 0;
+}
+.lxp-sheet__handle { position: absolute; top: 4px; left: 50%; width: 48px; height: 4px; margin-left: -24px; border-radius: 2px; background: var(--bg-hierarchy-quaternary); }
+.lxp-sheet__title { padding: 0 4px 12px; font: var(--font-label-16sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-sheet__list { list-style: none; margin: 0; padding: 0; }
+.lxp-sheet__item {
+  height: 48px; display: flex; align-items: center; padding: 0 4px;
+  font: var(--font-label-16m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+}
+.lxp-sheet__item.is-danger { color: var(--tx-semantic-nega-secondary); }
+
+/* ===== components/blocks/chat-message.css ===== */
+/* ---------- ChatMessage ---------- */
+.lxp-chat-msg { display: flex; align-items: flex-start; gap: 8px; width: 100%; padding: 8px; }
+.lxp-chat-msg__main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.lxp-chat-msg__meta { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+.lxp-chat-msg__meta b { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-chat-msg__meta span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-chat-msg__meta .lxp-chat-msg__read { display: inline-flex; align-items: center; gap: 4px; color: var(--tx-hierarchy-quaternary); }
+.lxp-chat-msg__text { font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-chat-msg__reactions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* ---------- ChatDate ---------- */
+.lxp-chat-date { display: flex; justify-content: center; padding: 8px 0; }
+.lxp-chat-date span {
+  padding: 4px 12px; border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary);
+  font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
+}
+
+/* ===== components/blocks/course-card.css ===== */
+/* ---------- CourseCard ---------- */
+.lxp-course-card {
+  display: flex; overflow: hidden; background: var(--bg-neutral-white);
+  border: 1px solid var(--bo-hierarchy-secondary); border-radius: var(--radi-lg);
+}
+.lxp-course-card__thumb { flex-shrink: 0; background-size: cover; background-position: center; }
+.lxp-course-card__title { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-course-card__meta { font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+
+.lxp-course-card--grid { flex-direction: column; width: 156px; min-width: 156px; }
+.lxp-course-card--grid .lxp-course-card__thumb { height: 80px; width: 100%; }
+.lxp-course-card--grid .lxp-course-card__body { padding: 12px; display: flex; flex-direction: column; gap: var(--spac-12); }
+.lxp-course-card--grid .lxp-course-card__title {
+  height: 42px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+
+.lxp-course-card--list { align-items: stretch; width: 100%; min-width: 320px; height: 68px; }
+.lxp-course-card--list .lxp-course-card__thumb { width: 20px; background-position: left center; }
+.lxp-course-card--list .lxp-course-card__body {
+  flex: 1 1 0; min-width: 0; padding: 12px 16px; display: flex; flex-direction: column; gap: 2px;
+}
+.lxp-course-card--list .lxp-course-card__title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ===== components/blocks/date-strip.css ===== */
+/* ---------- DateStrip (62×60 칸, gap 6, 가운데 정렬 · 양 끝 잘림) ---------- */
+.lxp-date-strip { width: 100%; overflow: hidden; display: flex; justify-content: center; }
+.lxp-date-strip__track { display: flex; gap: 6px; flex-shrink: 0; }
+.lxp-date-strip__item {
+  width: 62px; height: 60px; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--bg-neutral-white); border: 1px solid var(--bo-hierarchy-secondary); border-radius: var(--radi-xsm);
+  cursor: pointer;
+}
+.lxp-date-strip__item span { font: var(--font-cap-12sb); letter-spacing: var(--ls-cap); line-height: 1.2; color: var(--tx-hierarchy-quaternary); }
+.lxp-date-strip__item strong { font: var(--font-label-18b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-date-strip__item.is-active { background: var(--bg-semantic-info-primary); border-color: var(--bo-semantic-info-primary); box-shadow: var(--shadow-md); }
+.lxp-date-strip__item.is-active span,
+.lxp-date-strip__item.is-active strong { color: var(--tx-neutral-white-solid); }
+
+/* ===== components/blocks/deadline-card.css ===== */
+/* ---------- DeadlineCard ---------- */
+.lxp-deadline-card {
+  flex-shrink: 0; width: 328px; height: 128px; padding: 16px 20px;
+  display: flex; flex-direction: column; gap: 16px;
+  background: var(--bg-neutral-white); border-radius: var(--radi-lg);
+  box-shadow: var(--shadow-xsm);
+}
+.lxp-deadline-card.is-faded { background: var(--fg-neutral-w80-solid); box-shadow: var(--shadow-card); }
+.lxp-deadline-card__head { display: flex; align-items: center; justify-content: space-between; }
+.lxp-deadline-card__head > span { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-deadline-card__body { display: flex; align-items: center; gap: 8px; }
+.lxp-deadline-card__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.lxp-deadline-card__text p { font: var(--font-label-18sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-deadline-card__text span { font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+
+
+/* ===== components/blocks/dropdown.css ===== */
+/* ---------- Dropdown ---------- */
+.lxp-dropdown {
+  width: 140px; padding: 8px;
+  background: var(--bg-neutral-white);
+  border: 1px solid var(--bo-hierarchy-secondary);
+  border-radius: var(--radi-xsm);
+  box-shadow: var(--shadow-md);
+  display: flex; flex-direction: column;
+}
+.lxp-dropdown__item {
+  height: 36px; display: flex; align-items: center; gap: 8px;
+  padding: 10px 8px 10px 10px; border-radius: var(--radi-2xsm);
+  font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+  text-align: left; white-space: nowrap;
+}
+.lxp-dropdown__item.is-checked { background: var(--bg-hierarchy-secondary-subtle); }
+
+/* ===== components/blocks/info-bar.css ===== */
+/* ---------- InfoBar (SubRow 7062:38223) ---------- */
+.lxp-info-bar {
+  width: 100%; height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 6px 8px 6px 12px;
+  background: var(--bg-hierarchy-primary); border: 1px solid var(--bo-hierarchy-primary); border-radius: var(--radi-xsm);
+  box-shadow: var(--shadow-xsm);
+}
+.lxp-info-bar__main { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.lxp-info-bar__main p { white-space: nowrap; font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary); }
+.lxp-info-bar__chip { flex-shrink: 0; white-space: nowrap; }
+.lxp-info-bar__chip.is-box { height: 24px; display: inline-flex; align-items: center; padding: 0 8px; border-radius: var(--radi-3xsm); background: var(--bg-semantic-info-quinary); font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-info-bar__chip.is-pill { padding: 4px 12px; border-radius: var(--radi-full); background: var(--bg-neutral-b6-hovered); font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary); }
+.lxp-info-bar__action { flex-shrink: 0; height: 32px; display: inline-flex; align-items: center; gap: 4px; padding: 0 6px 0 8px; border-radius: var(--radi-xsm); font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); cursor: pointer; }
+
+/* ===== components/blocks/member-row.css ===== */
+/* ---------- MemberRow (LearnerRows › Row 7062:38271) ----------
+   Figma 구분선 #e5e8ec 는 토큰이 아니어서 가장 가까운 --bo-hierarchy-secondary 를 씁니다. */
+.lxp-member-row { position: relative; display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg-neutral-white); border-bottom: 1px solid var(--bo-hierarchy-secondary); }
+.lxp-member-row__who { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; }
+.lxp-member-row__name { display: flex; align-items: center; }
+.lxp-member-row__name p { min-width: 0; max-width: 5em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font: var(--font-label-15b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-member-row__chev { width: 24px; height: 24px; flex-shrink: 0; display: grid; place-items: center; border-radius: var(--radi-2xsm); }
+.lxp-member-row__sub { font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-member-row__right { flex-shrink: 0; }
+
+/* ===== components/blocks/message-input.css ===== */
 /* ---------- MessageInput ---------- */
 .lxp-msg-input {
   display: flex; align-items: center; width: 100%; padding: 4px;
@@ -722,34 +882,83 @@
 }
 .lxp-msg-input input::placeholder { color: var(--tx-hierarchy-quinary); }
 
-/* ---------- Footer ---------- */
-.lxp-footer { width: 100%; }
-.lxp-footer--empty { height: 86px; background: var(--bg-neutral-white); }
-.lxp-footer--action {
-  height: 86px; padding: 12px 20px 28px;
-  background: var(--bg-neutral-white); border-top: 1px solid var(--bo-hierarchy-secondary);
+/* ===== components/blocks/message-item.css ===== */
+/* ---------- MessageItem ---------- */
+.lxp-msg-item {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  padding: 8px var(--spac-20);
 }
-.lxp-footer--pair {
-  display: flex; gap: 8px; padding: 12px 16px 20px;
-  background: var(--bg-neutral-white); border-top: 1px solid var(--bo-hierarchy-primary);
-  box-shadow: var(--shadow-lg);
+.lxp-msg-item.is-update { background: var(--bg-semantic-info-senary-subtle); }
+.lxp-msg-item.is-focused { background: var(--bg-hierarchy-primary); }
+.lxp-msg-item.is-swiped { background: var(--bg-hierarchy-primary-subtle); flex: 0 0 360px; }
+.lxp-msg-item__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+.lxp-msg-item__name { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.lxp-msg-item__name p { font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-msg-item__icons { display: inline-flex; gap: 4px; flex-shrink: 0; }
+.lxp-msg-item__preview {
+  font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.lxp-footer__secondary { width: 128px; }
-.lxp-footer__primary { flex: 1 1 0; min-width: 0; }
-.lxp-footer__row { display: flex; align-items: center; justify-content: space-between; }
-.lxp-footer__count {
-  display: flex; align-items: center; gap: 4px; white-space: nowrap;
-  font: var(--font-label-18b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary);
-}
-.lxp-footer__count em { font-style: normal; color: var(--tx-coursmos-secondary); }
-.lxp-footer--chat {
-  min-height: 60px; padding: 12px 20px;
-  display: flex; flex-direction: column; justify-content: center; gap: 6px;
-  background: var(--bg-hierarchy-secondary); border-top: 1px solid var(--bo-hierarchy-secondary);
-}
-.lxp-footer__caption { text-align: center; font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-msg-item.is-block .lxp-msg-item__name { flex: 0 0 auto; }
+.lxp-msg-item.is-block .lxp-msg-item__preview { color: var(--tx-hierarchy-senary); }
 
-/* ===== components/tabs.css ===== */
+/* 스와이프: 360px 뷰포트 기준으로 액션(64px)이 드러난 상태 */
+.lxp-swipe { display: flex; width: 100%; overflow: hidden; background: var(--bg-hierarchy-primary); }
+.lxp-swipe--right { justify-content: flex-end; }
+.lxp-swipe--right > .lxp-msg-item { margin-left: -192px; }
+
+
+/* ===== components/blocks/module-item.css ===== */
+/* ---------- ModuleItem ---------- */
+.lxp-module-item {
+  display: flex; align-items: center; gap: var(--radi-xsm); width: 100%; height: 63px; padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+  border-radius: var(--radi-lg); box-shadow: var(--shadow-card);
+}
+.lxp-module-item > .lxp-icon { margin-right: 4px; }
+.lxp-module-item__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
+.lxp-module-item__text p { font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-module-item__text span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+
+/* ===== components/blocks/popup.css ===== */
+/* ---------- Popup ---------- */
+.lxp-popup {
+  width: 300px; overflow: hidden; display: flex; flex-direction: column;
+  background: var(--bg-neutral-w90); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+  border-radius: var(--radi-lg); box-shadow: var(--shadow-lg);
+}
+.lxp-popup__content { display: flex; flex-direction: column; gap: 8px; padding: 20px 20px 16px; text-align: center; }
+.lxp-popup__title { font: var(--font-label-16sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-popup__body { font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary); }
+.lxp-popup__actions { display: flex; }
+.lxp-popup__btn {   /* Button(ghost) 을 팝업 하단 칸으로: 꽉 채우고 위 구분선 */
+  flex: 1 1 0; height: 48px; padding: 0 20px; border-radius: 0;
+  border-top: 1px solid var(--bo-hierarchy-quaternary);
+  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+}
+.lxp-popup__btn + .lxp-popup__btn { border-left: 1px solid var(--bo-hierarchy-quaternary); }
+
+/* ===== components/blocks/stat-grid.css ===== */
+/* ---------- StatGrid (SessionStrip 7062:38229) ----------
+   Figma 배경 #f5f8fb 는 토큰이 아니어서 가장 가까운 --bg-hierarchy-primary-subtle 을 씁니다. */
+.lxp-stat-grid { display: flex; flex-direction: column; gap: 8px; padding: 12px 16px 8px; background: var(--bg-hierarchy-primary-subtle); }
+.lxp-stat-grid__row { display: flex; gap: 4px; }
+.lxp-stat-grid__item {
+  flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 3px 0; border-radius: var(--radi-2xsm); cursor: pointer;
+}
+.lxp-stat-grid__item:disabled { cursor: default; }
+.lxp-stat-grid__label { display: flex; align-items: center; padding-right: 6px; white-space: nowrap; font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-stat-grid__item.is-long .lxp-stat-grid__label { font-size: 11px; }
+.lxp-stat-grid__count { height: 20px; display: flex; align-items: center; justify-content: center; gap: 1px; padding-left: 6px; font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary); }
+.lxp-stat-grid__item:disabled .lxp-stat-grid__count { padding-left: 0; }
+.lxp-stat-grid__footer {
+  min-height: 31px; display: flex; align-items: center; justify-content: space-between; padding: 6px 0 0 4px;
+  border-top: 1px solid var(--bo-hierarchy-primary);
+  font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
+}
+
+/* ===== components/blocks/tabs.css ===== */
 /* ---------- ChipTabs ---------- */
 .lxp-chip-tabs { display: flex; align-items: center; gap: 6px; padding: 0 20px; overflow-x: auto; scrollbar-width: none; }
 .lxp-chip-tabs__item {
@@ -792,24 +1001,21 @@
   content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--fg-hierarchy-primary);
 }
 
-/* ===== components/control.css ===== */
-/* 선택 컨트롤: DateStrip · ToggleGroup · Checkbox — Figma 확정안 7054:14428 (스마트 출석부) */
-
-/* ---------- DateStrip (62×60 칸, gap 6, 가운데 정렬 · 양 끝 잘림) ---------- */
-.lxp-date-strip { width: 100%; overflow: hidden; display: flex; justify-content: center; }
-.lxp-date-strip__track { display: flex; gap: 6px; flex-shrink: 0; }
-.lxp-date-strip__item {
-  width: 62px; height: 60px; flex-shrink: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  background: var(--bg-neutral-white); border: 1px solid var(--bo-hierarchy-secondary); border-radius: var(--radi-xsm);
-  cursor: pointer;
+/* ===== components/blocks/tag.css ===== */
+/* ---------- Tag (con-base) ---------- */
+.lxp-tag {
+  display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+  background: var(--bg-hierarchy-primary); border: 1px solid var(--bo-hierarchy-primary);
+  border-radius: var(--radi-full); overflow: hidden;
+  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); white-space: nowrap;
 }
-.lxp-date-strip__item span { font: var(--font-cap-12sb); letter-spacing: var(--ls-cap); line-height: 1.2; color: var(--tx-hierarchy-quaternary); }
-.lxp-date-strip__item strong { font: var(--font-label-18b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-date-strip__item.is-active { background: var(--bg-semantic-info-primary); border-color: var(--bo-semantic-info-primary); box-shadow: var(--shadow-md); }
-.lxp-date-strip__item.is-active span,
-.lxp-date-strip__item.is-active strong { color: var(--tx-neutral-white-solid); }
+.lxp-tag--md { height: 40px; }
+.lxp-tag--lg { height: 44px; }
+.lxp-tag.has-avatar { padding: 0 9px 0 2px; }
+.lxp-tag.has-icon { padding: 0 9px 0 14px; }
+.lxp-tag .lxp-avatar { border: 0; }
 
+/* ===== components/blocks/toggle-group.css ===== */
 /* ---------- ToggleGroup (버튼 h40, gap 2) ---------- */
 .lxp-toggle-group { position: relative; display: flex; gap: 2px; flex-shrink: 0; }
 .lxp-toggle-group__item,
@@ -833,189 +1039,7 @@
 .lxp-toggle-group__menu { position: absolute; top: calc(100% + 4px); right: 0; z-index: 3; width: 118px; }
 .lxp-toggle-group__menu .lxp-dropdown__item { width: 100%; cursor: pointer; }
 
-/* ---------- Checkbox (20px 박스 + 라벨 14M) ---------- */
-.lxp-checkbox { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-checkbox input {
-  appearance: none; -webkit-appearance: none; margin: 0; width: 20px; height: 20px; flex-shrink: 0;
-  display: grid; place-items: center; cursor: pointer;
-  background: var(--bg-neutral-white); border: 1.5px solid var(--bo-hierarchy-quaternary); border-radius: var(--radi-3xsm);
-}
-.lxp-checkbox input:checked { background: var(--bg-coursmos-primary); border-color: var(--bo-coursmos-primary); }
-.lxp-checkbox input:checked::after {
-  content: ''; width: 9px; height: 5px; transform: translateY(-1px) rotate(-45deg);
-  border: solid var(--fg-neutral-white-solid); border-width: 0 0 2px 2px;
-}
-.lxp-checkbox input:disabled { opacity: .4; cursor: not-allowed; }
-.lxp-checkbox em { font-style: normal; color: var(--tx-semantic-nega-secondary); }
-
-.lxp-date-strip__item:focus-visible,
-.lxp-toggle-group__item:focus-visible,
-.lxp-toggle-group__more:focus-visible,
-.lxp-checkbox input:focus-visible { outline: 2px solid var(--bo-coursmos-primary); outline-offset: 1px; }
-
-/* ===== components/display.css ===== */
-/* ---------- Chip ---------- */
-.lxp-chip {
-  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
-  height: 24px; padding: 4px 8px; border-radius: var(--radi-3xsm);
-  font: var(--font-label-12m); letter-spacing: var(--ls-label); white-space: nowrap;
-}
-.lxp-chip--info { background: var(--bg-semantic-info-senary); color: var(--tx-coursmos-secondary); }
-.lxp-chip--neutral { background: var(--bg-hierarchy-secondary-subtle); color: var(--tx-hierarchy-secondary); }
-.lxp-chip--posi { background: var(--bg-semantic-posi-senary); color: var(--tx-semantic-posi-secondary); }
-.lxp-chip--nega { background: var(--bg-semantic-nega-senary); color: var(--tx-semantic-nega-secondary); }
-/* warn 은 Figma chip/times 에 없는 코드 확장 톤. 글자 토큰 --tx-semantic-noti-primary(warn50)는 이 배경에서 대비 1.55:1 이라
-   못 씀 → warn30(4.0:1, posi·nega 칩과 비슷)을 쓰는데, 그 단계의 글자 토큰이 없어 배경 토큰을 빌림. Figma에 글자 변수가 생기면 교체 */
-.lxp-chip--warn { background: var(--bg-semantic-warn-senary); color: var(--bg-semantic-warn-tertiary); }
-
-/* ---------- Badge ---------- */
-.lxp-badge {
-  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
-  background: var(--bg-semantic-posi-quinary); color: var(--tx-hierarchy-primary);
-  border-radius: var(--radi-full); white-space: nowrap;
-}
-.lxp-badge--md { height: 22px; min-width: 22px; padding: 4px 6px; font: var(--font-label-12sb); letter-spacing: var(--ls-label); }
-.lxp-badge--sm { height: 18px; min-width: 18px; padding: 4px 6px; font: var(--font-cap-11sb); letter-spacing: var(--ls-cap); }
-.lxp-badge--square { height: 22px; padding: 6px 8px; border-radius: var(--radi-3xsm); font: var(--font-label-13m); letter-spacing: var(--ls-label); }
-
-/* ---------- Avatar ---------- */
-.lxp-avatar {
-  display: inline-flex; flex-shrink: 0; overflow: hidden;
-  border-radius: var(--radi-full);
-  border: 1px solid var(--bo-neutral-white);
-  background: #e0e0e0; /* Figma avatar placeholder bg */
-}
-.lxp-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.lxp-avatar.is-dimmed img { opacity: .25; }
-.lxp-avatar.is-empty {
-  align-items: center; justify-content: center;
-  font-weight: 600; color: var(--tx-hierarchy-quaternary); background: var(--bg-hierarchy-tertiary);
-}
-
-.lxp-avatar-group { display: inline-flex; align-items: center; flex-shrink: 0; }
-.lxp-avatar-group > .lxp-avatar { margin-right: calc(var(--size) / -2); }
-.lxp-avatar-group__more {
-  width: var(--size); height: var(--size); border-radius: var(--radi-full);
-  display: inline-flex; align-items: center; justify-content: center;
-  background: var(--bg-semantic-info-senary);
-  font: var(--font-label-16b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
-}
-
-/* ---------- Tag (con-base) ---------- */
-.lxp-tag {
-  display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
-  background: var(--bg-hierarchy-primary); border: 1px solid var(--bo-hierarchy-primary);
-  border-radius: var(--radi-full); overflow: hidden;
-  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); white-space: nowrap;
-}
-.lxp-tag--md { height: 40px; }
-.lxp-tag--lg { height: 44px; }
-.lxp-tag.has-avatar { padding: 0 9px 0 2px; }
-.lxp-tag.has-icon { padding: 0 9px 0 14px; }
-.lxp-tag .lxp-avatar { border: 0; }
-
-/* ---------- Toast ---------- */
-.lxp-toast {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 16px 8px 12px; border-radius: var(--radi-full);
-  background: var(--bg-neutral-b60); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
-  font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-neutral-white); white-space: nowrap;
-}
-
-/* ---------- StatGrid (SessionStrip 7062:38229) ----------
-   Figma 배경 #f5f8fb 는 토큰이 아니어서 가장 가까운 --bg-hierarchy-primary-subtle 을 씁니다. */
-.lxp-stat-grid { display: flex; flex-direction: column; gap: 8px; padding: 12px 16px 8px; background: var(--bg-hierarchy-primary-subtle); }
-.lxp-stat-grid__row { display: flex; gap: 4px; }
-.lxp-stat-grid__item {
-  flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px;
-  padding: 3px 0; border-radius: var(--radi-2xsm); cursor: pointer;
-}
-.lxp-stat-grid__item:disabled { cursor: default; }
-.lxp-stat-grid__label { display: flex; align-items: center; padding-right: 6px; white-space: nowrap; font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
-.lxp-stat-grid__item.is-long .lxp-stat-grid__label { font-size: 11px; }
-.lxp-stat-grid__count { height: 20px; display: flex; align-items: center; justify-content: center; gap: 1px; padding-left: 6px; font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary); }
-.lxp-stat-grid__item:disabled .lxp-stat-grid__count { padding-left: 0; }
-.lxp-stat-grid__footer {
-  min-height: 31px; display: flex; align-items: center; justify-content: space-between; padding: 6px 0 0 4px;
-  border-top: 1px solid var(--bo-hierarchy-primary);
-  font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
-}
-
-/* ---------- InfoBar (SubRow 7062:38223) ---------- */
-.lxp-info-bar {
-  width: 100%; height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 6px 8px 6px 12px;
-  background: var(--bg-hierarchy-primary); border: 1px solid var(--bo-hierarchy-primary); border-radius: var(--radi-xsm);
-  box-shadow: var(--shadow-xsm);
-}
-.lxp-info-bar__main { display: flex; align-items: center; gap: 4px; min-width: 0; }
-.lxp-info-bar__main p { white-space: nowrap; font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary); }
-.lxp-info-bar__chip { flex-shrink: 0; white-space: nowrap; }
-.lxp-info-bar__chip.is-box { height: 24px; display: inline-flex; align-items: center; padding: 0 8px; border-radius: var(--radi-3xsm); background: var(--bg-semantic-info-quinary); font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-info-bar__chip.is-pill { padding: 4px 12px; border-radius: var(--radi-full); background: var(--bg-neutral-b6-hovered); font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary); }
-.lxp-info-bar__action { flex-shrink: 0; height: 32px; display: inline-flex; align-items: center; gap: 4px; padding: 0 6px 0 8px; border-radius: var(--radi-xsm); font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); cursor: pointer; }
-
-/* ---------- MemberRow (LearnerRows › Row 7062:38271) ----------
-   Figma 구분선 #e5e8ec 는 토큰이 아니어서 가장 가까운 --bo-hierarchy-secondary 를 씁니다. */
-.lxp-member-row { position: relative; display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg-neutral-white); border-bottom: 1px solid var(--bo-hierarchy-secondary); }
-.lxp-member-row__who { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; }
-.lxp-member-row__name { display: flex; align-items: center; }
-.lxp-member-row__name p { min-width: 0; max-width: 5em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font: var(--font-label-15b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-member-row__chev { width: 24px; height: 24px; flex-shrink: 0; display: grid; place-items: center; border-radius: var(--radi-2xsm); }
-.lxp-member-row__sub { font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
-.lxp-member-row__right { flex-shrink: 0; }
-
-/* ===== components/learning.css ===== */
-/* ---------- CourseCard ---------- */
-.lxp-course-card {
-  display: flex; overflow: hidden; background: var(--bg-neutral-white);
-  border: 1px solid var(--bo-hierarchy-secondary); border-radius: var(--radi-lg);
-}
-.lxp-course-card__thumb { flex-shrink: 0; background-size: cover; background-position: center; }
-.lxp-course-card__title { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-course-card__meta { font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
-
-.lxp-course-card--grid { flex-direction: column; width: 156px; min-width: 156px; }
-.lxp-course-card--grid .lxp-course-card__thumb { height: 80px; width: 100%; }
-.lxp-course-card--grid .lxp-course-card__body { padding: 12px; display: flex; flex-direction: column; gap: var(--spac-12); }
-.lxp-course-card--grid .lxp-course-card__title {
-  height: 42px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-}
-
-.lxp-course-card--list { align-items: stretch; width: 100%; min-width: 320px; height: 68px; }
-.lxp-course-card--list .lxp-course-card__thumb { width: 20px; background-position: left center; }
-.lxp-course-card--list .lxp-course-card__body {
-  flex: 1 1 0; min-width: 0; padding: 12px 16px; display: flex; flex-direction: column; gap: 2px;
-}
-.lxp-course-card--list .lxp-course-card__title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-/* ---------- DeadlineCard ---------- */
-.lxp-deadline-card {
-  flex-shrink: 0; width: 328px; height: 128px; padding: 16px 20px;
-  display: flex; flex-direction: column; gap: 16px;
-  background: var(--bg-neutral-white); border-radius: var(--radi-lg);
-  box-shadow: var(--shadow-xsm);
-}
-.lxp-deadline-card.is-faded { background: var(--fg-neutral-w80-solid); box-shadow: var(--shadow-card); }
-.lxp-deadline-card__head { display: flex; align-items: center; justify-content: space-between; }
-.lxp-deadline-card__head > span { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
-.lxp-deadline-card__body { display: flex; align-items: center; gap: 8px; }
-.lxp-deadline-card__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
-.lxp-deadline-card__text p { font: var(--font-label-18sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-deadline-card__text span { font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
-
-.lxp-deadline-carousel { display: flex; justify-content: center; gap: 6px; width: 100%; overflow: hidden; padding: 6px 0; }
-
-/* ---------- ModuleItem ---------- */
-.lxp-module-item {
-  display: flex; align-items: center; gap: var(--radi-xsm); width: 100%; height: 63px; padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
-  border-radius: var(--radi-lg); box-shadow: var(--shadow-card);
-}
-.lxp-module-item > .lxp-icon { margin-right: 4px; }
-.lxp-module-item__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
-.lxp-module-item__text p { font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-module-item__text span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
-
+/* ===== components/blocks/week-picker.css ===== */
 /* ---------- WeekPicker ---------- */
 .lxp-week { display: flex; align-items: center; justify-content: center; padding: 0 24px; width: 100%; }
 .lxp-week__day {
@@ -1029,94 +1053,127 @@
 .lxp-week__day.is-selected b { color: var(--tx-coursmos-secondary); }
 .lxp-week__dot { position: absolute; top: 8px; left: calc(50% + 11.5px); width: 5px; height: 5px; transform: translateX(-50%); }
 
-/* ===== components/message.css ===== */
-/* ---------- MessageItem ---------- */
-.lxp-msg-item {
-  display: flex; align-items: center; gap: 12px; width: 100%;
-  padding: 8px var(--spac-20);
-}
-.lxp-msg-item.is-update { background: var(--bg-semantic-info-senary-subtle); }
-.lxp-msg-item.is-focused { background: var(--bg-hierarchy-primary); }
-.lxp-msg-item.is-swiped { background: var(--bg-hierarchy-primary-subtle); flex: 0 0 360px; }
-.lxp-msg-item__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
-.lxp-msg-item__name { display: flex; align-items: center; gap: 4px; min-width: 0; }
-.lxp-msg-item__name p { font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-msg-item__icons { display: inline-flex; gap: 4px; flex-shrink: 0; }
-.lxp-msg-item__preview {
-  font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-.lxp-msg-item.is-block .lxp-msg-item__name { flex: 0 0 auto; }
-.lxp-msg-item.is-block .lxp-msg-item__preview { color: var(--tx-hierarchy-senary); }
+/* ===== components/sections/deadline-carousel.css ===== */
+/* ---------- DeadlineCarousel ---------- */
+.lxp-deadline-carousel { display: flex; justify-content: center; gap: 6px; width: 100%; overflow: hidden; padding: 6px 0; }
 
-/* 스와이프: 360px 뷰포트 기준으로 액션(64px)이 드러난 상태 */
-.lxp-swipe { display: flex; width: 100%; overflow: hidden; background: var(--bg-hierarchy-primary); }
-.lxp-swipe--right { justify-content: flex-end; }
-.lxp-swipe--right > .lxp-msg-item { margin-left: -192px; }
-.lxp-swipe__act {
-  flex: 0 0 64px; height: 64px; display: flex; align-items: center; justify-content: center;
-  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-neutral-white);
+/* ===== components/sections/footer.css ===== */
+/* ---------- Footer ---------- */
+.lxp-footer { width: 100%; }
+.lxp-footer--empty { height: 86px; background: var(--bg-neutral-white); }
+.lxp-footer--action {
+  height: 86px; padding: 12px 20px 28px;
+  background: var(--bg-neutral-white); border-top: 1px solid var(--bo-hierarchy-secondary);
 }
+.lxp-footer--pair {
+  display: flex; gap: 8px; padding: 12px 16px 20px;
+  background: var(--bg-neutral-white); border-top: 1px solid var(--bo-hierarchy-primary);
+  box-shadow: var(--shadow-lg);
+}
+.lxp-footer__secondary { width: 128px; }
+.lxp-footer__primary { flex: 1 1 0; min-width: 0; }
+.lxp-footer__row { display: flex; align-items: center; justify-content: space-between; }
+.lxp-footer__count {
+  display: flex; align-items: center; gap: 4px; white-space: nowrap;
+  font: var(--font-label-18b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary);
+}
+.lxp-footer__count em { font-style: normal; color: var(--tx-coursmos-secondary); }
+.lxp-footer--chat {
+  min-height: 60px; padding: 12px 20px;
+  display: flex; flex-direction: column; justify-content: center; gap: 6px;
+  background: var(--bg-hierarchy-secondary); border-top: 1px solid var(--bo-hierarchy-secondary);
+}
+.lxp-footer__caption { text-align: center; font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
 
-/* ---------- Reaction ---------- */
-.lxp-reaction {
-  display: inline-flex; align-items: center; gap: 4px; height: 26px; padding: 2px 10px;
-  border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary); border: 1px solid transparent;
-  font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+/* ===== components/sections/header.css ===== */
+/* ---------- Header (메인 탭 헤더) ---------- */
+.lxp-header {
+  position: relative; height: 68px; width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px 8px 24px;
 }
-.lxp-reaction.is-selected { background: var(--bg-coursmos-senary); border-color: var(--bo-semantic-info-secondary); }
-.lxp-reaction__emoji { font-size: 14px; line-height: 16px; width: 16px; text-align: center; }
+.lxp-header__title { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.lxp-header__title h1 { font: var(--font-head-20b); letter-spacing: var(--ls-head); color: var(--tx-hierarchy-primary); white-space: nowrap; }
+.lxp-header__actions { display: flex; align-items: center; gap: 2px; }
+.lxp-header__menu { position: absolute; top: 54px; right: 12px; z-index: 20; }
 
-/* ---------- ChatMessage ---------- */
-.lxp-chat-msg { display: flex; align-items: flex-start; gap: 8px; width: 100%; padding: 8px; }
-.lxp-chat-msg__main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
-.lxp-chat-msg__meta { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
-.lxp-chat-msg__meta b { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-chat-msg__meta span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
-.lxp-chat-msg__meta .lxp-chat-msg__read { display: inline-flex; align-items: center; gap: 4px; color: var(--tx-hierarchy-quaternary); }
-.lxp-chat-msg__text { font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-chat-msg__reactions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+/* ---------- AppHeader (서브 페이지 헤더 56px) ---------- */
+.lxp-app-header {
+  height: 56px; width: 100%; padding: 0 12px;
+  display: flex; align-items: center; justify-content: space-between; gap: 0;
+  background: var(--bg-neutral-white);
+  border-bottom: 1px solid var(--bo-hierarchy-secondary);
+}
+.lxp-app-header__title {
+  flex: 1 1 0; min-width: 0; text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+}
+.lxp-app-header__title p { width: 100%; font: var(--font-label-16b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-app-header__title.has-icon { flex-direction: row; justify-content: center; gap: 4px; }
+.lxp-app-header__title.has-icon p { width: auto; }
+.lxp-app-header__title span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
 
-/* ---------- ChatDate ---------- */
-.lxp-chat-date { display: flex; justify-content: center; padding: 8px 0; }
-.lxp-chat-date span {
-  padding: 4px 12px; border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary);
-  font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
+/* ===== components/layout/stack.css ===== */
+/* ---------- Stack · Grid · Surface (틀) ----------
+   값은 함수가 style="--lxp-gap:…" 로 넘깁니다. 사용자 정의 속성은 상속되므로
+   틀마다 기본값을 다시 정해, 안쪽 틀이 바깥 틀의 간격을 물려받지 않게 합니다(인라인 값이 있으면 그쪽이 이김). */
+.lxp-stack, .lxp-grid { --lxp-gap: 0; --lxp-pad: 0; --lxp-align: stretch; --lxp-justify: flex-start; }
+.lxp-stack {
+  display: flex; flex-direction: column;
+  gap: var(--lxp-gap); padding: var(--lxp-pad);
+  align-items: var(--lxp-align); justify-content: var(--lxp-justify);
 }
+.lxp-stack--row { --lxp-align: center; flex-direction: row; }
+.lxp-grid {
+  --lxp-justify: stretch;
+  display: grid; grid-template-columns: var(--lxp-cols);
+  gap: var(--lxp-gap); padding: var(--lxp-pad); justify-content: var(--lxp-justify);
+}
+.lxp-surface--white { background: var(--bg-neutral-white); }
+.lxp-surface--subtle { background: var(--bg-hierarchy-primary-subtle); }
+.lxp-surface--fill { min-height: 100%; }
 
-/* ===== components/overlay.css ===== */
-/* ---------- Popup ---------- */
-.lxp-popup {
-  width: 300px; overflow: hidden; display: flex; flex-direction: column;
-  background: var(--bg-neutral-w90); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-  border-radius: var(--radi-lg); box-shadow: var(--shadow-lg);
+/* ===== components/sections/section.css ===== */
+/* ---------- Section (홈 '이번 주 학습 6') ---------- */
+.lxp-section-title { display: flex; align-items: center; gap: 8px; padding: 0 12px; }
+.lxp-section-title__text { font: var(--font-head-20b); letter-spacing: var(--ls-head); color: var(--tx-hierarchy-primary); }
+.lxp-section-title__count {
+  min-width: 24px; height: 24px; padding: 0 6px; border-radius: var(--radi-3xsm);
+  border: 1px solid var(--bo-coursmos-quinary); background: var(--bg-neutral-white);
+  font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-coursmos-secondary);
+  display: inline-flex; align-items: center; justify-content: center;
 }
-.lxp-popup__content { display: flex; flex-direction: column; gap: 8px; padding: 20px 20px 16px; text-align: center; }
-.lxp-popup__title { font: var(--font-label-16sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-popup__body { font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-tertiary); }
-.lxp-popup__actions { display: flex; }
-.lxp-popup__btn {
-  flex: 1 1 0; height: 48px; padding: 0 20px;
-  border-top: 1px solid var(--bo-hierarchy-quaternary);
-  font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
-}
-.lxp-popup__btn + .lxp-popup__btn { border-left: 1px solid var(--bo-hierarchy-quaternary); }
-.lxp-popup__btn.is-danger { color: var(--tx-semantic-nega-secondary); }
-.lxp-popup__btn.is-primary { color: var(--tx-coursmos-secondary); }
+.lxp-section-title__aside { margin-left: auto; display: inline-flex; }
 
-/* ---------- BottomSheet ---------- */
-.lxp-sheet {
-  position: relative; width: 100%; padding: 32px 16px 34px;
-  background: var(--bg-neutral-white); border-radius: var(--radi-lg) var(--radi-lg) 0 0;
+/* ===== components/sections/tab-bar.css ===== */
+/* ---------- TabBar (82px) ---------- */
+.lxp-tabbar {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--spac-12) var(--spac-20) var(--spac-28);
+  background: var(--bg-hierarchy-primary);
+  border-top: 1px solid var(--bo-hierarchy-primary);
 }
-.lxp-sheet__handle { position: absolute; top: 4px; left: 50%; width: 48px; height: 4px; margin-left: -24px; border-radius: 2px; background: var(--bg-hierarchy-quaternary); }
-.lxp-sheet__title { padding: 0 4px 12px; font: var(--font-label-16sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-sheet__list { list-style: none; margin: 0; padding: 0; }
-.lxp-sheet__item {
-  height: 48px; display: flex; align-items: center; padding: 0 4px;
-  font: var(--font-label-16m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+.lxp-tabbar__item {
+  position: relative; width: 48px; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  font: var(--font-cap-11sb); letter-spacing: var(--ls-cap); text-align: center; white-space: nowrap;
+  color: var(--tx-hierarchy-quaternary); text-decoration: none;
 }
-.lxp-sheet__item.is-danger { color: var(--tx-semantic-nega-secondary); }
+.lxp-tabbar__item.is-active { color: var(--tx-hierarchy-secondary); }
+.lxp-tabbar__badge {
+  position: absolute; top: -6px; right: -3.67px; height: 18px; padding: 4px 6px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-semantic-posi-quinary); border-radius: var(--radi-full);
+  font: var(--font-cap-11sb); font-style: normal; letter-spacing: var(--ls-cap); color: var(--tx-hierarchy-primary);
+}
+.lxp-tabbar__dot { position: absolute; top: 2px; right: 2px; width: 6px; height: 6px; }
+
+/* ===== components/layout/screen.css ===== */
+/* ---------- StatusBar (iPhone header 44px) ---------- */
+.lxp-statusbar { position: relative; height: 44px; width: 100%; overflow: hidden; }
+.lxp-statusbar__left { position: absolute; left: 33.45px; top: 17.17px; width: 28.426px; height: 11.089px; }
+.lxp-statusbar__right { position: absolute; right: 14.67px; top: 17.33px; width: 66.661px; height: 11.336px; }
 
 /* ---------- Dim content ---------- */
 .lxp-dim__content { position: absolute; inset: 0; display: flex; justify-content: center; }

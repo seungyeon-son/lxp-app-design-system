@@ -1,0 +1,26 @@
+/* ---------- Header (메인 탭 헤더) ---------- */
+.lxp-header {
+  position: relative; height: 68px; width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px 8px 24px;
+}
+.lxp-header__title { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.lxp-header__title h1 { font: var(--font-head-20b); letter-spacing: var(--ls-head); color: var(--tx-hierarchy-primary); white-space: nowrap; }
+.lxp-header__actions { display: flex; align-items: center; gap: 2px; }
+.lxp-header__menu { position: absolute; top: 54px; right: 12px; z-index: 20; }
+
+/* ---------- AppHeader (서브 페이지 헤더 56px) ---------- */
+.lxp-app-header {
+  height: 56px; width: 100%; padding: 0 12px;
+  display: flex; align-items: center; justify-content: space-between; gap: 0;
+  background: var(--bg-neutral-white);
+  border-bottom: 1px solid var(--bo-hierarchy-secondary);
+}
+.lxp-app-header__title {
+  flex: 1 1 0; min-width: 0; text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+}
+.lxp-app-header__title p { width: 100%; font: var(--font-label-16b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-app-header__title.has-icon { flex-direction: row; justify-content: center; gap: 4px; }
+.lxp-app-header__title.has-icon p { width: auto; }
+.lxp-app-header__title span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }

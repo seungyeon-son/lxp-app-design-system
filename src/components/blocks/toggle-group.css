@@ -1,0 +1,22 @@
+/* ---------- ToggleGroup (버튼 h40, gap 2) ---------- */
+.lxp-toggle-group { position: relative; display: flex; gap: 2px; flex-shrink: 0; }
+.lxp-toggle-group__item,
+.lxp-toggle-group__more {
+  height: 40px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  background: var(--bg-neutral-white); border: 1px solid var(--bo-hierarchy-secondary); border-radius: var(--radi-xsm);
+  cursor: pointer;
+}
+.lxp-toggle-group__item { padding: 0 10px 0 6px; font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); white-space: nowrap; }
+.lxp-toggle-group__more { width: 40px; }
+/* 하나라도 고르면 나머지는 흐리게 (unselected) */
+.lxp-toggle-group.is-picked .lxp-toggle-group__item,
+.lxp-toggle-group.is-picked .lxp-toggle-group__more { border-color: var(--bo-hierarchy-primary-subtle); color: var(--tx-hierarchy-quaternary); }
+.lxp-toggle-group.is-picked .lxp-toggle-group__item.is-active { color: var(--tx-hierarchy-secondary); }
+/* 선택 (selected / active) — tone 별 테두리 */
+.lxp-toggle-group .is-active.is-info    { border-color: var(--bo-semantic-info-primary); }
+.lxp-toggle-group .is-active.is-nega    { border-color: var(--bo-semantic-nega-primary); }
+.lxp-toggle-group .is-active.is-posi    { border-color: var(--bo-semantic-posi-primary); }
+.lxp-toggle-group .is-active.is-warn    { border-color: var(--bo-semantic-warn-primary); }
+.lxp-toggle-group .is-active.is-neutral { border-color: var(--bo-hierarchy-quinary); }
+.lxp-toggle-group__menu { position: absolute; top: calc(100% + 4px); right: 0; z-index: 3; width: 118px; }
+.lxp-toggle-group__menu .lxp-dropdown__item { width: 100%; cursor: pointer; }

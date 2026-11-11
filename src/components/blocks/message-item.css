@@ -1,0 +1,24 @@
+/* ---------- MessageItem ---------- */
+.lxp-msg-item {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  padding: 8px var(--spac-20);
+}
+.lxp-msg-item.is-update { background: var(--bg-semantic-info-senary-subtle); }
+.lxp-msg-item.is-focused { background: var(--bg-hierarchy-primary); }
+.lxp-msg-item.is-swiped { background: var(--bg-hierarchy-primary-subtle); flex: 0 0 360px; }
+.lxp-msg-item__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+.lxp-msg-item__name { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.lxp-msg-item__name p { font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-msg-item__icons { display: inline-flex; gap: 4px; flex-shrink: 0; }
+.lxp-msg-item__preview {
+  font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.lxp-msg-item.is-block .lxp-msg-item__name { flex: 0 0 auto; }
+.lxp-msg-item.is-block .lxp-msg-item__preview { color: var(--tx-hierarchy-senary); }
+
+/* 스와이프: 360px 뷰포트 기준으로 액션(64px)이 드러난 상태 */
+.lxp-swipe { display: flex; width: 100%; overflow: hidden; background: var(--bg-hierarchy-primary); }
+.lxp-swipe--right { justify-content: flex-end; }
+.lxp-swipe--right > .lxp-msg-item { margin-left: -192px; }
+

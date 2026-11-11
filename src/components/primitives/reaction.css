@@ -1,0 +1,8 @@
+/* ---------- Reaction ---------- */
+.lxp-reaction {
+  display: inline-flex; align-items: center; gap: 4px; height: 26px; padding: 2px 10px;
+  border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary); border: 1px solid transparent;
+  font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+}
+.lxp-reaction.is-selected { background: var(--bg-coursmos-senary); border-color: var(--bo-semantic-info-secondary); }
+.lxp-reaction__emoji { font-size: 14px; line-height: 16px; width: 16px; text-align: center; }

@@ -1,0 +1,47 @@
+/* ---------- Button ---------- */
+.lxp-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+  overflow: hidden; white-space: nowrap; flex-shrink: 0;
+  border-radius: var(--radi-xsm);
+  transition: filter .15s ease, background-color .15s ease;
+}
+.lxp-btn--block { display: flex; width: 100%; }
+.lxp-btn:disabled { cursor: not-allowed; }
+
+/* size */
+.lxp-btn--xl { height: 48px; padding: 0 20px; font: var(--font-label-16sb); letter-spacing: var(--ls-label); }
+.lxp-btn--lg { height: 44px; padding: 0 18px; font: var(--font-label-15m); letter-spacing: var(--ls-label); }
+.lxp-btn--md { height: 40px; padding: 0 16px 0 14px; font: var(--font-label-14m); letter-spacing: var(--ls-label); }
+.lxp-btn--xs { height: 28px; padding: 0 12px 0 10px; border-radius: var(--radi-2xsm); font: var(--font-label-12m); letter-spacing: var(--ls-label); }
+.lxp-btn--lg.has-icon { padding: 0 18px 0 16px; }
+.lxp-btn--lg.has-icon-right { padding: 0 16px 0 18px; }
+
+/* variant */
+.lxp-btn--primary { background: var(--bg-coursmos-primary); color: var(--tx-neutral-white-solid); }
+.lxp-btn--primary:active { background: var(--bg-coursmos-tertiary); }
+.lxp-btn--primary:disabled { background: var(--bg-coursmos-quaternary); }
+
+.lxp-btn--secondary { background: var(--bg-hierarchy-secondary); color: var(--tx-hierarchy-secondary); }
+
+.lxp-btn--outline { background: var(--bg-neutral-white); color: var(--tx-hierarchy-secondary); border: 1px solid var(--bo-hierarchy-quaternary); }
+
+.lxp-btn--outline-primary { background: var(--bg-neutral-white); color: var(--tx-coursmos-secondary); border: 1px solid var(--bo-coursmos-quaternary); }
+
+.lxp-btn--gray { background: var(--bg-hierarchy-quinary); color: var(--tx-neutral-white-solid); }
+
+.lxp-btn--ghost { background: transparent; color: var(--tx-hierarchy-secondary); }
+.lxp-btn--ghost.is-danger { color: var(--tx-semantic-nega-secondary); }
+.lxp-btn--ghost.is-primary { color: var(--tx-coursmos-secondary); }
+
+/* ---------- IconButton ---------- */
+.lxp-icon-btn {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  overflow: hidden; border-radius: var(--radi-xsm);
+  background: transparent;
+}
+.lxp-icon-btn--16 { width: 16px; height: 16px; border-radius: 0; }
+.lxp-icon-btn--24 { width: 24px; height: 24px; border-radius: var(--radi-2xsm); }
+.lxp-icon-btn--36 { width: 36px; height: 36px; }
+.lxp-icon-btn--40 { width: 40px; height: 40px; }
+.lxp-icon-btn.is-active { background: var(--bg-hierarchy-secondary); }
+.lxp-icon-btn--round { border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary); }

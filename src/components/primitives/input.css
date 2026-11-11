@@ -1,0 +1,23 @@
+/* ---------- Input ---------- */
+.lxp-input {
+  display: flex; align-items: center; gap: 8px; width: 100%; height: 44px;
+  padding: 10px 14px; overflow: hidden;
+  background: var(--bg-neutral-white);
+  border: 1px solid var(--bo-hierarchy-tertiary);
+  border-radius: var(--radi-md);
+  cursor: text;
+}
+.lxp-input input {
+  flex: 1 1 0; font: var(--font-label-15r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+  caret-color: var(--fg-semantic-info);
+}
+.lxp-input input::placeholder { color: var(--tx-hierarchy-quinary); }
+.lxp-input__clear { display: inline-flex; flex-shrink: 0; }
+.lxp-input__lead.is-faded { opacity: .4; }
+
+.lxp-input.is-focused,
+.lxp-input:focus-within { border-color: var(--bo-semantic-info-primary); }
+.lxp-input.is-invalid { border-color: var(--bo-semantic-nega-primary); }
+.lxp-input.is-disabled { background: var(--bg-hierarchy-primary-subtle); cursor: not-allowed; }
+.lxp-input.is-disabled input::placeholder { color: var(--tx-hierarchy-senary); }
+.lxp-input.is-disabled.is-invalid { border-color: var(--bo-semantic-nega-30); }

@@ -1,0 +1,9 @@
+/* ---------- StatusBar (iPhone header 44px) ---------- */
+.lxp-statusbar { position: relative; height: 44px; width: 100%; overflow: hidden; }
+.lxp-statusbar__left { position: absolute; left: 33.45px; top: 17.17px; width: 28.426px; height: 11.089px; }
+.lxp-statusbar__right { position: absolute; right: 14.67px; top: 17.33px; width: 66.661px; height: 11.336px; }
+
+/* ---------- Dim content ---------- */
+.lxp-dim__content { position: absolute; inset: 0; display: flex; justify-content: center; }
+.lxp-dim__content.is-center { align-items: center; }
+.lxp-dim__content.is-bottom { align-items: flex-end; }

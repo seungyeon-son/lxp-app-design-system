@@ -1,0 +1,9 @@
+/* ---------- MemberRow (LearnerRows › Row 7062:38271) ----------
+   Figma 구분선 #e5e8ec 는 토큰이 아니어서 가장 가까운 --bo-hierarchy-secondary 를 씁니다. */
+.lxp-member-row { position: relative; display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg-neutral-white); border-bottom: 1px solid var(--bo-hierarchy-secondary); }
+.lxp-member-row__who { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; }
+.lxp-member-row__name { display: flex; align-items: center; }
+.lxp-member-row__name p { min-width: 0; max-width: 5em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font: var(--font-label-15b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-member-row__chev { width: 24px; height: 24px; flex-shrink: 0; display: grid; place-items: center; border-radius: var(--radi-2xsm); }
+.lxp-member-row__sub { font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-member-row__right { flex-shrink: 0; }

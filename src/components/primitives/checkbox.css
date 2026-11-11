@@ -1,0 +1,19 @@
+/* ---------- Checkbox (20px 박스 + 라벨 14M) ---------- */
+.lxp-checkbox { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-checkbox input {
+  appearance: none; -webkit-appearance: none; margin: 0; width: 20px; height: 20px; flex-shrink: 0;
+  display: grid; place-items: center; cursor: pointer;
+  background: var(--bg-neutral-white); border: 1.5px solid var(--bo-hierarchy-quaternary); border-radius: var(--radi-3xsm);
+}
+.lxp-checkbox input:checked { background: var(--bg-coursmos-primary); border-color: var(--bo-coursmos-primary); }
+.lxp-checkbox input:checked::after {
+  content: ''; width: 9px; height: 5px; transform: translateY(-1px) rotate(-45deg);
+  border: solid var(--fg-neutral-white-solid); border-width: 0 0 2px 2px;
+}
+.lxp-checkbox input:disabled { opacity: .4; cursor: not-allowed; }
+.lxp-checkbox em { font-style: normal; color: var(--tx-semantic-nega-secondary); }
+
+.lxp-date-strip__item:focus-visible,
+.lxp-toggle-group__item:focus-visible,
+.lxp-toggle-group__more:focus-visible,
+.lxp-checkbox input:focus-visible { outline: 2px solid var(--bo-coursmos-primary); outline-offset: 1px; }

@@ -1,0 +1,14 @@
+/* ---------- DateStrip (62×60 칸, gap 6, 가운데 정렬 · 양 끝 잘림) ---------- */
+.lxp-date-strip { width: 100%; overflow: hidden; display: flex; justify-content: center; }
+.lxp-date-strip__track { display: flex; gap: 6px; flex-shrink: 0; }
+.lxp-date-strip__item {
+  width: 62px; height: 60px; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--bg-neutral-white); border: 1px solid var(--bo-hierarchy-secondary); border-radius: var(--radi-xsm);
+  cursor: pointer;
+}
+.lxp-date-strip__item span { font: var(--font-cap-12sb); letter-spacing: var(--ls-cap); line-height: 1.2; color: var(--tx-hierarchy-quaternary); }
+.lxp-date-strip__item strong { font: var(--font-label-18b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-date-strip__item.is-active { background: var(--bg-semantic-info-primary); border-color: var(--bo-semantic-info-primary); box-shadow: var(--shadow-md); }
+.lxp-date-strip__item.is-active span,
+.lxp-date-strip__item.is-active strong { color: var(--tx-neutral-white-solid); }

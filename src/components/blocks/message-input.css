@@ -1,0 +1,10 @@
+/* ---------- MessageInput ---------- */
+.lxp-msg-input {
+  display: flex; align-items: center; width: 100%; padding: 4px;
+  background: var(--bg-neutral-white); border-radius: var(--radi-full); overflow: hidden;
+}
+.lxp-msg-input input {
+  flex: 1 1 0; padding: 0 8px;
+  font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+}
+.lxp-msg-input input::placeholder { color: var(--tx-hierarchy-quinary); }

@@ -1,0 +1,10 @@
+/* ---------- ModuleItem ---------- */
+.lxp-module-item {
+  display: flex; align-items: center; gap: var(--radi-xsm); width: 100%; height: 63px; padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+  border-radius: var(--radi-lg); box-shadow: var(--shadow-card);
+}
+.lxp-module-item > .lxp-icon { margin-right: 4px; }
+.lxp-module-item__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
+.lxp-module-item__text p { font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-module-item__text span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }

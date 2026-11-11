@@ -1,0 +1,22 @@
+/* ---------- Avatar ---------- */
+.lxp-avatar {
+  display: inline-flex; flex-shrink: 0; overflow: hidden;
+  border-radius: var(--radi-full);
+  border: 1px solid var(--bo-neutral-white);
+  background: #e0e0e0; /* Figma avatar placeholder bg */
+}
+.lxp-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lxp-avatar.is-dimmed img { opacity: .25; }
+.lxp-avatar.is-empty {
+  align-items: center; justify-content: center;
+  font-weight: 600; color: var(--tx-hierarchy-quaternary); background: var(--bg-hierarchy-tertiary);
+}
+
+.lxp-avatar-group { display: inline-flex; align-items: center; flex-shrink: 0; }
+.lxp-avatar-group > .lxp-avatar { margin-right: calc(var(--size) / -2); }
+.lxp-avatar-group__more {
+  width: var(--size); height: var(--size); border-radius: var(--radi-full);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--bg-semantic-info-senary);
+  font: var(--font-label-16b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+}

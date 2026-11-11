@@ -1,0 +1,16 @@
+/* ---------- Dropdown ---------- */
+.lxp-dropdown {
+  width: 140px; padding: 8px;
+  background: var(--bg-neutral-white);
+  border: 1px solid var(--bo-hierarchy-secondary);
+  border-radius: var(--radi-xsm);
+  box-shadow: var(--shadow-md);
+  display: flex; flex-direction: column;
+}
+.lxp-dropdown__item {
+  height: 36px; display: flex; align-items: center; gap: 8px;
+  padding: 10px 8px 10px 10px; border-radius: var(--radi-2xsm);
+  font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+  text-align: left; white-space: nowrap;
+}
+.lxp-dropdown__item.is-checked { background: var(--bg-hierarchy-secondary-subtle); }
