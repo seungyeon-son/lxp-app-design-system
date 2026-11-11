@@ -1,0 +1,13 @@
+/* ---------- ShareLinkCard (chat_share_link 89:23365) ---------- */
+.lxp-share-link { display: flex; flex-direction: column; width: 156px; height: 180px; overflow: hidden; border: 1px solid var(--bo-hierarchy-secondary); border-radius: var(--radi-xsm); }
+.lxp-share-link__thumb { flex: 1 1 0; min-height: 0; background: var(--bg-hierarchy-secondary) center / cover no-repeat; }
+.lxp-share-link__body { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 12px; }
+.lxp-share-link__body > div { display: flex; flex-direction: column; gap: 2px; }
+.lxp-share-link__title { font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-share-link__sub { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+
+/* ---------- ShareFileCard (chat_share_docs 87:23224) ---------- */
+.lxp-share-file { display: flex; align-items: center; gap: 8px; width: 100%; padding: 12px; box-shadow: inset 0 0 0 1px var(--bo-hierarchy-secondary); border-radius: var(--radi-xsm); }
+.lxp-share-file__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.lxp-share-file__text p { font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-share-file__text span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }

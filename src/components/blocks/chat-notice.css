@@ -1,0 +1,9 @@
+/* ---------- ChatNotice (chat_notice 93:23602) ---------- */
+.lxp-chat-notice { display: flex; flex-direction: column; width: 100%; }
+.lxp-chat-notice__head { display: flex; align-items: center; gap: 16px; padding: 10px var(--spac-20); border-bottom: 1px solid var(--bo-hierarchy-primary); }
+.lxp-chat-notice.is-open .lxp-chat-notice__head { background: var(--bg-hierarchy-secondary); }
+.lxp-chat-notice__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.lxp-chat-notice__title { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-chat-notice__meta { display: flex; align-items: center; gap: 8px; font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); white-space: nowrap; }
+.lxp-chat-notice__meta i { width: 1px; height: 12px; background: var(--bo-hierarchy-secondary); }
+.lxp-chat-notice__body { padding: var(--spac-16) var(--spac-20); border-bottom: 1px solid var(--bo-hierarchy-primary); white-space: pre-wrap; font: var(--font-label-15r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }

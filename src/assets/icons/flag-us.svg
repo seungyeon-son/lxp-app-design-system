@@ -1,0 +1,37 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle id="Ellipse 2" cx="12" cy="12" r="12" fill="white"/>
+
+<g id="Group 1">
+<mask id="mask0_0_667" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+<circle id="Ellipse 1" cx="12" cy="12" r="12" fill="#FCFCFC"/>
+</mask>
+<g mask="url(#mask0_0_667)">
+<g id="Rectangle 1">
+<rect x="3.9" y="21.3" width="16.5" height="3" fill="#DC1E11"/>
+<rect x="3.9" y="21.3" width="16.5" height="3" fill="#DC1E11"/>
+</g>
+<g id="Rectangle 2">
+<rect x="0.3" y="15.3" width="23.7" height="3" fill="#DC1E11"/>
+<rect x="0.3" y="15.3" width="23.7" height="3" fill="#DC1E11"/>
+</g>
+<g id="Rectangle 3">
+<rect x="0.3" y="9" width="23.7" height="3" fill="#DC1E11"/>
+<rect x="0.3" y="9" width="23.7" height="3" fill="#DC1E11"/>
+</g>
+<g id="Rectangle 4">
+<rect x="0.3" y="3" width="23.7" height="3" fill="#DC1E11"/>
+<rect x="0.3" y="3" width="23.7" height="3" fill="#DC1E11"/>
+</g>
+<rect id="Rectangle 5" width="12.3" height="12" fill="#0052AF"/>
+<path id="Vector 1" d="M9.9 10.05L9 10.5L9.3 9.6L8.7 9H9.6L9.9 8.1L10.35 9H11.1L10.5 9.6L10.8 10.5L9.9 10.05Z" fill="#FCFCFC"/>
+<path id="Vector 4" d="M5.7 10.05L4.8 10.5L5.1 9.6L4.5 9H5.4L5.7 8.1L6.15 9H6.9L6.3 9.6L6.6 10.5L5.7 10.05Z" fill="#FCFCFC"/>
+<path id="Vector 5" d="M1.5 10.05L0.6 10.5L0.9 9.6L0.3 9H1.2L1.5 8.1L1.95 9H2.7L2.1 9.6L2.4 10.5L1.5 10.05Z" fill="#FCFCFC"/>
+<path id="Vector 2" d="M9.9 6.75L9 7.2L9.3 6.3L8.7 5.7H9.6L9.9 4.8L10.35 5.7H11.1L10.5 6.3L10.8 7.2L9.9 6.75Z" fill="#FCFCFC"/>
+<path id="Vector 6" d="M9.9 3.45L9 3.9L9.3 3L8.7 2.4H9.6L9.9 1.5L10.35 2.4H11.1L10.5 3L10.8 3.9L9.9 3.45Z" fill="#FCFCFC"/>
+<path id="Vector 9" d="M9.9 0.15L9 0.6L9.3 -0.3L8.7 -0.9H9.6L9.9 -1.8L10.35 -0.9H11.1L10.5 -0.3L10.8 0.6L9.9 0.15Z" fill="#FCFCFC"/>
+<path id="Vector 7" d="M5.7 3.45L4.8 3.9L5.1 3L4.5 2.4H5.4L5.7 1.5L6.15 2.4H6.9L6.3 3L6.6 3.9L5.7 3.45Z" fill="#FCFCFC"/>
+<path id="Vector 3" d="M5.7 6.75L4.8 7.2L5.1 6.3L4.5 5.7H5.4L5.7 4.8L6.15 5.7H6.9L6.3 6.3L6.6 7.2L5.7 6.75Z" fill="#FCFCFC"/>
+<path id="Vector 8" d="M1.5 6.75L0.6 7.2L0.9 6.3L0.3 5.7H1.2L1.5 4.8L1.95 5.7H2.7L2.1 6.3L2.4 7.2L1.5 6.75Z" fill="#FCFCFC"/>
+</g>
+</g>
+</svg>

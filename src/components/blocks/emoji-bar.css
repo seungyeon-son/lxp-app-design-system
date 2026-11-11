@@ -1,0 +1,4 @@
+/* ---------- EmojiBar (Message action bar) ---------- */
+.lxp-emoji-bar { display: flex; align-items: flex-start; justify-content: space-between; width: 100%; }
+.lxp-emoji-bar__item { display: inline-flex; padding: var(--spac-8); border-radius: var(--radi-xsm); }
+.lxp-emoji-bar__item img { display: block; }

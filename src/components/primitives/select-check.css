@@ -1,0 +1,2 @@
+/* ---------- SelectCheck (icon-check-state) — 좌우 6px 여백 포함 (Figma check btn) ---------- */
+.lxp-select-check { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0 var(--spac-6); border-radius: var(--radi-full); }

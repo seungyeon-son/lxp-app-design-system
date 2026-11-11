@@ -109,26 +109,44 @@ dist/                      lxp.css · lxp.js · fonts/ · index.html · tokens.j
 | `WeekPicker` | 24:12363 | `days, selected` |
 | `MessageItem` | 19:8837 | `option('dm'\|'group'), state('enabled'\|'focused'\|'update'\|'block'), swipe('left'\|'right')` |
 | `ChatMessage` / `ChatDate` | 80:20270 | `name, time, read, text, reactions` / `label` |
-| `Popup` / `BottomSheet` / `Dropdown` | 80:22498 · 37:14852 | Popup `actions[{label,tone}]` · Dropdown `items[{icon,label,value,checked}]` |
+| `Popup` / `BottomSheet` / `Dropdown` | 80:22498 · 80:21734 · 80:25749 | Popup `actions[{label,tone}]` · BottomSheet `title, tone('white'\|'subtle'), items \| content, gap` · Dropdown `items[{icon,label,value,checked}]` |
 | `DateStrip` | 7062:38201 † | `items[{label,date}], selected` |
 | `InfoBar` | 7062:38223 † | `label, chips[{label,variant('box'\|'pill')}], action{label,icon}` |
 | `StatGrid` | 7062:38229 † | `items[{label,count,icon,value}], linked, footer` (0이면 비활성) |
 | `ToggleGroup` | 7062:38277 † | `items[{value,label,icon,iconOff,tone}], value, overflow{items,open}, label, attrs` |
 | `MemberRow` | 7062:38271 † | `name, sub, chevron, right, avatar, attrs` |
+| `MenuList` | 21:11720 · 21:11955 | `items[{icon,label,value,valueTone('info'\|'muted'),trailing,attrs}], tone('white'\|'gray')` — 더보기 메뉴 · 외부링크 메뉴 |
+| `AlertItem` | 25:13296 | `course, time, title, divider` — 홈 > 알림 목록 행 |
+| `FriendRow` | Friends list_state | `name, avatar, icon, right, selected, disabled, attrs` — 대화 상대 선택 행 (아바타 48, icon = '초대하기') |
+| `ListItem` / `ListGroup` | list-base-state | `label, icon, flag, trailing('chevron'\|'check'), tone('default'\|'muted'\|'danger'), size('md'\|'sm')` / `label, items[], card, size` |
+| `EmojiBar` | Message action bar | `emojis[[name,label]]` — 길게 누르기 시트의 빠른 리액션 6개 (emoji-* 이미지) |
+| `SettingCard` | 83:17411 | `title, icon, count, more, aside, heading('lg'\|'md'), list, children` — 채팅방 설정 카드 (사진/동영상 · 문서 · 링크 · 공지 · 대화 멤버 · 멤버 초대) |
+| `SelectAllRow` | 87:22551 | `label, count, checked` — '전체 선택 34명' |
+| `ChatGroupCard` | 57:20087 · 60:20862 | `title, count, label, members[{name,avatar,right}]` — 메시지방 만들기: 강의 묶음 카드 (members 있으면 펼침) |
+| `StartChat` | 79:18831 | `names[], avatars[], more` — 새 대화방 안내 (1명 = 큰 아바타, 여러 명 = 겹친 아바타) |
+| `ChatReplyBar` | 112:17153 | `to, text` — 답장 중 바 (메시지 입력 Footer 위) |
+| `ChatNotice` | 93:23602 | `title, date, author, body, open` — 채팅방 공지 (닫힘 / 열림) |
+| `PopoverAlert` | 82:25752 | `name, time, text, open` — 채팅방 고정 메시지 팝오버 |
+| `ShareLinkCard` / `ShareFileCard` | 89:23365 · 87:23224 | `title, site, url, image` / `name, size, icon` — 채팅방 기록 링크 · 문서 |
+| `EmptyState` | 70:22686 | `text, icon, iconSize` — 빈 화면 안내 ('차단된 대화방이 없습니다.') |
+| `ClassEditRow` | 51:9191 · 46:9178 | `title, professor, visible, attrs` — 내 강의실 편집 행 (공개 토글 = `IconButton` 눈 / 감긴 눈) |
 
 ### 2층 요소
 
 | 함수 | Figma 노드 | 주요 props |
 |---|---|---|
-| `Button` / `IconButton` | btn-base-state | `variant(+'outline-primary'), size('xl'\|'lg'\|'md'\|'sm'\|'xs'), tone('danger'\|'primary'), icon, iconRight, block, attrs` / `icon, size(16\|24\|36\|40), active, round, attrs` |
+| `Button` / `IconButton` | btn-base-state | `variant(+'outline-primary'), size('xl'\|'lg'\|'md'\|'sm'\|'xs'), tone('danger'\|'primary'), icon, iconRight, block, attrs` / `icon, size(16\|20\|24\|28\|36\|40), active, round, attrs` |
 | `Input` | 86:18467 | `state('enabled'\|'focused'\|'disabled'), validation('normal'\|'filled'\|'invalid'), value` |
-| `Avatar` / `AvatarGroup` | 72:11136 | `src('avatar-02'…), size(24–48), dimmed` |
+| `Avatar` / `AvatarGroup` | 72:11136 · 70:25318 | `src('avatar-01'~'avatar-06'), size(24–56), dimmed` / `src \| avatars[], more, size, overlap` |
 | `Chip` / `Badge` | chip/times · new | `tone('info'\|'neutral'\|'posi'\|'nega'\|'warn'\|'label')` / `count, size` |
 | `Pill` | chip/tag2-base · 7062:38227 † | `label` (회색 둥근 태그 '보강') |
 | `Toast` | 37:14852 | `label, icon` — 화면에 띄울 때는 `Screen({ toast })` |
 | `Reaction` | 80:20270 | `emoji, icon, count, selected, add` |
 | `Checkbox` | 7062:38718 † | `label, checked, count, id` |
 | `Ratio` | 7062:38718 † | `label, value, total` (처리 현황 3/40) |
+| `Flag` | icon/flag/*_02 | `code('kr'\|'us'\|'jp'\|'cn'), size` — 원형 국기 (번역 언어) |
+| `SelectCheck` | icon-check-state | `checked, label, attrs` — 원형 선택 표시 (빈 원 / 파란 체크) |
+| `ImageTile` | 83:17338 | `src` — 정사각 사진 칸 (없으면 회색) |
 | `SwipeAction` | 19:8837 | `label, icon, tone('neutral'\|'strong'\|'danger'\|'info')` |
 
 † 출처는 컴포넌트 페이지가 아니라 **4.5 LXP App 작업장** 파일(`ZRoFjuXczoq30fVbJMNsVP`)의 스마트 출석부 확정안(7054:14428)입니다. 화면 조립 예시: `LXP_SCREENS.rollBookEntry()` · `rollBookChecking()` · `rollBook({ statuses, onlyTodo, menu })`.

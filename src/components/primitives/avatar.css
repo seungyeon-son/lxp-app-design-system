@@ -13,10 +13,11 @@
 }
 
 .lxp-avatar-group { display: inline-flex; align-items: center; flex-shrink: 0; }
-.lxp-avatar-group > .lxp-avatar { margin-right: calc(var(--size) / -2); }
+.lxp-avatar-group > .lxp-avatar { margin-right: calc(var(--overlap, calc(var(--size) / 2)) * -1); }
 .lxp-avatar-group__more {
   width: var(--size); height: var(--size); border-radius: var(--radi-full);
   display: inline-flex; align-items: center; justify-content: center;
   background: var(--bg-semantic-info-senary);
   font: var(--font-label-16b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
 }
+.lxp-avatar-group.is-sm .lxp-avatar-group__more { font: var(--font-label-15b); }

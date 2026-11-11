@@ -286,7 +286,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
   // ---- facts
   const nSem = Object.keys(T.semantic).length;
   const nIcons = L.iconNames().length;
-  const comps = ['Screen','StatusBar','Header','AppHeader','TabBar','Dropdown','Button','IconButton','Input','MessageInput','Footer','ChipTabs','SegmentedControl','LineTabs','Chip','Badge','Avatar','AvatarGroup','Tag','Toast','CourseCard','DeadlineCard','DeadlineCarousel','ModuleItem','WeekPicker','MessageItem','ChatMessage','Reaction','ChatDate','Popup','BottomSheet','Dim','DateStrip','ToggleGroup','Checkbox','StatGrid','InfoBar','MemberRow','Stack','Grid','Surface','Section','Ratio','SwipeAction'];
+  const comps = ['Screen','StatusBar','Header','AppHeader','TabBar','Dropdown','Button','IconButton','Input','MessageInput','Footer','ChipTabs','SegmentedControl','LineTabs','Chip','Badge','Avatar','AvatarGroup','Tag','Toast','CourseCard','DeadlineCard','DeadlineCarousel','ModuleItem','WeekPicker','MessageItem','ChatMessage','Reaction','ChatDate','Popup','BottomSheet','Dim','DateStrip','ToggleGroup','Checkbox','StatGrid','InfoBar','MemberRow','Stack','Grid','Surface','Section','Ratio','SwipeAction','Pill','MenuList','AlertItem','ClassEditRow','FriendRow','ChatGroupCard','StartChat','ChatReplyBar','ChatNotice','PopoverAlert','ShareLinkCard','ShareFileCard','EmptyState','Flag','SelectCheck','ImageTile','ListItem','ListGroup','EmojiBar','SettingCard','SelectAllRow'];
   $('#facts').innerHTML = `<span><b>${nSem}</b> 시맨틱 컬러 토큰</span><span><b>${Object.keys(T.typography.styles).length}</b> 텍스트 스타일</span><span><b>${comps.length}</b> 컴포넌트 함수</span><span><b>${nIcons}</b> 아이콘·에셋</span><span>기준 화면 <b>360 × 780</b></span>`;
 
   // ---- start code
@@ -468,12 +468,47 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
       S(`StatGrid({ footer: Ratio({ label: '처리 현황', value: 0, total: 40 }) })`, 'Default'),
       S(`StatGrid({ linked: true, items: [{ label: '출석', count: 32, icon: 'status-present' }, { label: '결석', count: 0, icon: 'status-absent' }, { label: '지각', count: 2, icon: 'status-late' }, { label: '조퇴', count: 1, icon: 'status-early' }, { label: '지각조퇴', count: 1, icon: 'status-lateearly-muted' }], footer: [Ratio({ label: '처리 현황', value: 36, total: 40 }), Checkbox({ count: 3 })] })`, 'Active · 미처리만 보기'),
     ]],
+    ['MenuList', 'MenuList · AlertItem · ClassEditRow', '21:11720 · 25:13296 · 51:9191', '더보기 메뉴, 홈 알림 목록 행, 내 강의실 편집 행. 행 사이 구분선은 높이를 차지하지 않습니다(Figma 와 같은 크기).', [
+      S(`MenuList({})`, 'MenuList — 더보기 (more_menu)', { pad: true }),
+      S(`MenuList({ tone: 'gray', items: [{ label: '외부링크 메뉴', trailing: 'link-external-20' }] })`, 'MenuList gray — 외부링크 (more_externel_menu)', { pad: true }),
+      S(`[AlertItem({}), AlertItem({ course: '물리학수업', time: '오전09:10', title: '[공지] 중간고사 일정이 변경되었습니다.' })].join('')`, 'AlertItem — 홈 > 알림'),
+      S(`[ClassEditRow({}), ClassEditRow({ title: '교육공학 개론', professor: '최지은 교수', visible: false })].join('')`, 'ClassEditRow — 공개 · 비공개', { pad: true }),
+    ]],
+    ['ChatGroupCard', 'ChatGroupCard · FriendRow · StartChat', '57:20087 · 60:20862 · 79:18831', '메시지방 만들기와 새 대화방 안내.', [
+      S(`ChatGroupCard({})`, 'ChatGroupCard — 닫힘', { pad: true }),
+      S(`ChatGroupCard({ title: '물리학실험실 2 [001]', count: null, members: [{ name: '김연아(2251****)', avatar: 'avatar-03' }, { name: '이상화(2251****)', avatar: 'avatar-02' }] })`, 'ChatGroupCard — 펼침 (FriendRow 목록)', { pad: true }),
+      S(`FriendRow({ name: '봉준호(2251****)', avatar: 'avatar-04', right: Checkbox({ label: '', checked: true }) })`, 'FriendRow — 오른쪽 슬롯에 선택 표시'),
+      S(`StartChat({})`, 'StartChat — 1:1', { pad: true }),
+      S(`StartChat({ names: ['김연아', '이상화', '봉준호', '손흥민', '박지성'], avatars: ['avatar-05', 'avatar-02', 'avatar-06'], more: 5 })`, 'StartChat — 단체', { pad: true }),
+    ]],
+    ['ChatNotice', 'ChatNotice · PopoverAlert · ChatReplyBar', '93:23602 · 82:25752 · 112:17153', '채팅방 공지, 고정 메시지 팝오버, 답장 중 바.', [
+      S(`ChatNotice({})`, 'ChatNotice — 닫힘'),
+      S(`ChatNotice({ open: true })`, 'ChatNotice — 열림'),
+      S(`PopoverAlert({})`, 'PopoverAlert — 닫힘', { pad: true }),
+      S(`PopoverAlert({ open: true })`, 'PopoverAlert — 열림', { pad: true }),
+      S(`ChatReplyBar({})`, 'ChatReplyBar'),
+    ]],
+    ['ShareLinkCard', 'ShareLinkCard · ShareFileCard · EmptyState', '89:23365 · 87:23224 · 70:22686', '채팅방 기록(링크·문서)과 빈 화면 안내. Avatar 는 avatar-01~06 6명을 씁니다(70:25318).', [
+      S(`ShareLinkCard({})`, 'ShareLinkCard', { bare: true }),
+      S(`ShareFileCard({})`, 'ShareFileCard', { pad: true }),
+      S(`EmptyState({})`, 'EmptyState', { bare: true }),
+      S(`['avatar-01','avatar-02','avatar-03','avatar-04','avatar-05','avatar-06'].map(s => Avatar({ src: s, size: 48 })).join(' ')`, 'Avatar 이미지 6종', { bare: true }),
+    ]],
+    ['SettingCard', 'SettingCard · SelectAllRow · SelectCheck', '83:17411 · 87:22551', '채팅방 설정 카드. 사진 칸은 ImageTile, 사람 목록은 FriendRow(선택 · 비활성)를 조합합니다.', [
+      S(`SettingCard({ icon: 'file-img-24', title: '사진/동영상', children: Grid({ cols: 4, gap: 8, pad: [0, 20], children: [1, 2, 3, 4].map(() => ImageTile({})) }) })`, '사진/동영상', { pad: true }),
+      S(`[SettingCard({ icon: 'file-info-24', title: '문서' }), SettingCard({ icon: 'link-24', title: '링크' }), SettingCard({ icon: 'pin-24-blue', title: '공지' })].join('')`, '문서 · 링크 · 공지', { pad: true, col: true }),
+      S(`SettingCard({ title: '대화 멤버', count: 5, more: false, list: true, children: [FriendRow({ icon: 'plus-circle-48', name: '초대하기' }), FriendRow({ name: '이병헌(2251****)', avatar: 'avatar-04' }), FriendRow({ name: '유비온(2251****)', avatar: 'avatar-07' })] })`, '대화 멤버', { pad: true }),
+      S(`SettingCard({ heading: 'md', title: '물리학실험실 2 [001]', more: false, list: true, aside: IconButton({ icon: 'caret-up-18', size: 32, label: '접기' }), children: Stack({ gap: 8, children: [SelectAllRow({}), Stack({ children: [FriendRow({ name: '학습자3(2251****)', avatar: 'avatar-03', disabled: true }), FriendRow({ name: '원슈타인(2251****)', avatar: 'avatar-04', right: SelectCheck({}) }), FriendRow({ name: '강동원(2251****)', avatar: 'avatar-05', selected: true, right: SelectCheck({ checked: true }) })] })] }) })`, '멤버 초대 (선택 · 비활성)', { pad: true }),
+      S(`[Flag({ code: 'kr' }), Flag({ code: 'us' }), Flag({ code: 'jp' }), Flag({ code: 'cn' })].join(' ')`, 'Flag', { bare: true }),
+    ]],
     ['Popup', 'Popup · Toast · Dropdown · BottomSheet', '80:22498 · 37:14852', '오버레이 요소. 팝업·바텀시트는 Screen({ overlay: Dim({ content }) }), 토스트는 Screen({ toast: Toast({ label }) }).', [
       S(`Popup({})`, 'Popup delete', { bare: true }),
       S(`Popup({ title: '대화방 이름 변경', body: '변경한 이름은 나에게만 보입니다.', actions: [{ label: '취소' }, { label: '확인', tone: 'primary' }] })`, 'Popup confirm', { bare: true }),
       S(`Toast({})`, 'Toast', { bare: true }),
       S(`Dropdown({ items: [{ icon: 'message-chat-circle', label: '차단 대화 관리' }] })`, 'Dropdown', { bare: true }),
-      S(`BottomSheet({ items: [{ label: '답장' }, { label: '복사' }, { label: '공지로 등록' }, { label: '삭제', tone: 'danger' }] })`, 'BottomSheet'),
+      S(`BottomSheet({ content: Stack({ gap: 8, children: [EmojiBar({}), '<i class="lxp-sheet__line"></i>', Stack({ gap: 4, children: [ListItem({ icon: 'reply-20', label: '메시지 답장' }), ListItem({ icon: 'pin-20', label: '공지 등록' }), ListItem({ icon: 'trash-20-red', label: '메시지 삭제', tone: 'danger' })] })] }) })`, 'BottomSheet — 길게 누르기 (long_press)'),
+      S(`BottomSheet({ tone: 'subtle', title: '대화방 설정', gap: 20, content: Stack({ gap: 32, children: [ListGroup({ label: '메시지 번역', card: false, items: [{ icon: 'translate-20', label: '번역 언어 선택', tone: 'muted', trailing: 'chevron' }] }), ListGroup({ label: '대화방 관리', items: [{ icon: 'edit-20', label: '대화방 이름 변경', tone: 'muted' }, { icon: 'bell-setting-20', label: '대화방 알림 끄기', tone: 'muted' }, { icon: 'settings-20', label: '대화방 관리', tone: 'muted' }] }), ListItem({ icon: 'log-out-20-red', label: '대화방 나가기', tone: 'danger' })] }) })`, 'BottomSheet — 대화방 설정 (chat_setting)'),
+      S(`BottomSheet({ tone: 'subtle', title: '메시지 번역', gap: 12, content: [ListGroup({ label: '언어 선택', items: [{ flag: 'kr', label: '한국어', trailing: 'check' }, { flag: 'us', label: '영어' }, { flag: 'jp', label: '일본어' }, { flag: 'cn', label: '중국어' }] }), Stack({ direction: 'row', justify: 'end', children: Button({ label: '원문 보기', variant: 'outline' }) })] })`, 'BottomSheet — 메시지 번역 (translate)'),
     ]],
   ];
 

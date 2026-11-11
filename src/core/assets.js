@@ -11,8 +11,8 @@ export function setAssetBase(path) { BASE = path.endsWith('/') ? path : path + '
 /** 에셋 URL. name 은 파일명(확장자 제외). 예: 'tab-home', 'avatar-02' */
 export function asset(name) {
   if (ASSETS[name]) return ASSETS[name];
-  const isImg = /^(avatar|thumb)-/.test(name);
-  return BASE + (isImg ? 'images/' : 'icons/') + name + (/^thumb-|^avatar-0/.test(name) ? '.png' : '.svg');
+  const isImg = /^(avatar|thumb|emoji)-/.test(name);
+  return BASE + (isImg ? 'images/' : 'icons/') + name + (isImg ? '.png' : '.svg');
 }
 
 /** 등록된 아이콘 이름 목록 (빌드 결과 기준) */

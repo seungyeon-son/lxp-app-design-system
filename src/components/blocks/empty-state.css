@@ -1,0 +1,4 @@
+/* ---------- EmptyState (block_chatting_icon 70:22686) ---------- */
+.lxp-empty { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.lxp-empty__icon { display: block; }
+.lxp-empty p { font: var(--font-label-16r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); text-align: center; white-space: nowrap; }

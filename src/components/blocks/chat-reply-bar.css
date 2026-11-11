@@ -1,0 +1,9 @@
+/* ---------- ChatReplyBar (chating_reply 112:17153) ---------- */
+.lxp-reply-bar {
+  display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 16px 4px;
+  background: var(--bg-hierarchy-primary); border-top: 1px solid var(--bo-hierarchy-secondary);
+}
+.lxp-reply-bar__main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.lxp-reply-bar__to { display: flex; align-items: center; gap: 4px; font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); white-space: nowrap; }
+.lxp-reply-bar__to b { font-weight: inherit; color: var(--tx-semantic-info-secondary); }
+.lxp-reply-bar__text { font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }

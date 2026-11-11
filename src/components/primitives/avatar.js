@@ -20,8 +20,17 @@ export function Avatar({ src, name = '', size = 48, dimmed = false, alt = '', cl
 }
 
 /** 그룹 아바타 (아바타 + "+N" 원형, 겹침 -24px) */
-export function AvatarGroup({ src = 'avatar-03', more = 5, size = 48 } = {}) {
-  return `<span class="lxp-avatar-group" style="--size:${size}px">
-    ${Avatar({ src, size })}<span class="lxp-avatar-group__more">+${esc(more)}</span>
+/**
+ * 그룹 아바타 — 아바타(들) + "+N" 원형
+ * @param {string} [p.src] 아바타 하나 (기본, 메시지 목록: 48px · 절반 겹침)
+ * @param {string[]} [p.avatars] 여러 개 (대화 시작 안내: 36px · 8px 겹침, Figma start-chat 79:18831)
+ * @param {number} [p.more] "+N" — 0 이면 생략
+ * @param {number} [p.overlap] 겹치는 폭(px). 기본 = 크기의 절반
+ */
+export function AvatarGroup({ src = 'avatar-03', avatars, more = 5, size = 48, overlap } = {}) {
+  const list = avatars || [src];
+  const ov = overlap != null ? `;--overlap:${overlap}px` : '';
+  return `<span class="${cx('lxp-avatar-group', size <= 36 && 'is-sm')}" style="--size:${size}px${ov}">
+    ${list.map((s) => Avatar({ src: s, size })).join('')}${more ? `<span class="lxp-avatar-group__more">+${esc(more)}</span>` : ''}
   </span>`;
 }

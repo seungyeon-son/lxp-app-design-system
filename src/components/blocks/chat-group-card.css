@@ -1,0 +1,12 @@
+/* ---------- ChatGroupCard (generator_chat/group 57:20087 · search-student 60:20862) ---------- */
+.lxp-chat-group {
+  display: flex; flex-direction: column; gap: 16px; width: 100%; padding: 16px 0; overflow: hidden;
+  background: var(--bg-hierarchy-primary); border-radius: var(--radi-lg); box-shadow: inset 0 0 0 1px var(--bo-hierarchy-secondary);
+}
+.lxp-chat-group__head { display: flex; align-items: center; justify-content: space-between; gap: 6px; height: 36px; padding: 0 var(--spac-20); }
+.lxp-chat-group__title { display: flex; align-items: center; gap: 8px; min-width: 0; font: var(--font-label-15b); letter-spacing: var(--ls-label); }
+.lxp-chat-group__title p { max-width: 210px; color: var(--tx-hierarchy-secondary); }
+.lxp-chat-group__title span { flex-shrink: 0; font: var(--font-label-15m); color: var(--tx-hierarchy-quaternary); }
+.lxp-chat-group__title b { font: var(--font-label-15sb); color: var(--tx-coursmos-secondary); }
+.lxp-chat-group__list { display: flex; flex-direction: column; gap: 2px; }
+.lxp-chat-group__label { padding: 0 var(--spac-20); font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }

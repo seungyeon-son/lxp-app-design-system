@@ -1,0 +1,5 @@
+/* ---------- StartChat (start-chat 79:18831) ---------- */
+.lxp-start-chat { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; padding: 0 8px; }
+.lxp-start-chat p { display: flex; align-items: flex-start; max-width: 100%; font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); white-space: nowrap; }
+.lxp-start-chat b { font: var(--font-label-14sb); }
+.lxp-start-chat.is-team b { max-width: 135px; }

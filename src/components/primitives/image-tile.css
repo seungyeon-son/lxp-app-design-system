@@ -1,0 +1,2 @@
+/* ---------- ImageTile ---------- */
+.lxp-image-tile { display: block; aspect-ratio: 1 / 1; min-width: 0; border-radius: var(--radi-xsm); background: var(--bg-hierarchy-secondary) center / cover no-repeat; }

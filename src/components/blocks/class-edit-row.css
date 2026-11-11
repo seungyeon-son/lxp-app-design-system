@@ -1,0 +1,5 @@
+/* ---------- ClassEditRow (class_edit_list 51:9191) ---------- */
+.lxp-class-edit-row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 0; }
+.lxp-class-edit-row__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--spac-2); }
+.lxp-class-edit-row__text p { height: 24px; font: var(--font-label-15sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-class-edit-row__text span { font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }

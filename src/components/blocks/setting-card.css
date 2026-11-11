@@ -1,0 +1,15 @@
+/* ---------- SettingCard (chat_setting 83:17411) ---------- */
+.lxp-setting-card {
+  display: flex; flex-direction: column; justify-content: center; width: 100%; padding: 16px 0;
+  border-radius: var(--radi-md); box-shadow: inset 0 0 0 1px var(--bo-hierarchy-secondary);
+}
+.lxp-setting-card.has-body { gap: 16px; }
+.lxp-setting-card.is-list { padding-bottom: var(--spac-8); }
+.lxp-setting-card__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 var(--spac-20); }
+.lxp-setting-card__head.is-md { height: 36px; }
+.lxp-setting-card__title { display: flex; align-items: center; gap: 4px; min-width: 0; white-space: nowrap; letter-spacing: var(--ls-label); }
+.lxp-setting-card__head.is-lg .lxp-setting-card__title { font: var(--font-label-16sb); }
+.lxp-setting-card__head.is-md .lxp-setting-card__title { font: var(--font-label-15b); }
+.lxp-setting-card__title span { overflow: hidden; text-overflow: ellipsis; color: var(--tx-hierarchy-secondary); }
+.lxp-setting-card__title em { font-style: normal; color: var(--tx-hierarchy-quaternary); }
+.lxp-setting-card__body { display: flex; flex-direction: column; }

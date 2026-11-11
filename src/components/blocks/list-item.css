@@ -1,0 +1,13 @@
+/* ---------- ListItem (list-base-state) ---------- */
+.lxp-list-item {
+  display: flex; align-items: center; gap: 8px; width: 100%; overflow: hidden; text-align: left;
+  background: var(--bg-neutral-white); border-radius: var(--radi-2xsm);
+}
+.lxp-list-item--md { height: 44px; padding: 10px 8px 10px 14px; }
+.lxp-list-item--sm { height: 36px; padding: 10px 8px 10px 10px; }
+.lxp-list-item__main { flex: 1 1 0; min-width: 0; display: flex; align-items: center; gap: 8px; }
+.lxp-list-item__main > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-list-item--md .lxp-list-item__main > span { font: var(--font-label-15m); }
+.lxp-list-item--sm .lxp-list-item__main > span { font: var(--font-label-14m); }
+.lxp-list-item.is-muted .lxp-list-item__main > span { color: var(--tx-hierarchy-tertiary); }
+.lxp-list-item.is-danger .lxp-list-item__main > span { color: var(--tx-semantic-nega-secondary); }

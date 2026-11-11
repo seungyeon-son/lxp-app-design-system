@@ -1,0 +1,6 @@
+/* ---------- ListGroup ---------- */
+.lxp-list-group { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.lxp-list-group__label { padding: 0 var(--spac-8); font: var(--font-cap-12sb); letter-spacing: var(--ls-cap); color: var(--tx-hierarchy-quaternary); }
+.lxp-list-group__card { display: flex; flex-direction: column; padding: var(--spac-4) var(--spac-6); background: var(--bg-neutral-white); border-radius: var(--radi-xsm); }
+.lxp-list-group__card.is-sm > .lxp-list-item { margin: 4px; width: calc(100% - 8px); }
+.lxp-list-group__line { display: block; height: 1px; background: var(--bo-hierarchy-primary); }

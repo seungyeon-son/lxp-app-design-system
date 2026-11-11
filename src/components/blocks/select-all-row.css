@@ -1,0 +1,4 @@
+/* ---------- SelectAllRow (87:22551) ---------- */
+.lxp-select-all { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--spac-20); }
+.lxp-select-all p { display: flex; align-items: center; gap: 4px; white-space: nowrap; font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-select-all b { font: var(--font-label-14sb); color: var(--tx-coursmos-secondary); }

@@ -366,13 +366,14 @@
 }
 
 .lxp-avatar-group { display: inline-flex; align-items: center; flex-shrink: 0; }
-.lxp-avatar-group > .lxp-avatar { margin-right: calc(var(--size) / -2); }
+.lxp-avatar-group > .lxp-avatar { margin-right: calc(var(--overlap, calc(var(--size) / 2)) * -1); }
 .lxp-avatar-group__more {
   width: var(--size); height: var(--size); border-radius: var(--radi-full);
   display: inline-flex; align-items: center; justify-content: center;
   background: var(--bg-semantic-info-senary);
   font: var(--font-label-16b); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
 }
+.lxp-avatar-group.is-sm .lxp-avatar-group__more { font: var(--font-label-15b); }
 
 /* ===== components/primitives/badge.css ===== */
 /* ---------- Badge ---------- */
@@ -402,6 +403,7 @@
 .lxp-btn--md { height: 40px; padding: 0 16px 0 14px; font: var(--font-label-14m); letter-spacing: var(--ls-label); }
 .lxp-btn--sm { height: 32px; padding: 0 8px; font: var(--font-label-15m); letter-spacing: var(--ls-label); }
 .lxp-btn--sm.has-icon-right { padding-right: 6px; }
+.lxp-btn--2xs { height: 24px; padding: 0 4px 0 6px; gap: 2px; border-radius: var(--radi-2xsm); font: var(--font-cap-12sb); letter-spacing: var(--ls-cap); }
 .lxp-btn--xs { height: 28px; padding: 0 12px 0 10px; border-radius: var(--radi-2xsm); font: var(--font-label-12m); letter-spacing: var(--ls-label); }
 .lxp-btn--lg.has-icon { padding: 0 18px 0 16px; }
 .lxp-btn--lg.has-icon-right { padding: 0 16px 0 18px; }
@@ -430,7 +432,10 @@
   background: transparent;
 }
 .lxp-icon-btn--16 { width: 16px; height: 16px; border-radius: 0; }
+.lxp-icon-btn--20 { width: 20px; height: 20px; border-radius: 0; }
+.lxp-icon-btn--28 { width: 28px; height: 28px; border-radius: var(--radi-2xsm); }
 .lxp-icon-btn--24 { width: 24px; height: 24px; border-radius: var(--radi-2xsm); }
+.lxp-icon-btn--32 { width: 32px; height: 32px; border-radius: var(--radi-2xsm); }
 .lxp-icon-btn--36 { width: 36px; height: 36px; }
 .lxp-icon-btn--40 { width: 40px; height: 40px; }
 .lxp-icon-btn.is-active { background: var(--bg-hierarchy-secondary); }
@@ -472,6 +477,16 @@
 /* warn 은 Figma chip/times 에 없는 코드 확장 톤. 글자 토큰 --tx-semantic-noti-primary(warn50)는 이 배경에서 대비 1.55:1 이라
    못 씀 → warn30(4.0:1, posi·nega 칩과 비슷)을 쓰는데, 그 단계의 글자 토큰이 없어 배경 토큰을 빌림. Figma에 글자 변수가 생기면 교체 */
 .lxp-chip--warn { background: var(--bg-semantic-warn-senary); color: var(--bg-semantic-warn-tertiary); }
+
+/* ===== components/primitives/flag.css ===== */
+/* ---------- Flag (icon/flag/*_02) ---------- */
+.lxp-flag { position: relative; display: inline-flex; flex-shrink: 0; overflow: hidden; border-radius: var(--radi-full); }
+.lxp-flag img { display: block; }
+.lxp-flag.has-ring::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px var(--bo-hierarchy-quaternary); }
+
+/* ===== components/primitives/image-tile.css ===== */
+/* ---------- ImageTile ---------- */
+.lxp-image-tile { display: block; aspect-ratio: 1 / 1; min-width: 0; border-radius: var(--radi-xsm); background: var(--bg-hierarchy-secondary) center / cover no-repeat; }
 
 /* ===== components/primitives/input.css ===== */
 /* ---------- Input ---------- */
@@ -522,6 +537,10 @@
 .lxp-reaction.is-selected { background: var(--bg-coursmos-senary); border-color: var(--bo-semantic-info-secondary); }
 .lxp-reaction__emoji { font-size: 14px; line-height: 16px; width: 16px; text-align: center; }
 
+/* ===== components/primitives/select-check.css ===== */
+/* ---------- SelectCheck (icon-check-state) — 좌우 6px 여백 포함 (Figma check btn) ---------- */
+.lxp-select-check { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0 var(--spac-6); border-radius: var(--radi-full); }
+
 /* ===== components/primitives/swipe-action.css ===== */
 /* ---------- SwipeAction ---------- */
 .lxp-swipe-action {
@@ -542,20 +561,67 @@
   font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-neutral-white); white-space: nowrap;
 }
 
+/* ===== components/blocks/alert-item.css ===== */
+/* ---------- AlertItem (Alert_content 25:13296) — 내용 · 4px · 1px 구분선(좌우 16 안쪽) ---------- */
+.lxp-alert-item { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; }
+.lxp-alert-item__body { display: flex; flex-direction: column; gap: 4px; width: 100%; padding: 16px 20px; }
+.lxp-alert-item__meta { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 23px; }
+.lxp-alert-item__meta p { flex: 1 1 auto; font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-alert-item__time { display: inline-flex; align-items: center; gap: 2px; flex-shrink: 0; font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-alert-item__title { font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-alert-item__line { width: calc(100% - 32px); height: 0; margin: 0; border: 0; border-top: 1px solid var(--bo-hierarchy-primary); }
+
+/* ===== components/blocks/list-item.css ===== */
+/* ---------- ListItem (list-base-state) ---------- */
+.lxp-list-item {
+  display: flex; align-items: center; gap: 8px; width: 100%; overflow: hidden; text-align: left;
+  background: var(--bg-neutral-white); border-radius: var(--radi-2xsm);
+}
+.lxp-list-item--md { height: 44px; padding: 10px 8px 10px 14px; }
+.lxp-list-item--sm { height: 36px; padding: 10px 8px 10px 10px; }
+.lxp-list-item__main { flex: 1 1 0; min-width: 0; display: flex; align-items: center; gap: 8px; }
+.lxp-list-item__main > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-list-item--md .lxp-list-item__main > span { font: var(--font-label-15m); }
+.lxp-list-item--sm .lxp-list-item__main > span { font: var(--font-label-14m); }
+.lxp-list-item.is-muted .lxp-list-item__main > span { color: var(--tx-hierarchy-tertiary); }
+.lxp-list-item.is-danger .lxp-list-item__main > span { color: var(--tx-semantic-nega-secondary); }
+
 /* ===== components/blocks/bottom-sheet.css ===== */
 /* ---------- BottomSheet ---------- */
 .lxp-sheet {
-  position: relative; width: 100%; padding: 32px 16px 34px;
-  background: var(--bg-neutral-white); border-radius: var(--radi-lg) var(--radi-lg) 0 0;
+  position: relative; display: flex; flex-direction: column; gap: var(--sheet-gap, 16px); width: 100%;
+  border-radius: var(--radi-lg) var(--radi-lg) 0 0;
 }
-.lxp-sheet__handle { position: absolute; top: 4px; left: 50%; width: 48px; height: 4px; margin-left: -24px; border-radius: 2px; background: var(--bg-hierarchy-quaternary); }
-.lxp-sheet__title { padding: 0 4px 12px; font: var(--font-label-16sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
-.lxp-sheet__list { list-style: none; margin: 0; padding: 0; }
-.lxp-sheet__item {
-  height: 48px; display: flex; align-items: center; padding: 0 4px;
-  font: var(--font-label-16m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
+.lxp-sheet--white { padding: var(--spac-28) 12px 32px; background: var(--bg-neutral-white); }     /* long_press */
+.lxp-sheet--subtle { padding: var(--spac-32) var(--spac-16); background: var(--bg-hierarchy-primary-subtle); }   /* chat_setting */
+.lxp-sheet__handle { position: absolute; top: 4px; left: 50%; margin-left: -24px; display: block; }
+.lxp-sheet__title { text-align: center; font: var(--font-label-15sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary); }
+.lxp-sheet__list { display: flex; flex-direction: column; gap: 4px; }
+.lxp-sheet__line { display: block; height: 1px; background: var(--bo-hierarchy-primary); }
+
+/* ===== components/blocks/friend-row.css ===== */
+/* ---------- FriendRow (Friends list_state) ---------- */
+.lxp-friend-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 44px; padding: 8px 20px; }
+.lxp-friend-row__who { display: flex; align-items: center; gap: 12px; flex: 1 1 0; min-width: 0; }
+.lxp-friend-row__who p { font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-friend-row__right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.lxp-friend-row.is-action .lxp-friend-row__who p { font: var(--font-label-14sb); }
+.lxp-friend-row.is-selected { background: var(--bg-hierarchy-secondary); }
+.lxp-friend-row.is-disabled .lxp-friend-row__who p { color: var(--tx-hierarchy-quinary); }   /* 비활성 표시 — 대비 규칙 예외 */
+
+/* ===== components/blocks/chat-group-card.css ===== */
+/* ---------- ChatGroupCard (generator_chat/group 57:20087 · search-student 60:20862) ---------- */
+.lxp-chat-group {
+  display: flex; flex-direction: column; gap: 16px; width: 100%; padding: 16px 0; overflow: hidden;
+  background: var(--bg-hierarchy-primary); border-radius: var(--radi-lg); box-shadow: inset 0 0 0 1px var(--bo-hierarchy-secondary);
 }
-.lxp-sheet__item.is-danger { color: var(--tx-semantic-nega-secondary); }
+.lxp-chat-group__head { display: flex; align-items: center; justify-content: space-between; gap: 6px; height: 36px; padding: 0 var(--spac-20); }
+.lxp-chat-group__title { display: flex; align-items: center; gap: 8px; min-width: 0; font: var(--font-label-15b); letter-spacing: var(--ls-label); }
+.lxp-chat-group__title p { max-width: 210px; color: var(--tx-hierarchy-secondary); }
+.lxp-chat-group__title span { flex-shrink: 0; font: var(--font-label-15m); color: var(--tx-hierarchy-quaternary); }
+.lxp-chat-group__title b { font: var(--font-label-15sb); color: var(--tx-coursmos-secondary); }
+.lxp-chat-group__list { display: flex; flex-direction: column; gap: 2px; }
+.lxp-chat-group__label { padding: 0 var(--spac-20); font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
 
 /* ===== components/blocks/chat-message.css ===== */
 /* ---------- ChatMessage ---------- */
@@ -574,6 +640,35 @@
   padding: 4px 12px; border-radius: var(--radi-full); background: var(--bg-hierarchy-secondary);
   font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary);
 }
+
+/* ===== components/blocks/chat-notice.css ===== */
+/* ---------- ChatNotice (chat_notice 93:23602) ---------- */
+.lxp-chat-notice { display: flex; flex-direction: column; width: 100%; }
+.lxp-chat-notice__head { display: flex; align-items: center; gap: 16px; padding: 10px var(--spac-20); border-bottom: 1px solid var(--bo-hierarchy-primary); }
+.lxp-chat-notice.is-open .lxp-chat-notice__head { background: var(--bg-hierarchy-secondary); }
+.lxp-chat-notice__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.lxp-chat-notice__title { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-chat-notice__meta { display: flex; align-items: center; gap: 8px; font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); white-space: nowrap; }
+.lxp-chat-notice__meta i { width: 1px; height: 12px; background: var(--bo-hierarchy-secondary); }
+.lxp-chat-notice__body { padding: var(--spac-16) var(--spac-20); border-bottom: 1px solid var(--bo-hierarchy-primary); white-space: pre-wrap; font: var(--font-label-15r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+
+/* ===== components/blocks/chat-reply-bar.css ===== */
+/* ---------- ChatReplyBar (chating_reply 112:17153) ---------- */
+.lxp-reply-bar {
+  display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 16px 4px;
+  background: var(--bg-hierarchy-primary); border-top: 1px solid var(--bo-hierarchy-secondary);
+}
+.lxp-reply-bar__main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.lxp-reply-bar__to { display: flex; align-items: center; gap: 4px; font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); white-space: nowrap; }
+.lxp-reply-bar__to b { font-weight: inherit; color: var(--tx-semantic-info-secondary); }
+.lxp-reply-bar__text { font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+
+/* ===== components/blocks/class-edit-row.css ===== */
+/* ---------- ClassEditRow (class_edit_list 51:9191) ---------- */
+.lxp-class-edit-row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 0; }
+.lxp-class-edit-row__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--spac-2); }
+.lxp-class-edit-row__text p { height: 24px; font: var(--font-label-15sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-class-edit-row__text span { font: var(--font-label-12m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
 
 /* ===== components/blocks/course-card.css ===== */
 /* ---------- CourseCard ---------- */
@@ -650,6 +745,18 @@
 }
 .lxp-dropdown__item.is-checked { background: var(--bg-hierarchy-secondary-subtle); }
 
+/* ===== components/blocks/emoji-bar.css ===== */
+/* ---------- EmojiBar (Message action bar) ---------- */
+.lxp-emoji-bar { display: flex; align-items: flex-start; justify-content: space-between; width: 100%; }
+.lxp-emoji-bar__item { display: inline-flex; padding: var(--spac-8); border-radius: var(--radi-xsm); }
+.lxp-emoji-bar__item img { display: block; }
+
+/* ===== components/blocks/empty-state.css ===== */
+/* ---------- EmptyState (block_chatting_icon 70:22686) ---------- */
+.lxp-empty { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.lxp-empty__icon { display: block; }
+.lxp-empty p { font: var(--font-label-16r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); text-align: center; white-space: nowrap; }
+
 /* ===== components/blocks/info-bar.css ===== */
 /* ---------- InfoBar (SubRow 7062:38223) ---------- */
 .lxp-info-bar {
@@ -661,6 +768,14 @@
 .lxp-info-bar__main p { white-space: nowrap; font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-primary); }
 /* 칩은 Chip({ tone: 'label' }) · Pill, 오른쪽은 Button({ variant: 'ghost', size: 'sm' }) */
 
+/* ===== components/blocks/list-group.css ===== */
+/* ---------- ListGroup ---------- */
+.lxp-list-group { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.lxp-list-group__label { padding: 0 var(--spac-8); font: var(--font-cap-12sb); letter-spacing: var(--ls-cap); color: var(--tx-hierarchy-quaternary); }
+.lxp-list-group__card { display: flex; flex-direction: column; padding: var(--spac-4) var(--spac-6); background: var(--bg-neutral-white); border-radius: var(--radi-xsm); }
+.lxp-list-group__card.is-sm > .lxp-list-item { margin: 4px; width: calc(100% - 8px); }
+.lxp-list-group__line { display: block; height: 1px; background: var(--bo-hierarchy-primary); }
+
 /* ===== components/blocks/member-row.css ===== */
 /* ---------- MemberRow (LearnerRows › Row 7062:38271) ----------
    Figma 구분선 #e5e8ec 는 토큰이 아니어서 가장 가까운 --bo-hierarchy-secondary 를 씁니다. */
@@ -671,6 +786,23 @@
 .lxp-member-row__chev { width: 24px; height: 24px; flex-shrink: 0; display: grid; place-items: center; border-radius: var(--radi-2xsm); }
 .lxp-member-row__sub { font: var(--font-label-13r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
 .lxp-member-row__right { flex-shrink: 0; }
+
+/* ===== components/blocks/menu-list.css ===== */
+/* ---------- MenuList (more_menu 21:11720 · more_externel_menu 21:11955) ---------- */
+.lxp-menu-list { display: flex; flex-direction: column; width: 100%; padding: 0 8px; border-radius: var(--radi-lg); }
+.lxp-menu-list--white { background: var(--bg-neutral-white); box-shadow: inset 0 0 0 1px var(--bo-hierarchy-secondary); }   /* Figma 안쪽 테두리 — 크기에 더해지지 않음 */
+.lxp-menu-list--gray { background: var(--bg-hierarchy-secondary); }
+.lxp-menu-list__item {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; height: 55px; padding: 0 16px;
+  text-align: left;
+}
+.lxp-menu-list__item + .lxp-menu-list__item { box-shadow: inset 0 1px 0 var(--bo-hierarchy-primary); }   /* 구분선: 높이 0 (Figma Line) */
+.lxp-menu-list__main { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.lxp-menu-list__main span { font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lxp-menu-list__side { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+.lxp-menu-list__value { font: var(--font-label-14r); letter-spacing: var(--ls-label); white-space: nowrap; }
+.lxp-menu-list__value.is-info { color: var(--tx-semantic-info-secondary); }
+.lxp-menu-list__value.is-muted { color: var(--tx-hierarchy-quaternary); }
 
 /* ===== components/blocks/message-input.css ===== */
 /* ---------- MessageInput ---------- */
@@ -722,6 +854,19 @@
 .lxp-module-item__text p { font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
 .lxp-module-item__text span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
 
+/* ===== components/blocks/popover-alert.css ===== */
+/* ---------- PopoverAlert (popover_alert 82:25752) ---------- */
+.lxp-popover-alert {
+  display: flex; align-items: flex-start; gap: 4px; width: 100%; padding: 12px 18px 16px 16px;
+  background: var(--bg-neutral-white); border-radius: var(--radi-lg);
+  box-shadow: inset 0 0 0 1px var(--bo-hierarchy-quaternary), var(--shadow-md);   /* 테두리는 Figma 처럼 안쪽 — 크기에 더해지지 않음 */
+}
+.lxp-popover-alert__main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.lxp-popover-alert__who { display: flex; align-items: baseline; gap: 4px; white-space: nowrap; }
+.lxp-popover-alert__who b { font: var(--font-label-14sb); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-popover-alert__who span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-popover-alert__text { font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+
 /* ===== components/blocks/popup.css ===== */
 /* ---------- Popup ---------- */
 .lxp-popup {
@@ -739,6 +884,51 @@
   font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary);
 }
 .lxp-popup__btn + .lxp-popup__btn { border-left: 1px solid var(--bo-hierarchy-quaternary); }
+
+/* ===== components/blocks/select-all-row.css ===== */
+/* ---------- SelectAllRow (87:22551) ---------- */
+.lxp-select-all { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--spac-20); }
+.lxp-select-all p { display: flex; align-items: center; gap: 4px; white-space: nowrap; font: var(--font-label-14m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+.lxp-select-all b { font: var(--font-label-14sb); color: var(--tx-coursmos-secondary); }
+
+/* ===== components/blocks/setting-card.css ===== */
+/* ---------- SettingCard (chat_setting 83:17411) ---------- */
+.lxp-setting-card {
+  display: flex; flex-direction: column; justify-content: center; width: 100%; padding: 16px 0;
+  border-radius: var(--radi-md); box-shadow: inset 0 0 0 1px var(--bo-hierarchy-secondary);
+}
+.lxp-setting-card.has-body { gap: 16px; }
+.lxp-setting-card.is-list { padding-bottom: var(--spac-8); }
+.lxp-setting-card__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 var(--spac-20); }
+.lxp-setting-card__head.is-md { height: 36px; }
+.lxp-setting-card__title { display: flex; align-items: center; gap: 4px; min-width: 0; white-space: nowrap; letter-spacing: var(--ls-label); }
+.lxp-setting-card__head.is-lg .lxp-setting-card__title { font: var(--font-label-16sb); }
+.lxp-setting-card__head.is-md .lxp-setting-card__title { font: var(--font-label-15b); }
+.lxp-setting-card__title span { overflow: hidden; text-overflow: ellipsis; color: var(--tx-hierarchy-secondary); }
+.lxp-setting-card__title em { font-style: normal; color: var(--tx-hierarchy-quaternary); }
+.lxp-setting-card__body { display: flex; flex-direction: column; }
+
+/* ===== components/blocks/share-card.css ===== */
+/* ---------- ShareLinkCard (chat_share_link 89:23365) ---------- */
+.lxp-share-link { display: flex; flex-direction: column; width: 156px; height: 180px; overflow: hidden; border: 1px solid var(--bo-hierarchy-secondary); border-radius: var(--radi-xsm); }
+.lxp-share-link__thumb { flex: 1 1 0; min-height: 0; background: var(--bg-hierarchy-secondary) center / cover no-repeat; }
+.lxp-share-link__body { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 12px; }
+.lxp-share-link__body > div { display: flex; flex-direction: column; gap: 2px; }
+.lxp-share-link__title { font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-share-link__sub { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+
+/* ---------- ShareFileCard (chat_share_docs 87:23224) ---------- */
+.lxp-share-file { display: flex; align-items: center; gap: 8px; width: 100%; padding: 12px; box-shadow: inset 0 0 0 1px var(--bo-hierarchy-secondary); border-radius: var(--radi-xsm); }
+.lxp-share-file__text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.lxp-share-file__text p { font: var(--font-label-13m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-share-file__text span { font: var(--font-label-12r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-quaternary); }
+
+/* ===== components/blocks/start-chat.css ===== */
+/* ---------- StartChat (start-chat 79:18831) ---------- */
+.lxp-start-chat { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; padding: 0 8px; }
+.lxp-start-chat p { display: flex; align-items: flex-start; max-width: 100%; font: var(--font-label-14r); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); white-space: nowrap; }
+.lxp-start-chat b { font: var(--font-label-14sb); }
+.lxp-start-chat.is-team b { max-width: 135px; }
 
 /* ===== components/blocks/stat-grid.css ===== */
 /* ---------- StatGrid (SessionStrip 7062:38229) ----------

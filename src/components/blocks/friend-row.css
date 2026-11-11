@@ -1,0 +1,8 @@
+/* ---------- FriendRow (Friends list_state) ---------- */
+.lxp-friend-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 44px; padding: 8px 20px; }
+.lxp-friend-row__who { display: flex; align-items: center; gap: 12px; flex: 1 1 0; min-width: 0; }
+.lxp-friend-row__who p { font: var(--font-label-15m); letter-spacing: var(--ls-label); color: var(--tx-hierarchy-secondary); }
+.lxp-friend-row__right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.lxp-friend-row.is-action .lxp-friend-row__who p { font: var(--font-label-14sb); }
+.lxp-friend-row.is-selected { background: var(--bg-hierarchy-secondary); }
+.lxp-friend-row.is-disabled .lxp-friend-row__who p { color: var(--tx-hierarchy-quinary); }   /* 비활성 표시 — 대비 규칙 예외 */
