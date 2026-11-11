@@ -5,6 +5,7 @@ export default {
   component: WeekPicker,
   figma: '24:12363',
   parameters: { background: 'sky' },
+  interact: (t) => { const i = t.index('.lxp-week__day'); return i < 0 ? null : { selected: i }; },
 };
 
 export const First = { name: '첫날 선택 (기본)' };

@@ -140,6 +140,21 @@ export const RUNTIME = String.raw`
     const m = s.match(/^\(?\s*(\w*)\s*\)?\s*=>\s*([\s\S]*)$/);
     return m ? m[2].replace(/^\(([\s\S]*)\)$/, '$1').trim() : s;
   };
+  /** 클릭한 요소 도우미 — interact(t, args) 의 t */
+  function target(el, root) {
+    const closest = (sel) => { const e = el.closest(sel); return e && root.contains(e) ? e : null; };
+    return {
+      el, root, closest,
+      index: (sel) => { const e = closest(sel); return e ? [...root.querySelectorAll(sel)].indexOf(e) : -1; },
+      attr: (name) => { const e = closest('[' + name + ']'); return e ? e.getAttribute(name) : null; },
+    };
+  }
+  /** story 에 클릭을 흘려 보내 바뀐 인자를 돌려줌 (없으면 null) */
+  function interactStory(story, el, root, args) {
+    if (!story.interact) return null;
+    const out = story.interact(target(el, root), args);
+    return out && typeof out === 'object' ? out : null;
+  }
   function normalize(files, docs) {
     const comps = [];
     for (const f of files) {
@@ -153,8 +168,10 @@ export const RUNTIME = String.raw`
         const args = Object.assign({}, meta.args, s.args);
         const parameters = Object.assign({}, meta.parameters, s.parameters);
         const render = s.render || null;
+        const interact = s.interact === false ? null : (s.interact || meta.interact || null);
         return {
-          id: id + '--' + kebab(key), key, name: s.name || words(key), args, parameters, render,
+          id: id + '--' + kebab(key), key, name: s.name || words(key), args, parameters, render, interact,
+          usesArgs: !render || render.length > 0,   // render(args) 면 Controls · interact 가 미리보기에 반영됨
           description: s.description || '',
           code: render ? renderSrc(render) : name + '(' + fmt(args) + ')',
           run: (over) => { const a = Object.assign({}, args, over); return render ? render(a) : fn(a); },

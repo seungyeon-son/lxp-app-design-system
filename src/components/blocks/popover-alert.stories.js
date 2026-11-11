@@ -5,6 +5,7 @@ export default {
   component: PopoverAlert,
   figma: '82:25752',
   parameters: { layout: 'padded' },
+  interact: (t, args) => ({ open: !args.open }),
 };
 
 export const Closed = { name: '닫힘 (기본) — 한 줄' };

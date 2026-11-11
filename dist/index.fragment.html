@@ -152,6 +152,12 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
 .stage > .lxp.is-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .stage > .lxp.is-column { display: flex; flex-direction: column; gap: 8px; }
 .stage > .lxp.is-phone { height: 780px; border-radius: 28px; overflow: hidden; box-shadow: 0 0 0 1px var(--d-line); }
+.stage.is-live { cursor: pointer; }
+.stage.is-live::before { content: '클릭해 보세요'; position: absolute; top: 8px; right: 10px; font: 500 11px var(--d-font); color: #575e64; background: rgba(255,255,255,.8); padding: 2px 8px; border-radius: 999px; pointer-events: none; }
+.stage { position: relative; }
+.sb__action { font: 12px var(--d-mono); color: var(--d-fg-3); margin: 0; min-height: 18px; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.sb__action b { color: var(--d-accent); font-weight: 500; }
+.sb__live { font: 600 10.5px var(--d-font); color: var(--d-accent); background: var(--d-accent-soft); padding: 1px 7px; border-radius: 999px; letter-spacing: .02em; }
 .stage--err { color: #f04438; font: 12px var(--d-mono); white-space: pre-wrap; }
 .ctl { width: 100%; border-collapse: collapse; font-size: 13px; }
 .ctl th { text-align: left; font-weight: 600; font-size: 11.5px; color: var(--d-fg-3); padding: 6px 8px; border-bottom: 1px solid var(--d-line); }
@@ -430,7 +436,8 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
     let inner;
     try { inner = story.run(args); } catch (e) { return `<div class="stage"><pre class="stage--err">${esc(e.stack || e.message)}</pre></div>`; }
     const cls = ['lxp', 'is-' + p.layout, p.background && 'is-' + p.background, p.arrange && 'is-' + p.arrange].filter(Boolean).join(' ');
-    return `<div class="stage"><div class="${cls}"${p.height ? ` style="min-height:${p.height}px"` : ''}>${inner}</div></div>`;
+    const live = story.interact && story.usesArgs;
+    return `<div class="stage${live ? ' is-live' : ''}" data-story="${story.id}"><div class="${cls}"${p.height ? ` style="min-height:${p.height}px"` : ''}>${inner}</div></div>`;
   }
   const codeHtml = (code) => `<div class="code"><button class="copy" type="button">복사</button><pre>${esc(code)}</pre></div>`;
   const kw = (s) => s.toLowerCase();
@@ -444,7 +451,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
       if (!items.length) return '';
       return `<div class="sb__layer">${ly}</div>` + items.map((c) => {
         const open = q || (cur && cur.comp === c);
-        return `<div class="sb__comp${open ? ' is-open' : ''}"><a href="#/${c.id}"${cur && cur.comp === c && !cur.story ? ' aria-current="true"' : ''}>${esc(c.name)} <small>${c.stories.length}</small></a>
+        return `<div class="sb__comp${open ? ' is-open' : ''}"><a href="#/${c.id}"${cur && cur.comp === c && !cur.story ? ' aria-current="true"' : ''}>${esc(c.name)} <small>${c.stories.some((s) => s.interact) ? '● ' : ''}${c.stories.length}</small></a>
           <div class="sb__stories">${c.stories.map((s) => `<a class="sb__story" href="#/${s.id}"${cur && cur.story === s ? ' aria-current="true"' : ''}>${esc(s.name)}</a>`).join('')}</div></div>`;
       }).join('');
     }).join('') || '<p class="sb__note" style="padding:8px">없음</p>';
@@ -466,7 +473,8 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
     const first = story || c.stories[0];
     return `<div class="sb__head"><h3>${esc(c.name)} <span>${c.layer}</span></h3>
       <div class="sb__meta"><b>src/components/${esc(c.file)}.stories.js</b>${c.figma ? `<span>${figmaLink(c.figma)}</span>` : ''}<span>story ${c.stories.length}</span></div>
-      ${c.description ? `<p>${esc(c.description)}</p>` : ''}${c.notes ? `<p>${esc(c.notes)}</p>` : ''}</div>
+      ${c.description ? `<p>${esc(c.description)}</p>` : ''}${c.notes ? `<p>${esc(c.notes)}</p>` : ''}
+      ${c.stories.some((s) => s.interact) ? '<p><span class="sb__live">인터랙션</span> 미리보기를 누르면 상태가 바뀝니다. 바뀐 인자는 아래에 기록되고 Canvas 에서는 Controls 에도 반영됩니다.</p>' : ''}</div>
       <div class="sb__tabs" role="tablist"><a role="tab" href="#/${first.id}" aria-selected="${tab === 'canvas'}">Canvas</a><a role="tab" href="#/${c.id}" aria-selected="${tab === 'docs'}">Docs</a></div>`;
   }
   const show = (v) => v === undefined ? '' : typeof v === 'string' ? `'${v}'` : JSON.stringify(v);
@@ -496,8 +504,9 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
       <p class="sb__name">${esc(s.name)} <code>${s.key}</code></p>
       ${s.description ? `<p class="sb__note">${esc(s.description)}</p>` : ''}
       <div id="sb-stage"></div>
+      <p class="sb__action" id="sb-action-canvas"></p>
       <div class="sb__bar"><h4>Controls</h4><button class="sb__btn" type="button" id="sb-reset">처음 값으로</button></div>
-      ${s.render ? '<p class="sb__note">여러 컴포넌트를 조합한 story 라 Controls 가 미리보기에 적용되지 않습니다. 아래 표는 인자 설명으로 보세요.</p>' : ''}
+      ${!s.usesArgs ? '<p class="sb__note">여러 컴포넌트를 조합한 story 라 Controls 가 미리보기에 적용되지 않습니다. 아래 표는 인자 설명으로 보세요.</p>' : ''}
       <div id="sb-ctl"></div>
       <div id="sb-code"></div>`;
     drawLive();
@@ -510,7 +519,7 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
   function drawLive() {
     const { comp: c, story: s, args } = live;
     $('#sb-stage').innerHTML = stageHtml(s, c, args);
-    $('#sb-ctl').innerHTML = propsTable(c, args, !s.render);
+    $('#sb-ctl').innerHTML = propsTable(c, args, s.usesArgs);
     $('#sb-code').innerHTML = codeHtml(s.render ? s.code : argCode(c, args));
   }
   $('#sb-main').addEventListener('input', (e) => {
@@ -524,18 +533,41 @@ h3.sub small { font-weight: 400; color: var(--d-fg-3); font-family: var(--d-mono
     else { try { v = el.value.trim() === '' ? undefined : new Function(`return (${el.value})`)(); el.classList.remove('is-bad'); } catch (_) { el.classList.add('is-bad'); return; } }
     live.args[p.name] = v;
     $('#sb-stage').innerHTML = stageHtml(live.story, live.comp, live.args);
-    $('#sb-code').innerHTML = codeHtml(argCode(live.comp, live.args));
+    $('#sb-code').innerHTML = codeHtml(live.story.render ? live.story.code : argCode(live.comp, live.args));
     el.closest('tr').classList.toggle('is-set', v !== undefined && v !== p.default);
   });
   $('#sb-main').addEventListener('click', (e) => { if (e.target.id === 'sb-reset' && live) { live.args = Object.assign({}, live.story.args); drawLive(); } });
 
+  // 인터랙션: 미리보기 클릭 → story.interact(t, args) → 바뀐 인자로 다시 그림
+  const short = (v) => { const t = LXP_FMT(v).replace(/\s+/g, ' '); return t.length > 60 ? t.slice(0, 57) + '…' : t; };
+  const showArgs = (o) => Object.entries(o).map(([k, v]) => `<b>${esc(k)}</b> ${esc(short(v))}`).join(' · ');
+  $('#sb-main').addEventListener('click', (e) => {
+    const stage = e.target.closest('.stage[data-story]'); if (!stage) return;
+    const comp = SB.find((c) => stage.dataset.story.startsWith(c.id + '--'));
+    const story = comp && comp.stories.find((s) => s.id === stage.dataset.story);
+    if (!story || !story.interact || !story.usesArgs) return;
+    e.preventDefault();
+    const args = live && live.story === story ? live.args : docsArgs[story.id];
+    let change;
+    try { change = LXP_INTERACT(story, e.target, stage.firstElementChild, args); } catch (err) { change = null; console.error(err); }
+    const log = live && live.story === story ? $('#sb-action-canvas') : $(`[data-action="${story.id}"]`);
+    if (!change) { if (log) log.innerHTML = '클릭 → 바뀐 것 없음'; return; }
+    Object.assign(args, change);
+    if (live && live.story === story) drawLive();
+    else stage.outerHTML = stageHtml(story, comp, args);
+    const log2 = live && live.story === story ? $('#sb-action-canvas') : $(`[data-action="${story.id}"]`);
+    if (log2) log2.innerHTML = '클릭 → ' + showArgs(change);
+  });
+
   // Docs: 모든 story + 인자 표
+  const docsArgs = {};   // Docs 의 story 별 현재 인자 (클릭으로 바뀐 상태)
   function docs(c) {
     live = null;
+    c.stories.forEach((s) => { docsArgs[s.id] = Object.assign({}, s.args); });
     $('#sb-main').innerHTML = head(c, 'docs') + `<div class="sb__docs">${c.stories.map((s) => `<div>
         <p class="sb__name">${esc(s.name)} <code>${s.key}</code> <a href="#/${s.id}">Canvas ›</a></p>
         ${s.description ? `<p class="sb__note">${esc(s.description)}</p>` : ''}
-        ${stageHtml(s, c, s.args)}${codeHtml(s.code)}</div>`).join('')}
+        ${stageHtml(s, c, s.args)}${s.interact ? `<p class="sb__action" data-action="${s.id}"></p>` : ''}${codeHtml(s.code)}</div>`).join('')}
       <div class="sb__wide"><p class="sb__name">인자</p>${propsTable(c, {}, false)}</div></div>`;
   }
 

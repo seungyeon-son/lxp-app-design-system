@@ -29,3 +29,9 @@ export const WithRight = {
     { name: '이상화(2251****)', avatar: 'avatar-02', right: SelectCheck({}) },
   ] }),
 };
+export const Toggle = {
+  name: '펼치고 접기 — › 를 눌러 보세요',
+  args: { open: false },
+  render: (args) => ChatGroupCard({ title: '물리학실험실 2 [001]', count: args.open ? null : 34, members: args.open ? [{ name: '김연아(2251****)', avatar: 'avatar-03' }, { name: '이상화(2251****)', avatar: 'avatar-02' }] : undefined }),
+  interact: (t, args) => (t.closest('.lxp-chat-group__head') ? { open: !args.open } : null),
+};

@@ -148,6 +148,7 @@ ${RUNTIME}
 const DOCS_BY_FN = ${JSON.stringify(docsByFn)};
 global.LXP_DOCS = DOCS_BY_FN;
 global.LXP_FMT = fmt;
+global.LXP_INTERACT = interactStory;
 global.LXP_STORIES = normalize(FILES, DOCS_BY_FN);
 })(typeof window !== 'undefined' ? window : globalThis);
 `;

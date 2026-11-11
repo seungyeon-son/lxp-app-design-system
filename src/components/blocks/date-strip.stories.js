@@ -4,6 +4,7 @@ import { DateStrip } from '../../index.js';
 export default {
   component: DateStrip,
   figma: '7062:38201',
+  interact: (t) => { const i = t.attr('data-index'); return i == null ? null : { selected: Number(i) }; },
 };
 
 export const Today = { name: '오늘 선택 (기본)' };

@@ -4,6 +4,8 @@ import { ChatNotice } from '../../index.js';
 export default {
   component: ChatNotice,
   figma: '93:23602',
+  // 머리(제목 줄)나 펼치기 버튼을 누르면 열고 닫음
+  interact: (t, args) => (t.closest('.lxp-chat-notice__head') ? { open: !args.open } : null),
 };
 
 export const Closed = { name: '닫힘 (기본)' };

@@ -5,6 +5,8 @@ export default {
   component: ClassEditRow,
   figma: '51:9191',
   parameters: { layout: 'padded' },
+  // 눈 버튼 = 공개 ↔ 비공개
+  interact: (t, args) => (t.closest('[data-toggle]') ? { visible: !(args.visible ?? true) } : null),
 };
 
 export const Visible = { name: '공개 (기본)' };

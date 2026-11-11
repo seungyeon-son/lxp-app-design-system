@@ -5,6 +5,7 @@ export default {
   component: SelectAllRow,
   figma: '87:22551',
   parameters: { layout: 'padded' },
+  interact: (t, args) => (t.closest('[role=checkbox]') ? { checked: !args.checked } : null),
 };
 
 export const Default = { name: '선택 안 함' };

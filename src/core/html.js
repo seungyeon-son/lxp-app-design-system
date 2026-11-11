@@ -23,14 +23,16 @@ export function cx(...args) {
 
 /**
  * 추가 HTML 속성: htmlAttrs({ id: 'save', 'data-i': 3, disabled: true }) → ' id="save" data-i="3" disabled'
- * false/null/undefined 는 생략, true 는 값 없는 속성. 앞에 공백이 붙어 있어 태그 안에 바로 이어 씁니다.
+ * false/null/undefined 는 생략, true 는 값 없는 속성. 단 aria-* 의 true/false 는 "true"/"false" 값으로 씁니다. 앞에 공백이 붙어 있어 태그 안에 바로 이어 씁니다.
  */
 export function htmlAttrs(obj) {
   if (!obj) return '';
   let out = '';
   for (const k in obj) {
     const v = obj[k];
-    if (v == null || v === false || !/^[a-zA-Z_:][\w:.-]*$/.test(k)) continue;
+    if (v == null || !/^[a-zA-Z_:][\w:.-]*$/.test(k)) continue;
+    if (typeof v === 'boolean' && k.startsWith('aria-')) { out += ` ${k}="${v}"`; continue; }   // aria-pressed="false" 처럼 값이 있어야 함
+    if (v === false) continue;
     out += v === true ? ` ${k}` : ` ${k}="${esc(v)}"`;
   }
   return out;

@@ -5,6 +5,8 @@ export default {
   component: LineTabs,
   figma: '85:21691',
   args: { items: ['사진/동영상', '문서', '링크', '공지'] },
+  // 탭을 누르면 그 칸이 선택됨
+  interact: (t) => { const i = t.index('[role=tab]'); return i < 0 ? null : { active: i }; },
 };
 
 export const First = { name: '첫 칸' };
